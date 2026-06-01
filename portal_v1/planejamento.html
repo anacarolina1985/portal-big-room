@@ -10,7 +10,6 @@
     --bg:#f4f5f7; --card:#fff; --txt:#1a1a1a; --muted:#6b7280;
     --border:#e3e6ea; --bg2:#f8f9fb; --shadow:0 1px 3px rgba(0,0,0,.08);
     --green:#127a3e; --amber:#b45309; --blue:#1d4ed8; --radius:10px;
-    --sidebar-w:248px;
   }
   [data-theme="dark"]{
     --bg:#0f1115; --card:#1a1d24; --txt:#e8eaed; --muted:#9aa0a6;
@@ -21,29 +20,37 @@
   .layout,
   .shell{display:flex;min-height:100vh}
   /* SIDEBAR */
-  .sidebar{width:var(--sidebar-w);background:var(--red);color:#fff;display:flex;flex-direction:column;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto}
-  .sidebar.col{width:64px}
-  .stoggle{padding:12px;display:flex;justify-content:flex-end}
-  .stoggle button{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:6px 10px;cursor:pointer;font-size:12px;font-weight:700}
-  .stoggle button:hover{background:rgba(255,255,255,.22)}
-  .back-link{display:flex;align-items:center;gap:8px;color:#fff;font-weight:700;text-decoration:none;font-size:13px;padding:10px 12px;border-radius:9px;transition:background .15s}
+  .sidebar{width:200px;min-width:200px;max-width:200px;flex-shrink:0;background:linear-gradient(170deg,#CC0000 0%,#8B0000 55%,#5a0000 100%);color:#fff;display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;box-shadow:3px 0 12px rgba(0,0,0,.2);z-index:20;position:relative;transition:width .22s ease,min-width .22s ease,max-width .22s ease}
+  .sidebar::before{content:'';position:absolute;top:-40px;right:-40px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06);pointer-events:none}
+  .sidebar::after{content:'';position:absolute;bottom:-20px;left:-20px;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none}
+  .sidebar.col{width:60px!important;min-width:60px!important;max-width:60px!important}
+  .stoggle{margin:6px 10px 12px;padding:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:9px;color:#fff;cursor:pointer;font-size:13px;font-weight:700;text-align:center;transition:background .15s;display:flex;align-items:center;justify-content:center;gap:8px}
+  .stoggle:hover{background:rgba(255,255,255,.24)}
+  .stoggle .stoggle-txt{font-size:11px}
+  .sidebar.col .stoggle .stoggle-txt{display:none}
+  .sidebar.col .stoggle{margin:6px 8px 12px}
+  .sbrand{padding:10px 12px 8px;border-bottom:1px solid rgba(255,255,255,.18);display:flex;flex-direction:column;align-items:stretch;gap:5px;position:relative;z-index:1}
+  .sblogo{width:100%;height:28px;background:#fff;border-radius:5px;padding:3px 10px;object-fit:contain;display:block;box-sizing:border-box;transition:transform .2s}
+  .sblogo:hover{transform:scale(1.01)}
+  .sclogo{width:100%;height:22px;background:#fff;border-radius:5px;padding:2px 10px;object-fit:contain;display:block;box-sizing:border-box}
+  .back-link{padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.12);display:flex;font-size:10px;color:rgba(255,255,255,.7);text-decoration:none;font-weight:700;transition:.15s;align-items:center;gap:5px;position:relative;z-index:1}
   .back-link:hover{color:#fff;background:rgba(255,255,255,.08);padding-left:16px}
-  .back-link .bl-ic{font-size:16px;width:20px;text-align:center;flex-shrink:0}
-  .back-link .bl-txt{font-size:13px}
-  .sbrand{padding:0 12px 10px;font-size:11px;opacity:.85;font-weight:600}
-  .smenu{flex:1;padding:6px 10px;display:flex;flex-direction:column;gap:3px;position:relative;z-index:1}
+  .smenu{flex:1;padding:6px 8px;position:relative;z-index:1}
   .nlabel{display:block;font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.9px;color:rgba(255,255,255,.45);padding:4px 8px 4px}
-  .sbot{padding:10px;border-top:1px solid rgba(255,255,255,.15);display:flex;flex-direction:column;gap:3px}
-  .nb{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:9px;color:#fff;background:none;border:none;cursor:pointer;font-size:13px;font-weight:600;text-align:left;text-decoration:none;width:100%;transition:background .15s}
-  .nb:hover{background:rgba(255,255,255,.14)}
-  .nb.act{background:#fff;color:var(--red)}
-  .nb .ic{font-size:16px;width:20px;text-align:center;flex-shrink:0}
-  .sidebar.col .ntxt,.sidebar.col .sbrand,.sidebar.col .back-link .bl-txt,.sidebar.col .smenu-label{display:none!important}
+  .nb{width:100%;padding:7px 9px;background:transparent;border:none;border-radius:6px;color:rgba(255,255,255,.82);cursor:pointer;text-align:left;font-weight:600;font-size:11px;transition:all .18s;display:flex;align-items:center;gap:8px;margin-bottom:1px;white-space:nowrap;position:relative;overflow:hidden}
+  .nb::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:rgba(255,255,255,.15);transition:width .2s;border-radius:6px}
+  .nb:hover::before{width:100%}
+  .nb:hover{color:#fff}
+  .nb.act{background:rgba(255,255,255,.22);color:#fff;box-shadow:inset 3px 0 0 #fff}
+  .nb .ic{font-size:13px;min-width:18px;text-align:center;flex-shrink:0;position:relative;z-index:1}
+  .nb .ntxt{overflow:hidden;text-overflow:ellipsis;font-size:11px;position:relative;z-index:1}
+  .sbot{padding:8px;border-top:1px solid rgba(255,255,255,.12);position:relative;z-index:1}
+  .sidebar.col .ntxt,.sidebar.col .sclogo,.sidebar.col .back-link .bl-txt,.sidebar.col .smenu-label{display:none!important}
   .sidebar.col .nb{justify-content:center;padding-left:0;padding-right:0}
   .sidebar.col .nb .ic{margin:0}
   .sidebar.col .sbrand{justify-content:center;padding:10px 6px}
+  .sidebar.col .sblogo{margin:0}
   .sidebar.col .back-link{justify-content:center;padding:10px 6px}
-  .sidebar.col .nb-theme{padding-top:9px!important}
   .nb-back{border-bottom:1px dashed rgba(255,255,255,.2);border-radius:0;margin-bottom:4px;padding-bottom:12px}
   /* MAIN */
   .main{flex:1;min-width:0;display:flex;flex-direction:column}
@@ -215,7 +222,7 @@
   <nav class="sidebar" id="sidebar">
     <button class="stoggle" onclick="toggleSidebar()" id="stoggleBtn" title="Recolher menu"><span class="stoggle-ic">«</span><span class="stoggle-txt">Recolher</span></button>
     <div><a href="../index.html" class="back-link" title="Portal"><span class="bl-ic">←</span><span class="bl-txt">Portal</span></a></div>
-    <div class="sbrand">Portal</div>
+    <div class="sbrand"><img id="imgB" src="" alt="" class="sblogo"><img id="imgC" src="" alt="" class="sclogo"></div>
     <div class="smenu">
       <div class="nlabel">Páginas</div>
       <a href="dashboard.html" class="nb nb-back" style="text-decoration:none" title="Voltar ao Dashboard"><span class="ic">⬆️</span><span class="ntxt">Voltar ao Dashboard</span></a>
