@@ -1,0 +1,1918 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MBR · Monthly Business Review · Bradesco Program Board</title>
+<style>
+  :root{
+    --red:#CC0000;--red-d:#A30000;
+    --bg:#f4f5f7;--card:#fff;--txt:#1a1a1a;--muted:#6b7280;
+    --border:#e3e6ea;--bg2:#f8f9fb;--shadow:0 1px 3px rgba(0,0,0,.08);
+    --green:#127a3e;--amber:#b45309;--blue:#1d4ed8;--radius:10px;
+  }
+  [data-theme="dark"]{
+    --bg:#0f1115;--card:#1a1d24;--txt:#e8eaed;--muted:#9aa0a6;
+    --border:#2a2e37;--bg2:#15181e;--shadow:0 1px 3px rgba(0,0,0,.4);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;overflow:hidden}
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--txt);font-size:14px;line-height:1.5}
+  .shell{display:flex;height:100vh;overflow:hidden}
+
+  /* ─── SIDEBAR ─── */
+  .sidebar{width:200px;min-width:200px;max-width:200px;flex-shrink:0;background:linear-gradient(170deg,#CC0000 0%,#8B0000 55%,#5a0000 100%);color:#fff;display:flex;flex-direction:column;overflow:hidden;box-shadow:3px 0 12px rgba(0,0,0,.2);z-index:20;position:relative;transition:width .22s ease,min-width .22s ease,max-width .22s ease}
+  .sidebar::before{content:'';position:absolute;top:-40px;right:-40px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06);pointer-events:none}
+  .sidebar::after{content:'';position:absolute;bottom:-20px;left:-20px;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none}
+  .sidebar.col{width:60px!important;min-width:60px!important;max-width:60px!important}
+  .stoggle{margin:6px 10px 12px;padding:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:9px;color:#fff;cursor:pointer;font-size:13px;font-weight:700;text-align:center;transition:background .15s;display:flex;align-items:center;justify-content:center;gap:8px}
+  .stoggle:hover{background:rgba(255,255,255,.24)}
+  .stoggle .stoggle-txt{font-size:11px}
+  .sidebar.col .stoggle .stoggle-txt,.sidebar.col .ntxt,.sidebar.col .sclogo,.sidebar.col .bl-txt,.sidebar.col .nlabel{display:none!important}
+  .sidebar.col .stoggle,.sidebar.col .nb{justify-content:center;padding-left:0;padding-right:0}
+  .sidebar.col .nb .ic,.sidebar.col .stoggle{margin-left:0;margin-right:0}
+  .sidebar.col .sbrand{justify-content:center;padding:10px 6px}
+  .sidebar.col .sblogo{margin:0}
+  .sidebar.col .back-link{justify-content:center;padding:10px 6px}
+  .sbrand{padding:10px 12px 8px;border-bottom:1px solid rgba(255,255,255,.18);display:flex;flex-direction:column;align-items:stretch;gap:5px;position:relative;z-index:1}
+  .sblogo{width:100%;height:28px;background:#fff;border-radius:5px;padding:3px 10px;object-fit:contain;display:block}
+  .sclogo{width:100%;height:22px;background:#fff;border-radius:5px;padding:2px 10px;object-fit:contain;display:block}
+  .back-link{padding:6px 12px;border-bottom:1px solid rgba(255,255,255,.12);display:flex;font-size:10px;color:rgba(255,255,255,.7);text-decoration:none;font-weight:700;transition:.15s;align-items:center;gap:5px;position:relative;z-index:1}
+  .back-link:hover{color:#fff;background:rgba(255,255,255,.08);padding-left:16px}
+  .smenu{flex:1 1 auto;min-height:0;padding:6px 8px;position:relative;z-index:1;overflow-y:auto;overflow-x:hidden}
+  .nlabel{display:block;font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.9px;color:rgba(255,255,255,.45);padding:4px 8px}
+  .nb{width:100%;padding:7px 9px;background:transparent;border:none;border-radius:6px;color:rgba(255,255,255,.82);cursor:pointer;text-align:left;font-weight:600;font-size:11px;transition:all .18s;display:flex;align-items:center;gap:8px;margin-bottom:1px;white-space:nowrap;position:relative;overflow:hidden;text-decoration:none}
+  .nb::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:rgba(255,255,255,.15);transition:width .2s;border-radius:6px}
+  .nb:hover::before{width:100%}
+  .nb:hover{color:#fff}
+  .nb.act{background:rgba(255,255,255,.22);color:#fff;box-shadow:inset 3px 0 0 #fff}
+  .nb .ic{font-size:13px;min-width:18px;text-align:center;flex-shrink:0;position:relative;z-index:1}
+  .nb .ntxt{overflow:hidden;text-overflow:ellipsis;font-size:11px;position:relative;z-index:1}
+  .sbot{padding:8px;border-top:1px solid rgba(255,255,255,.12);position:relative;z-index:1}
+  .nb-back{border-bottom:1px dashed rgba(255,255,255,.2);border-radius:0;margin-bottom:4px;padding-bottom:12px}
+
+  /* ─── MAIN ─── */
+  .main{flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+  .topbar{background:var(--card);border-bottom:1px solid var(--border);padding:14px 22px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:12px}
+  .topbar .t{font-weight:900;font-size:17px}
+  .topbar .sub{font-size:11px;color:var(--muted);margin-top:1px}
+  .topbar-sel{font-size:12px;padding:6px 10px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--txt);cursor:pointer}
+  .topbar-sel:focus{outline:2px solid var(--red);outline-offset:-1px}
+  .content{padding:20px 22px 60px;flex:1;overflow-y:auto;overflow-x:hidden}
+
+  /* ─── VIEWS ─── */
+  .view{display:none}
+  .view.active{display:block}
+
+  /* ─── SHARED ─── */
+  .kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:18px}
+  .kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow)}
+  .kpi .v{font-size:22px;font-weight:900;color:var(--red)}
+  .kpi .l{font-size:11px;color:var(--muted);margin-top:2px}
+  .sec-h{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin:0 0 12px;padding-bottom:8px;border-bottom:2px solid var(--border)}
+  .tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap}
+  .tag.green{background:rgba(18,122,62,.12);color:var(--green)}
+  .tag.amber{background:rgba(180,83,9,.12);color:var(--amber)}
+  .tag.blue{background:rgba(29,78,216,.12);color:var(--blue)}
+  .tag.gray{background:rgba(107,114,128,.14);color:var(--muted)}
+  .tag.red{background:rgba(204,0,0,.12);color:var(--red)}
+  .empty{text-align:center;padding:50px;color:var(--muted);font-size:14px}
+
+  /* ─── AGENDA ─── */
+  .agenda-wrap{display:grid;grid-template-columns:1fr 268px;gap:20px}
+  .agenda-main{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .agenda-header{background:linear-gradient(135deg,#CC0000 0%,#8B0000 100%);color:#fff;padding:22px 26px}
+  .agenda-header h2{font-size:21px;font-weight:900;letter-spacing:-.3px;margin-bottom:4px}
+  .agenda-header p{font-size:12.5px;opacity:.85}
+  .agenda-row{display:grid;grid-template-columns:156px 1fr;border-bottom:1px solid var(--border)}
+  .agenda-row:last-child{border-bottom:none}
+  .agenda-lbl{padding:18px 16px;display:flex;align-items:flex-start;gap:10px;background:var(--bg2);border-right:1px solid var(--border)}
+  .agenda-icon{width:38px;height:38px;border-radius:9px;background:rgba(204,0,0,.07);border:1px solid rgba(204,0,0,.14);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+  .agenda-lbl-txt{font-size:12px;font-weight:800;color:var(--txt);margin-top:2px;line-height:1.3}
+  .agenda-lbl-txt small{display:block;font-size:10px;color:var(--muted);font-weight:500;margin-top:2px}
+  .agenda-content{padding:18px;font-size:13px;color:var(--txt);line-height:1.65}
+  .agenda-content ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:6px}
+  .agenda-content ul li{display:flex;align-items:flex-start;gap:8px}
+  .agenda-content ul li::before{content:"›";color:var(--red);font-weight:900;flex-shrink:0;line-height:1.65}
+  .agenda-side{display:flex;flex-direction:column;gap:14px}
+  .side-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 18px}
+  .side-card-icon{font-size:22px;margin-bottom:8px}
+  .side-card-title{font-size:12px;font-weight:800;color:var(--txt);margin-bottom:6px}
+  .side-card-body{font-size:12.5px;color:var(--muted);line-height:1.65}
+  .side-card-body b{color:var(--txt)}
+  .side-card-note{font-size:11px;color:var(--muted);font-style:italic;margin-top:5px}
+  .side-card.info{background:rgba(204,0,0,.03);border-color:rgba(204,0,0,.16)}
+  .side-card.info .side-card-title{color:var(--red)}
+
+  /* ─── SESSIONS (Acompanhamento) ─── */
+  .sessions-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px}
+  .session-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;transition:box-shadow .18s,transform .15s;cursor:pointer}
+  .session-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.12)}
+  .session-card.pending{cursor:default}
+  .session-card.pending:hover{transform:none;box-shadow:var(--shadow)}
+  .sc-head{padding:14px 16px;display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid var(--border);background:var(--bg2)}
+  .sc-month{font-size:15px;font-weight:900;color:var(--txt)}
+  .sc-date{font-size:11px;color:var(--muted);margin-top:2px}
+  .sc-body{padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+  .prog-row{display:flex;align-items:center;gap:10px}
+  .prog-lbl{font-size:11px;color:var(--muted);min-width:84px;font-weight:600}
+  .prog-bar{flex:1;height:7px;background:var(--bg2);border-radius:4px;overflow:hidden;border:1px solid var(--border)}
+  .prog-fill{height:100%;border-radius:4px;transition:width .4s ease}
+  .prog-pct{font-size:12px;font-weight:800;min-width:38px;text-align:right}
+  .sc-stats{display:flex;gap:14px;flex-wrap:wrap}
+  .sc-stat{display:flex;align-items:center;gap:4px;font-size:11.5px;color:var(--muted)}
+  .sc-stat b{color:var(--txt);font-weight:800}
+  .sc-foot{padding:10px 16px;border-top:1px solid var(--border);display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+  .chip{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:12px;background:var(--bg2);color:var(--muted);border:1px solid var(--border)}
+  .chip.open{background:rgba(180,83,9,.08);color:var(--amber);border-color:rgba(180,83,9,.22)}
+  .chip.done{background:rgba(18,122,62,.08);color:var(--green);border-color:rgba(18,122,62,.22)}
+  .chip.risk{background:rgba(204,0,0,.08);color:var(--red);border-color:rgba(204,0,0,.22)}
+  .chip.nav{margin-left:auto;background:var(--bg2)}
+  .sess-pending{padding:28px 20px;text-align:center;color:var(--muted)}
+  .sess-pending .big{font-size:32px;margin-bottom:8px}
+
+  /* ─── KR EVOLUTION TABLE ─── */
+  .kr-table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+  .kr-table th{background:var(--bg2);text-align:left;padding:10px 14px;font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;border-bottom:2px solid var(--border)}
+  .kr-table td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:middle;font-size:13px}
+  .kr-table tr:last-child td{border-bottom:none}
+  .kr-table tr:hover td{background:var(--bg2)}
+  .pct-cell{text-align:center;font-weight:800;min-width:72px}
+  .mini-bar{height:4px;border-radius:2px;background:var(--bg2);margin-top:3px;overflow:hidden}
+  .mini-fill{height:100%;border-radius:2px}
+  .delta{font-size:10px;font-weight:700;margin-left:3px}
+  .delta.up{color:var(--green)}
+  .delta.dn{color:var(--red)}
+  .delta.eq{color:var(--muted)}
+
+  /* ─── AÇÕES TABLE ─── */
+  .ac-table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+  .ac-table th{background:var(--bg2);text-align:left;padding:10px 14px;font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;border-bottom:2px solid var(--border)}
+  .ac-table td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px}
+  .ac-table tr:last-child td{border-bottom:none}
+  .ac-table tr:hover td{background:var(--bg2)}
+  .badge{display:inline-block;font-size:10px;font-weight:800;padding:3px 9px;border-radius:12px}
+  .b-aberta{background:rgba(180,83,9,.1);color:var(--amber)}
+  .b-andamento{background:rgba(29,78,216,.1);color:var(--blue)}
+  .b-concluida{background:rgba(18,122,62,.1);color:var(--green)}
+  .b-cancelada{background:rgba(107,114,128,.12);color:var(--muted)}
+  .ac-filter-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px;align-items:flex-end}
+  .fg{display:flex;flex-direction:column;gap:4px}
+  .fg label{font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+  .fg select{font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--txt);min-width:160px;cursor:pointer}
+  .fg select:focus{outline:2px solid var(--red);outline-offset:-1px}
+
+  /* ─── DRAWER ─── */
+  .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:900;justify-content:flex-end}
+  .overlay.open{display:flex}
+  .drawer{width:540px;max-width:96vw;height:100vh;background:var(--card);box-shadow:-8px 0 32px rgba(0,0,0,.18);overflow-y:auto;display:flex;flex-direction:column}
+  .dr-head{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--bg2);flex-shrink:0}
+  .dr-head h3{font-size:15px;font-weight:900}
+  .dr-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);padding:4px 8px;border-radius:6px;line-height:1}
+  .dr-close:hover{background:var(--bg2);color:var(--red)}
+  .dr-body{flex:1;padding:18px 20px;overflow-y:auto}
+  .dr-sec{margin-bottom:18px}
+  .dr-sec-h{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:10px}
+  .kr-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg2);margin-bottom:7px}
+  .kr-row-name{flex:1;font-size:12.5px;line-height:1.4}
+  .kr-row-pcts{text-align:right;min-width:64px}
+  .kr-row-pcts .pct-big{font-size:14px;font-weight:900}
+  .kr-row-bar{width:48px}
+  .prob-row{padding:8px 10px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;font-size:12.5px;line-height:1.5;background:var(--bg2);display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap}
+  .ac-row{padding:10px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:7px;background:var(--bg2)}
+  .ac-row-desc{font-size:12.5px;line-height:1.5;margin-bottom:5px}
+  .ac-row-meta{font-size:11px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+
+  @media(max-width:780px){
+    .agenda-wrap{grid-template-columns:1fr}
+    .sessions-grid{grid-template-columns:1fr}
+    .drawer{width:100vw}
+  }
+
+  /* ─── APRESENTAÇÃO / SLIDE ─── */
+  .slide-controls{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin-bottom:16px;box-shadow:var(--shadow)}
+  .slide-controls .row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+  .btn-gen{background:var(--red);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+  .btn-gen:hover{background:var(--red-d)}
+  .btn-print{background:var(--bg2);color:var(--txt);border:1px solid var(--border);border-radius:8px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer}
+  .btn-print:hover{border-color:var(--red);color:var(--red)}
+  /* slide container */
+  .mbr-slide{background:#fff;border:1px solid #dde;border-radius:12px;box-shadow:0 4px 28px rgba(0,0,0,.13);overflow:hidden;font-family:'Segoe UI',system-ui,sans-serif;color:#1a1a1a;max-width:1280px;margin-top:4px}
+  .sl-head{background:linear-gradient(135deg,#CC0000 0%,#8B0000 100%);color:#fff;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+  .sl-head-l .sl-title{font-size:22px;font-weight:900;letter-spacing:-.3px}
+  .sl-head-l .sl-sub{font-size:12.5px;opacity:.85;margin-top:3px}
+  .sl-head-l .sl-exp{font-size:11px;opacity:.8;margin-top:6px}
+  .sl-head-r{text-align:right}
+  .sl-branding{font-size:12px;font-weight:800;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);border-radius:8px;padding:5px 13px;display:inline-block}
+  .sl-period{font-size:11px;opacity:.78;margin-top:4px}
+  /* col headers */
+  .sl-col-head{padding:10px 12px;color:#fff;display:flex;align-items:center;justify-content:center;gap:7px;min-height:44px;flex-direction:column;text-align:center}
+  .sl-col-num{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.25);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;flex-shrink:0}
+  .sl-col-name{font-size:10px;font-weight:700;opacity:.9;line-height:1.3;max-width:120px}
+  /* section label rows */
+  .sl-section-bar{background:#f8f9fb;border-top:1px solid #e3e6ea;border-bottom:1px solid #e3e6ea;padding:3px 14px;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:#9ca3af;display:flex;align-items:center;gap:12px}
+  /* objective cells */
+  .sl-obj-cell{padding:8px 10px;border:1px solid rgba(204,0,0,.12);border-radius:6px;margin:8px 8px 4px;background:rgba(204,0,0,.04);display:flex;align-items:flex-start;justify-content:space-between;gap:8px;min-height:54px}
+  .sl-obj-text{flex:1;font-size:12px;line-height:1.5;color:#1a1a1a}
+  /* KR cells */
+  .sl-kr-area{padding:0 8px 8px;display:flex;flex-direction:column;gap:5px}
+  .sl-kr-row{border:1px solid #e3e6ea;border-radius:6px;padding:7px 9px;font-size:11.5px;background:#fff;display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+  .sl-kr-row.risk-high{border-color:rgba(204,0,0,.32);background:rgba(204,0,0,.03)}
+  .sl-kr-row.risk-med{border-color:rgba(180,83,9,.28);background:rgba(180,83,9,.03)}
+  .sl-kr-lbl{font-size:9px;font-weight:800;margin-bottom:2px}
+  .sl-kr-text{flex:1;color:#374151;line-height:1.4;font-size:11.5px}
+  .sl-kr-right{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0}
+  .pct-badge{font-size:11px;font-weight:900;padding:3px 8px;border-radius:10px;white-space:nowrap}
+  .pct-badge.on-track{background:rgba(18,122,62,.12);color:#127a3e}
+  .pct-badge.med-risk{background:rgba(180,83,9,.12);color:#b45309}
+  .pct-badge.high-risk{background:rgba(204,0,0,.12);color:#CC0000}
+  .pct-badge.neutral{background:#f1f3f5;color:#6b7280}
+  .exp-lbl{font-size:9px;color:#9ca3af;white-space:nowrap}
+  /* bottom */
+  .sl-bottom{display:grid;grid-template-columns:1fr 1fr;border-top:2px solid #CC0000}
+  .sl-panel{padding:16px 20px}
+  .sl-panel-title{font-size:11.5px;font-weight:900;background:#CC0000;color:#fff;padding:5px 12px;border-radius:4px;display:inline-block;margin-bottom:12px}
+  .sl-panel.risks .sl-panel-title{background:#1e3799}
+  .sl-panel ol{padding-left:18px;display:flex;flex-direction:column;gap:7px}
+  .sl-panel ol li{font-size:12.5px;line-height:1.5;color:#374151}
+  .risk-tag{font-size:9px;font-weight:800;padding:1px 6px;border-radius:8px;margin-right:5px;vertical-align:middle}
+  .risk-tag.high{background:rgba(204,0,0,.12);color:#CC0000}
+  .risk-tag.med{background:rgba(180,83,9,.12);color:#b45309}
+  .risk-tag.ok{background:rgba(18,122,62,.12);color:#127a3e}
+  /* ─── DATA MANAGER ─── */
+  .dm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;margin-bottom:16px}
+  .dm-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+  .dm-card-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+  .dm-status{font-size:10px;font-weight:800;padding:2px 7px;border-radius:8px}
+  .dm-status.loaded{background:rgba(18,122,62,.12);color:var(--green)}
+  .dm-status.empty{background:rgba(107,114,128,.1);color:var(--muted)}
+  .dm-cols{font-size:11px;color:var(--muted);margin-bottom:10px;line-height:1.6}
+  .dm-cols code{font-size:10px;background:var(--bg2);padding:1px 5px;border-radius:4px;border:1px solid var(--border)}
+  .dm-upload{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .dm-file-btn{background:var(--red);color:#fff;border:none;border-radius:7px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer}
+  .dm-file-btn:hover{background:var(--red-d)}
+  .dm-clear-btn{background:var(--bg2);color:var(--muted);border:1px solid var(--border);border-radius:7px;padding:7px 10px;font-size:12px;cursor:pointer}
+  .dm-clear-btn:hover{color:var(--red);border-color:var(--red)}
+  .dm-summary{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;box-shadow:var(--shadow);margin-bottom:14px;font-size:12.5px;color:var(--muted)}
+  input[type=file]{display:none}
+  .nav-grp{margin-bottom:1px}
+  .nav-grp-hd{width:100%;padding:6px 9px;background:transparent;border:none;border-radius:6px;color:rgba(255,255,255,.75);cursor:pointer;text-align:left;font-weight:700;font-size:11px;display:flex;align-items:center;gap:8px;transition:all .15s;white-space:nowrap}
+  .nav-grp-hd:hover{background:rgba(255,255,255,.12);color:#fff}
+  .nav-grp-hd.open{color:#fff}
+  .ng-arr{margin-left:auto;font-size:10px;color:rgba(255,255,255,.35);transition:transform .2s;flex-shrink:0}
+  .nav-grp-hd.open .ng-arr{transform:rotate(90deg);color:rgba(255,255,255,.7)}
+  .nav-grp-bd{display:none;padding:1px 0 3px 18px}
+  .nav-grp-bd.open{display:block}
+  .nb-sub{padding:5px 8px!important;font-size:10.5px!important;color:rgba(255,255,255,.62)!important;margin-bottom:0!important;white-space:nowrap}
+  .nb-sub:hover{color:#fff!important}
+  .nb-sub.act{color:#fff!important;font-weight:800!important}
+  .sidebar.col .nav-grp-bd,.sidebar.col .ng-arr{display:none!important}
+  .sidebar.col .nav-grp-hd{justify-content:center;padding-left:0;padding-right:0}
+
+  @media print{
+    .sidebar,.topbar,.slide-controls,.overlay{display:none!important}
+    .main,.content{overflow:visible!important;height:auto!important}
+    .mbr-slide{box-shadow:none;border:none;border-radius:0;max-width:100%}
+    body,html{overflow:visible!important;height:auto!important}
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <nav class="sidebar" id="sidebar">
+    <button class="stoggle" onclick="toggleSidebar()" id="stoggleBtn" title="Recolher menu">
+      <span class="stoggle-ic">«</span><span class="stoggle-txt">Recolher</span>
+    </button>
+    <div><a href="../index.html" class="back-link"><span class="bl-ic">←</span><span class="bl-txt">Portal</span></a></div>
+    <div class="sbrand">
+      <img src="" alt="" class="sblogo" id="imgB">
+      <img src="" alt="" class="sclogo" id="imgC">
+    </div>
+    <div class="smenu">
+      <div class="nlabel">MBR</div>
+      <button class="nb act" onclick="switchView('agenda',this)"><span class="ic">📋</span><span class="ntxt">Agenda do Ritual</span></button>
+      <button class="nb" onclick="switchView('acomp',this)"><span class="ic">📅</span><span class="ntxt">Acompanhamento</span></button>
+      <button class="nb" onclick="switchView('krs',this)"><span class="ic">📈</span><span class="ntxt">Key Results</span></button>
+      <button class="nb" onclick="switchView('acoes',this)"><span class="ic">✅</span><span class="ntxt">Ações</span></button>
+      <button class="nb" onclick="switchView('slide',this)"><span class="ic">📊</span><span class="ntxt">Apresentação</span></button>
+      <div class="nlabel" style="margin-top:8px">Portal</div>
+      <a href="estrutura.html" class="nb" style="text-decoration:none"><span class="ic">🏛️</span><span class="ntxt">Estrutura</span></a>
+      <a href="okrs.html" class="nb" style="text-decoration:none"><span class="ic">🎯</span><span class="ntxt">OKRs & KRs</span></a>
+      <a href="planejamento.html" class="nb" style="text-decoration:none"><span class="ic">🗓️</span><span class="ntxt">Planejamento</span></a>
+    </div>
+    <div class="sbot">
+      <button class="nb" onclick="switchView('data',this)"><span class="ic">💾</span><span class="ntxt">Gerenciar Dados</span></button>
+      <button class="nb" onclick="switchView('docs',this)"><span class="ic">📖</span><span class="ntxt">Documentação</span></button>
+      <button class="nb" onclick="toggleTheme()"><span class="ic">🌙</span><span class="ntxt" id="themeTxt">Tema Escuro</span></button>
+    </div>
+  </nav>
+
+  <!-- ═══ MAIN ═══ -->
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <div class="t">📅 MBR · Monthly Business Review</div>
+        <div class="sub">Acompanhamento mensal dos resultados e saúde dos Key Results</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <select id="gTribo" class="topbar-sel" onchange="MBR.tribo=this.value;renderAll()"></select>
+        <select id="gQuarter" class="topbar-sel" onchange="MBR.quarter=this.value;renderAll()"></select>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ═══════════ VIEW: AGENDA ═══════════ -->
+      <div class="view active" id="view-agenda">
+        <div class="agenda-wrap">
+
+          <div class="agenda-main">
+            <div class="agenda-header">
+              <h2>Monthly Business Review</h2>
+              <p>Ritual mensal de acompanhamento dos resultados e saúde geral dos Key Results</p>
+            </div>
+
+            <div class="agenda-row">
+              <div class="agenda-lbl">
+                <div class="agenda-icon">🎯</div>
+                <div class="agenda-lbl-txt">Objetivo<small>do ritual</small></div>
+              </div>
+              <div class="agenda-content">
+                Proporcionar transparência total quanto a progresso, progressão dos objetivos e saúde geral dos Key Results das Squads
+              </div>
+            </div>
+
+            <div class="agenda-row">
+              <div class="agenda-lbl">
+                <div class="agenda-icon">📥</div>
+                <div class="agenda-lbl-txt">Informação<small>de input</small></div>
+              </div>
+              <div class="agenda-content">
+                <ul>
+                  <li>Progresso em relação aos OKRs</li>
+                  <li>Lista priorizada de problemas</li>
+                  <li>Visão macro de principais entregas</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="agenda-row">
+              <div class="agenda-lbl">
+                <div class="agenda-icon">⚙️</div>
+                <div class="agenda-lbl-txt">Atividades<small>do ritual</small></div>
+              </div>
+              <div class="agenda-content">
+                <ul>
+                  <li>Apresentação de evolução dos Key Results</li>
+                  <li>Porcentagem de evolução de cada Key Result e média dos Objetivos</li>
+                  <li>Evidenciar pontos de atenção e riscos para serem tratados</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="agenda-row">
+              <div class="agenda-lbl">
+                <div class="agenda-icon">📤</div>
+                <div class="agenda-lbl-txt">Resultado<small>esperado</small></div>
+              </div>
+              <div class="agenda-content">
+                <ul>
+                  <li>Transparência para toda a Tribo e stakeholders quanto as evoluções</li>
+                  <li>Solicitações de ajuda</li>
+                  <li>Ações para solucionar impedimentos</li>
+                  <li>Ações para melhorar a maturidade em Ágil</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="agenda-side">
+            <div class="side-card">
+              <div class="side-card-icon">👥</div>
+              <div class="side-card-title">Participantes</div>
+              <div class="side-card-body">
+                <b>TTL</b>, <b>CPOs</b>, <b>PO's</b>, <b>SeM's</b> e membros selecionados da equipe
+              </div>
+            </div>
+            <div class="side-card">
+              <div class="side-card-icon">🗓️</div>
+              <div class="side-card-title">Frequência</div>
+              <div class="side-card-body">
+                <b>Mensal</b>
+                <div class="side-card-note">Maior conforme necessário, por exemplo em caso de incidente</div>
+              </div>
+            </div>
+            <div class="side-card">
+              <div class="side-card-icon">✏️</div>
+              <div class="side-card-title">Facilitador</div>
+              <div class="side-card-body">
+                <b>Enterprise</b><br><b>Agile Coachs</b>
+              </div>
+            </div>
+            <div class="side-card info">
+              <div class="side-card-icon">ℹ️</div>
+              <div class="side-card-title">Como usar este painel</div>
+              <div class="side-card-body">
+                Acesse <b>Acompanhamento</b> para ver as sessões mensais, <b>Key Results</b> para acompanhar a evolução mês a mês e <b>Ações</b> para gerenciar os itens gerados no ritual.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ═══════════ VIEW: ACOMPANHAMENTO ═══════════ -->
+      <div class="view" id="view-acomp">
+        <div class="kpis" id="mbr-kpis"></div>
+        <div class="sec-h" id="acomp-h">Sessões do Quarter</div>
+        <div class="sessions-grid" id="sessions-grid"></div>
+      </div>
+
+      <!-- ═══════════ VIEW: KEY RESULTS ═══════════ -->
+      <div class="view" id="view-krs">
+        <div class="sec-h" id="krs-h">Evolução dos Key Results por Mês</div>
+        <div id="krs-wrap"></div>
+      </div>
+
+      <!-- ═══════════ VIEW: AÇÕES ═══════════ -->
+      <div class="view" id="view-acoes">
+        <div class="kpis" id="acoes-kpis"></div>
+        <div class="ac-filter-row">
+          <div class="fg">
+            <label>Status</label>
+            <select id="fStatus" onchange="renderAcoes()">
+              <option value="">Todos os status</option>
+              <option>Aberta</option>
+              <option>Em Andamento</option>
+              <option>Concluída</option>
+              <option>Cancelada</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Tipo</label>
+            <select id="fTipo" onchange="renderAcoes()">
+              <option value="">Todos os tipos</option>
+              <option>Impedimento</option>
+              <option>Solicitação de Ajuda</option>
+              <option>Maturidade Ágil</option>
+              <option>Melhoria</option>
+            </select>
+          </div>
+        </div>
+        <div id="acoes-wrap"></div>
+      </div>
+
+      <!-- ═══════════ VIEW: APRESENTAÇÃO ═══════════ -->
+      <div class="view" id="view-slide">
+        <div class="slide-controls">
+          <div class="row">
+            <div class="fg">
+              <label>Vertical</label>
+              <select id="sVert" onchange="onVertChange()"><option value="">Todas</option></select>
+            </div>
+            <div class="fg">
+              <label>Tribo</label>
+              <select id="sTribo" onchange="onTriboChange()"><option value="">Todas</option></select>
+            </div>
+            <div class="fg">
+              <label>Nível</label>
+              <select id="sNivel" onchange="onNivelChange()">
+                <option value="tribo">Tribo (consolidado)</option>
+                <option value="cluster">Cluster</option>
+                <option value="squad">Squad</option>
+              </select>
+            </div>
+            <div class="fg" id="fg-cluster" style="display:none">
+              <label>Cluster</label>
+              <select id="sCluster" onchange="onClusterChange()"></select>
+            </div>
+            <div class="fg" id="fg-squad" style="display:none">
+              <label>Squad</label>
+              <select id="sSquad"></select>
+            </div>
+            <div class="fg">
+              <label>Período (sessão MBR)</label>
+              <select id="sMes" onchange="renderSlide()"></select>
+            </div>
+            <div style="margin-top:auto;display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn-gen" onclick="renderSlide()">⚡ Gerar Apresentação</button>
+              <button class="btn-print" onclick="window.print()">🖨 Imprimir</button>
+            </div>
+          </div>
+        </div>
+        <div id="slide-out"></div>
+      </div>
+
+      <!-- ═══════════ VIEW: GERENCIAR DADOS ═══════════ -->
+      <div class="view" id="view-data">
+        <div class="sec-h">Gerenciar Dados</div>
+        <div class="dm-summary" id="dm-summary">Nenhum dado carregado — importe os arquivos CSV abaixo</div>
+        <div class="dm-grid">
+          <div class="dm-card" style="border-top:3px solid var(--red)">
+            <div class="dm-card-title" id="ds-hier">Hierarquia Org. <span class="dm-status empty">sem dados</span></div>
+            <div class="dm-cols" id="ds-hier-detail" style="margin-bottom:10px">Dados compartilhados pelo módulo <b>Estrutura</b>. Importe os CSVs lá e volte aqui.</div>
+            <div class="dm-upload">
+              <a href="estrutura.html" class="dm-file-btn" style="text-decoration:none">🏛️ Ir para Estrutura</a>
+              <button class="dm-clear-btn" onclick="clearLS('hier');loadFromLS();updateDataStatus()">↺ Recarregar</button>
+            </div>
+          </div>
+          <div class="dm-card">
+            <div class="dm-card-title" id="ds-okrs">Objetivos <span class="dm-status empty">sem dados</span></div>
+            <div class="dm-cols" id="ds-okrs-detail">Dados compartilhados pelo módulo <b>OKRs & KRs</b>. Importe o <code>Objetivo_novo.csv</code> lá e volte aqui.</div>
+            <div class="dm-upload" style="margin-top:10px">
+              <a href="okrs.html" class="dm-file-btn" style="text-decoration:none">🎯 Ir para OKRs</a>
+              <button class="dm-clear-btn" onclick="loadFromLS();rebuildSlideFilters();updateDataStatus()">↺ Recarregar</button>
+            </div>
+          </div>
+          <div class="dm-card">
+            <div class="dm-card-title" id="ds-krs">Key Results <span class="dm-status empty">sem dados</span></div>
+            <div class="dm-cols" id="ds-krs-detail">Dados compartilhados pelo módulo <b>OKRs & KRs</b>. Importe o <code>KRs.csv</code> lá e volte aqui.</div>
+            <div class="dm-upload" style="margin-top:10px">
+              <a href="okrs.html" class="dm-file-btn" style="text-decoration:none">🎯 Ir para OKRs</a>
+              <button class="dm-clear-btn" onclick="loadFromLS();updateDataStatus()">↺ Recarregar</button>
+            </div>
+          </div>
+          <div class="dm-card">
+            <div class="dm-card-title" id="ds-deps">Dependências <span class="dm-status empty">sem dados</span></div>
+            <div class="dm-cols" id="ds-deps-detail">Dados compartilhados pelo módulo <b>Planejamento</b>. Importe o <code>Dependencias.csv</code> lá e volte aqui.</div>
+            <div class="dm-upload" style="margin-top:10px">
+              <a href="planejamento.html" class="dm-file-btn" style="text-decoration:none">🗓️ Ir para Planejamento</a>
+              <button class="dm-clear-btn" onclick="loadFromLS();updateDataStatus()">↺ Recarregar</button>
+            </div>
+          </div>
+          <div class="dm-card">
+            <div class="dm-card-title" id="ds-feat">Features <span class="dm-status empty">sem dados</span></div>
+            <div class="dm-cols" id="ds-feat-detail">Dados compartilhados pelo módulo <b>Planejamento</b> (Program Board).</div>
+            <div class="dm-upload" style="margin-top:10px">
+              <a href="planejamento.html" class="dm-file-btn" style="text-decoration:none">🗓️ Ir para Planejamento</a>
+              <button class="dm-clear-btn" onclick="loadFromLS();updateDataStatus()">↺ Recarregar</button>
+            </div>
+          </div>
+          <div class="dm-card">
+            <div class="dm-card-title" id="ds-stor">Stories <span class="dm-status empty">sem dados</span></div>
+            <div class="dm-cols" id="ds-stor-detail">Dados compartilhados pelo módulo <b>Planejamento</b> (Program Board).</div>
+            <div class="dm-upload" style="margin-top:10px">
+              <a href="planejamento.html" class="dm-file-btn" style="text-decoration:none">🗓️ Ir para Planejamento</a>
+              <button class="dm-clear-btn" onclick="loadFromLS();updateDataStatus()">↺ Recarregar</button>
+            </div>
+          </div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;font-size:12.5px;color:var(--muted);line-height:1.7;box-shadow:var(--shadow)">
+          💡 Todos os dados são compartilhados pelos módulos do portal. Abra cada módulo para importar seus CSVs — o MBR lê automaticamente via <code>localStorage</code>.
+        </div>
+      </div>
+
+      <!-- ═══════════ VIEW: DOCUMENTAÇÃO ═══════════ -->
+      <div class="view" id="view-docs">
+        <div class="sec-h">Documentação</div>
+        <div style="display:flex;flex-direction:column;gap:14px;max-width:760px">
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;box-shadow:var(--shadow)">
+            <div style="font-size:14px;font-weight:900;margin-bottom:10px">📅 O que é o MBR?</div>
+            <p style="font-size:13px;color:var(--muted);line-height:1.7">O <b style="color:var(--txt)">Monthly Business Review</b> é o ritual mensal de acompanhamento dos resultados do trimestre. Conecta a execução das squads aos OKRs definidos no Big Room Planning, evidenciando evoluções, pontos de atenção e gerando ações corretivas.</p>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;box-shadow:var(--shadow)">
+            <div style="font-size:14px;font-weight:900;margin-bottom:10px">📋 Módulos do painel</div>
+            <div style="display:flex;flex-direction:column;gap:8px;font-size:13px">
+              <div><b>Agenda do Ritual</b> — Estrutura formal do MBR: objetivo, inputs, atividades, resultado esperado, participantes, frequência e facilitador.</div>
+              <div><b>Acompanhamento</b> — Cards das sessões realizadas no quarter com progresso de OKRs, participação e resumo de riscos e ações.</div>
+              <div><b>Key Results</b> — Tabela de evolução mensal de cada KR com delta (▲/▼) e indicador de ritmo vs meta.</div>
+              <div><b>Ações</b> — Tabela consolidada de ações geradas nas sessões, filtrável por status e tipo.</div>
+              <div><b>Apresentação</b> — Gerador de slide no formato do template Change, filtrável por Tribo / Cluster / Squad, com análise automática de risco de capacidade e progresso esperado.</div>
+            </div>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;box-shadow:var(--shadow)">
+            <div style="font-size:14px;font-weight:900;margin-bottom:10px">⚖️ Lógica de risco dos KRs</div>
+            <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:10px">O progresso <b style="color:var(--txt)">esperado</b> é calculado proporcionalmente ao mês dentro do quarter (ex: Maio = 67% do Q2). O KR é comparado ao esperado proporcional à sua meta:</p>
+            <div style="display:flex;flex-direction:column;gap:6px;font-size:12.5px">
+              <div><span class="tag green">No ritmo</span> — Realizado ≥ 90% do esperado proporcional</div>
+              <div><span class="tag amber">Atenção</span> — Realizado entre 65% e 90% do esperado</div>
+              <div><span class="tag red">Risco alto</span> — Realizado abaixo de 65% do esperado</div>
+            </div>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;box-shadow:var(--shadow)">
+            <div style="font-size:14px;font-weight:900;margin-bottom:10px">📦 Lógica de capacidade</div>
+            <p style="font-size:13px;color:var(--muted);line-height:1.7">Para cada squad, compara-se <b style="color:var(--txt)">(itens planejados + adicionados no quarter − entregues)</b> com a <b style="color:var(--txt)">capacidade restante</b> (sprints restantes × velocidade média). Itens adicionados ao longo do quarter são sinalizados como potencial impacto nas entregas comprometidas com os OKRs.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DRAWER: Detalhes da Sessão ═══ -->
+<div class="overlay" id="overlay" onclick="closeDrawer(event)">
+  <div class="drawer" id="drawer">
+    <div class="dr-head">
+      <h3 id="drTitle">Sessão MBR</h3>
+      <button class="dr-close" onclick="closeDrawerDirect()">✕</button>
+    </div>
+    <div class="dr-body" id="drBody"></div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════
+   DADOS — substitua ou integre com CSV futuramente
+   ══════════════════════════════════════════════════ */
+var MBR_DATA = {
+  tribos: ["INFRA BASE"],
+  quarters: ["Q1 2026", "Q2 2026"],
+  sessions: [
+    /* ── Q1 2026 ── */
+    {
+      id:"q1-jan", tribo:"INFRA BASE", quarter:"Q1 2026",
+      month:"Janeiro", date:"2026-01-09", status:"realizado",
+      okrAvg:18, attendance:82,
+      krs:[
+        {num:"KR-01", name:"Reduzir incidentes P1/P2 em 40%",         prev:0,  curr:18, target:40},
+        {num:"KR-02", name:"Disponibilidade da rede para 99.95%",       prev:0,  curr:20, target:100},
+        {num:"KR-03", name:"100% das squads com observabilidade ativa", prev:0,  curr:10, target:100},
+        {num:"KR-04", name:"Reduzir MTTR de incidentes em 30%",        prev:0,  curr:22, target:30}
+      ],
+      problems:[
+        {desc:"Ambiente de homologação indisponível impactando testes de segurança", tipo:"Impedimento", crit:"Alta"},
+        {desc:"Documentação de processos desatualizada — squads sem padrão", tipo:"Maturidade Ágil", crit:"Média"}
+      ],
+      actions:[
+        {desc:"Provisionar ambiente de homologação dedicado para testes",          tipo:"Impedimento",       resp:"TTL",                   prazo:"2026-01-30", status:"Concluída"},
+        {desc:"Criar sprint de documentação com POs responsáveis",                 tipo:"Maturidade Ágil",   resp:"Enterprise Agile Coach", prazo:"2026-02-14", status:"Concluída"}
+      ]
+    },
+    {
+      id:"q1-fev", tribo:"INFRA BASE", quarter:"Q1 2026",
+      month:"Fevereiro", date:"2026-02-06", status:"realizado",
+      okrAvg:41, attendance:88,
+      krs:[
+        {num:"KR-01", name:"Reduzir incidentes P1/P2 em 40%",         prev:18, curr:28, target:40},
+        {num:"KR-02", name:"Disponibilidade da rede para 99.95%",       prev:20, curr:55, target:100},
+        {num:"KR-03", name:"100% das squads com observabilidade ativa", prev:10, curr:40, target:100},
+        {num:"KR-04", name:"Reduzir MTTR de incidentes em 30%",        prev:22, curr:42, target:30}
+      ],
+      problems:[
+        {desc:"Squad NETSHIELD com 2 membros em férias simultâneas — risco de capacidade", tipo:"Impedimento", crit:"Média"}
+      ],
+      actions:[
+        {desc:"Planejar férias de forma escalonada para evitar picos de ausência",  tipo:"Melhoria", resp:"SeM NETSHIELD", prazo:"2026-03-01", status:"Concluída"}
+      ]
+    },
+    {
+      id:"q1-mar", tribo:"INFRA BASE", quarter:"Q1 2026",
+      month:"Março", date:"2026-03-06", status:"realizado",
+      okrAvg:74, attendance:91,
+      krs:[
+        {num:"KR-01", name:"Reduzir incidentes P1/P2 em 40%",         prev:28, curr:38, target:40},
+        {num:"KR-02", name:"Disponibilidade da rede para 99.95%",       prev:55, curr:82, target:100},
+        {num:"KR-03", name:"100% das squads com observabilidade ativa", prev:40, curr:75, target:100},
+        {num:"KR-04", name:"Reduzir MTTR de incidentes em 30%",        prev:42, curr:100, target:30}
+      ],
+      problems:[
+        {desc:"KR-02 e KR-03 abaixo da meta — risco para fechamento do quarter", tipo:"Impedimento", crit:"Alta"}
+      ],
+      actions:[
+        {desc:"Sprint de fechamento focado nos KRs em risco — realocar capacidade",  tipo:"Impedimento", resp:"CPO INFRA BASE", prazo:"2026-03-31", status:"Concluída"}
+      ]
+    },
+    /* ── Q2 2026 ── */
+    {
+      id:"q2-abr", tribo:"INFRA BASE", quarter:"Q2 2026",
+      month:"Abril", date:"2026-04-10", status:"realizado",
+      okrAvg:32, attendance:87,
+      krs:[
+        {num:"KR-01", name:"Reduzir incidentes críticos (P1) em 50%",              prev:0,  curr:20, target:50},
+        {num:"KR-02", name:"Aumentar disponibilidade da rede para 99.98%",          prev:0,  curr:45, target:100},
+        {num:"KR-03", name:"100% das squads com pipeline CI/CD automatizado",       prev:0,  curr:25, target:100},
+        {num:"KR-04", name:"Reduzir MTTR médio para menos de 2h",                  prev:0,  curr:18, target:100},
+        {num:"KR-05", name:"Zero squads sem OKRs atualizados há mais de 2 semanas", prev:0,  curr:60, target:100}
+      ],
+      problems:[
+        {desc:"Falta de ambiente para testes de carga antes da janela de manutenção", tipo:"Impedimento",     crit:"Alta"},
+        {desc:"Squad STORAGE com capacidade reduzida — membro em licença médica",      tipo:"Impedimento",     crit:"Média"},
+        {desc:"Processo de CAB (Change Advisory Board) gerando atrasos nas entregas",  tipo:"Melhoria",        crit:"Média"}
+      ],
+      actions:[
+        {desc:"Provisionar ambiente de testes de carga com apoio de Infraestrutura",  tipo:"Impedimento",     resp:"TTL",                    prazo:"2026-04-30", status:"Concluída"},
+        {desc:"Acionar RH para realocação temporária de recurso para squad STORAGE",   tipo:"Impedimento",     resp:"CPO",                    prazo:"2026-04-25", status:"Concluída"},
+        {desc:"Mapear gargalos no processo de CAB e propor simplificação ao Comitê",  tipo:"Melhoria",        resp:"SeM NETWORK",            prazo:"2026-05-15", status:"Em Andamento"}
+      ]
+    },
+    {
+      id:"q2-mai", tribo:"INFRA BASE", quarter:"Q2 2026",
+      month:"Maio", date:"2026-05-08", status:"realizado",
+      okrAvg:54, attendance:91,
+      krs:[
+        {num:"KR-01", name:"Reduzir incidentes críticos (P1) em 50%",              prev:20, curr:35, target:50},
+        {num:"KR-02", name:"Aumentar disponibilidade da rede para 99.98%",          prev:45, curr:68, target:100},
+        {num:"KR-03", name:"100% das squads com pipeline CI/CD automatizado",       prev:25, curr:50, target:100},
+        {num:"KR-04", name:"Reduzir MTTR médio para menos de 2h",                  prev:18, curr:62, target:100},
+        {num:"KR-05", name:"Zero squads sem OKRs atualizados há mais de 2 semanas", prev:60, curr:80, target:100}
+      ],
+      problems:[
+        {desc:"Integração com plataforma de monitoramento legada gerando ruído nos alertas",  tipo:"Impedimento",   crit:"Alta"},
+        {desc:"Dois OKRs de squad sem atualização há 3 semanas — KR-05 em risco",            tipo:"Maturidade Ágil", crit:"Média"}
+      ],
+      actions:[
+        {desc:"Revisar regras de alerta na plataforma legada e criar filtros de supressão",  tipo:"Impedimento",     resp:"NetObserv",              prazo:"2026-05-30", status:"Em Andamento"},
+        {desc:"Workshop de atualização de OKRs com POs das squads em atraso",               tipo:"Maturidade Ágil", resp:"Enterprise Agile Coach",  prazo:"2026-05-22", status:"Concluída"},
+        {desc:"Mapear gargalos no processo de CAB e propor simplificação ao Comitê",        tipo:"Melhoria",        resp:"SeM NETWORK",             prazo:"2026-05-15", status:"Em Andamento"}
+      ]
+    },
+    {
+      id:"q2-jun", tribo:"INFRA BASE", quarter:"Q2 2026",
+      month:"Junho", date:"2026-06-12", status:"pendente",
+      okrAvg:null, attendance:null,
+      krs:[
+        {num:"KR-01", name:"Reduzir incidentes críticos (P1) em 50%",              prev:35,  curr:null, target:50},
+        {num:"KR-02", name:"Aumentar disponibilidade da rede para 99.98%",          prev:68,  curr:null, target:100},
+        {num:"KR-03", name:"100% das squads com pipeline CI/CD automatizado",       prev:50,  curr:null, target:100},
+        {num:"KR-04", name:"Reduzir MTTR médio para menos de 2h",                  prev:62,  curr:null, target:100},
+        {num:"KR-05", name:"Zero squads sem OKRs atualizados há mais de 2 semanas", prev:80,  curr:null, target:100}
+      ],
+      problems:[], actions:[]
+    }
+  ]
+};
+
+/* ─── estado global ─── */
+var MBR = { tribo: MBR_DATA.tribos[0], quarter: "Q2 2026" };
+
+function g(id){ return document.getElementById(id); }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+/* ─── filtros globais (topbar) ─── */
+function buildGlobalFilters(){
+  g('gTribo').innerHTML  = MBR_DATA.tribos.map(function(t){return '<option'+(t===MBR.tribo?' selected':'')+'>'+esc(t)+'</option>';}).join('');
+  g('gQuarter').innerHTML = MBR_DATA.quarters.map(function(q){return '<option'+(q===MBR.quarter?' selected':'')+'>'+esc(q)+'</option>';}).join('');
+}
+
+function filteredSessions(){
+  return MBR_DATA.sessions.filter(function(s){ return s.tribo===MBR.tribo && s.quarter===MBR.quarter; });
+}
+
+/* ─── helpers visuais ─── */
+function pctColor(p){
+  if(p===null||p===undefined) return 'var(--muted)';
+  if(p>=70) return 'var(--green)';
+  if(p>=40) return 'var(--amber)';
+  return 'var(--red)';
+}
+function pctTag(p){
+  if(p===null||p===undefined) return 'gray';
+  if(p>=70) return 'green';
+  if(p>=40) return 'amber';
+  return 'red';
+}
+
+/* ════════════════════════ ACOMPANHAMENTO ════════════════════════ */
+function renderAcomp(){
+  var ss = filteredSessions();
+  var done = ss.filter(function(s){ return s.status==='realizado'; });
+  var avgOkr = done.length ? Math.round(done.reduce(function(a,s){ return a+s.okrAvg; },0)/done.length) : 0;
+  var allAc = ss.reduce(function(a,s){ return a.concat(s.actions); },[]);
+  var openAc = allAc.filter(function(a){ return a.status==='Aberta'||a.status==='Em Andamento'; }).length;
+  var avgAtt = done.length ? Math.round(done.reduce(function(a,s){ return a+s.attendance; },0)/done.length) : 0;
+
+  g('mbr-kpis').innerHTML = [
+    ['📅', done.length+'/'+ss.length,  'Sessões Realizadas'],
+    ['📊', avgOkr+'%',                 'Média OKRs no Quarter'],
+    ['✅', openAc+'/'+allAc.length,    'Ações em Aberto'],
+    ['👥', avgAtt ? avgAtt+'%' : '—',  'Participação Média']
+  ].map(function(k){
+    return '<div class="kpi"><div class="v">'+k[1]+'</div><div class="l">'+k[0]+' '+k[2]+'</div></div>';
+  }).join('');
+
+  g('acomp-h').textContent = MBR.tribo+' · '+MBR.quarter+' — Sessões Mensais';
+
+  if(!ss.length){ g('sessions-grid').innerHTML='<div class="empty">Nenhuma sessão registrada.</div>'; return; }
+
+  g('sessions-grid').innerHTML = ss.map(function(s){
+    if(s.status==='pendente'){
+      return '<div class="session-card pending">'+
+        '<div class="sc-head"><div><div class="sc-month">'+esc(s.month)+'</div><div class="sc-date">'+esc(s.date)+' · Previsto</div></div>'+
+        '<span class="tag gray">Pendente</span></div>'+
+        '<div class="sess-pending"><div class="big">🗓️</div>'+
+        '<div style="font-size:13px;font-weight:600">Sessão ainda não realizada</div>'+
+        '<div style="font-size:11px;margin-top:4px">Prevista para '+esc(s.date)+'</div></div></div>';
+    }
+    var col = pctColor(s.okrAvg);
+    var openS = s.actions.filter(function(a){ return a.status==='Aberta'||a.status==='Em Andamento'; }).length;
+    var risks = s.problems.filter(function(p){ return p.crit==='Alta'; }).length;
+    return '<div class="session-card" onclick="openDrawer(\''+esc(s.id)+'\')">'+
+      '<div class="sc-head">'+
+        '<div><div class="sc-month">'+esc(s.month)+'</div><div class="sc-date">'+esc(s.date)+'</div></div>'+
+        '<span class="tag '+pctTag(s.okrAvg)+'">'+s.okrAvg+'% OKRs</span>'+
+      '</div>'+
+      '<div class="sc-body">'+
+        '<div class="prog-row"><span class="prog-lbl">Progresso OKR</span>'+
+          '<div class="prog-bar"><div class="prog-fill" style="width:'+s.okrAvg+'%;background:'+col+'"></div></div>'+
+          '<span class="prog-pct" style="color:'+col+'">'+s.okrAvg+'%</span></div>'+
+        '<div class="prog-row"><span class="prog-lbl">Participação</span>'+
+          '<div class="prog-bar"><div class="prog-fill" style="width:'+s.attendance+'%;background:var(--blue)"></div></div>'+
+          '<span class="prog-pct" style="color:var(--blue)">'+s.attendance+'%</span></div>'+
+        '<div class="sc-stats">'+
+          '<span class="sc-stat">🔑 <b>'+s.krs.length+'</b> KRs</span>'+
+          '<span class="sc-stat">⚠️ <b>'+s.problems.length+'</b> pontos</span>'+
+          '<span class="sc-stat">✅ <b>'+s.actions.length+'</b> ações</span>'+
+        '</div>'+
+      '</div>'+
+      '<div class="sc-foot">'+
+        (risks  ? '<span class="chip risk">'+risks+' risco(s) crítico(s)</span>' : '')+
+        (openS  ? '<span class="chip open">'+openS+' ação(ões) abertas</span>'  : '')+
+        (!risks && !openS ? '<span class="chip done">✓ Sem pendências</span>'   : '')+
+        '<span class="chip nav">Ver detalhes →</span>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+/* ════════════════════════ KEY RESULTS ════════════════════════ */
+function renderKrs(){
+  var ss = filteredSessions().filter(function(s){ return s.status==='realizado'; });
+  g('krs-h').textContent = MBR.tribo+' · '+MBR.quarter+' — Evolução Mensal dos Key Results';
+  if(!ss.length){ g('krs-wrap').innerHTML='<div class="empty">Nenhuma sessão realizada neste quarter.</div>'; return; }
+
+  var months = ss.map(function(s){ return s.month; });
+  var krDefs = ss[0].krs.map(function(k){ return {num:k.num, name:k.name, target:k.target}; });
+
+  var html = '<table class="kr-table"><thead><tr>'+
+    '<th style="min-width:260px">Key Result</th>';
+  months.forEach(function(m){ html += '<th style="text-align:center;min-width:80px">'+esc(m)+'</th>'; });
+  html += '<th style="text-align:center">Meta</th><th style="text-align:center">Status</th></tr></thead><tbody>';
+
+  krDefs.forEach(function(kr){
+    html += '<tr>';
+    html += '<td><div style="font-size:11px;font-weight:700;color:var(--red)">'+esc(kr.num)+'</div>'+
+            '<div style="font-size:12.5px;color:var(--muted);margin-top:2px;line-height:1.4">'+esc(kr.name)+'</div></td>';
+
+    var lastPct = 0;
+    ss.forEach(function(s){
+      var k = s.krs.find(function(x){ return x.num===kr.num; });
+      var pct = k ? k.curr : null;
+      var prev = k ? k.prev : lastPct;
+      var delta = pct !== null ? pct - prev : null;
+      var col = pctColor(pct);
+      var dc = delta===null?'':delta>0?'up':delta<0?'dn':'eq';
+      var da = delta===null?'':delta>0?'▲+'+delta+'%':delta<0?'▼'+delta+'%':'—';
+      if(pct!==null) lastPct = pct;
+      html += '<td class="pct-cell" style="color:'+col+'">'+
+        (pct!==null ? pct+'%' : '<span style="color:var(--muted)">—</span>')+
+        (da ? '<span class="delta '+dc+'">'+da+'</span>' : '')+
+        '<div class="mini-bar"><div class="mini-fill" style="width:'+Math.min(pct||0,100)+'%;background:'+col+'"></div></div>'+
+      '</td>';
+    });
+
+    var lastSession = ss[ss.length-1];
+    var lastKr = lastSession.krs.find(function(x){ return x.num===kr.num; });
+    var lastVal = lastKr ? (lastKr.curr||0) : 0;
+    var onTrack = lastVal >= kr.target * 0.65;
+    html += '<td class="pct-cell" style="color:var(--muted)">'+esc(kr.target)+'%</td>';
+    html += '<td><span class="tag '+(onTrack?'green':'amber')+'">'+(onTrack?'✓ No ritmo':'⚠ Atenção')+'</span></td>';
+    html += '</tr>';
+  });
+
+  html += '</tbody></table>';
+  g('krs-wrap').innerHTML = html;
+}
+
+/* ════════════════════════ AÇÕES ════════════════════════ */
+function allAcoes(){
+  return filteredSessions().reduce(function(acc, s){
+    return acc.concat(s.actions.map(function(a){
+      return Object.assign({}, a, {sessionMonth:s.month, sessionDate:s.date});
+    }));
+  }, []);
+}
+
+function renderAcoes(){
+  var acs = allAcoes();
+  var stFil = g('fStatus').value;
+  var tpFil = g('fTipo').value;
+  if(stFil) acs = acs.filter(function(a){ return a.status===stFil; });
+  if(tpFil) acs = acs.filter(function(a){ return a.tipo===tpFil; });
+
+  var open = acs.filter(function(a){ return a.status==='Aberta'||a.status==='Em Andamento'; }).length;
+  var done = acs.filter(function(a){ return a.status==='Concluída'; }).length;
+  var imped= acs.filter(function(a){ return a.tipo==='Impedimento'; }).length;
+
+  g('acoes-kpis').innerHTML = [
+    ['✅', acs.length,  'Total de Ações'],
+    ['🔄', open,        'Em Aberto / Andamento'],
+    ['✔',  done,        'Concluídas'],
+    ['⚠',  imped,       'Impedimentos']
+  ].map(function(k){
+    return '<div class="kpi"><div class="v">'+k[1]+'</div><div class="l">'+k[0]+' '+k[2]+'</div></div>';
+  }).join('');
+
+  if(!acs.length){ g('acoes-wrap').innerHTML='<div class="empty">Nenhuma ação para os filtros selecionados.</div>'; return; }
+
+  var stCls = {
+    'Aberta':'b-aberta','Em Andamento':'b-andamento',
+    'Concluída':'b-concluida','Cancelada':'b-cancelada'
+  };
+
+  var html = '<table class="ac-table"><thead><tr>'+
+    '<th>Ação</th><th>Tipo</th><th>Responsável</th><th>MBR de Origem</th><th>Prazo</th><th>Status</th>'+
+    '</tr></thead><tbody>';
+
+  acs.forEach(function(a){
+    html += '<tr>'+
+      '<td style="max-width:300px">'+esc(a.desc)+'</td>'+
+      '<td><span class="tag gray">'+esc(a.tipo)+'</span></td>'+
+      '<td style="font-size:12px;font-weight:700;min-width:110px">'+esc(a.resp)+'</td>'+
+      '<td><span class="tag blue">'+esc(a.sessionMonth)+'</span></td>'+
+      '<td style="font-size:12px;white-space:nowrap">'+esc(a.prazo)+'</td>'+
+      '<td><span class="badge '+(stCls[a.status]||'')+'">'+esc(a.status)+'</span></td>'+
+    '</tr>';
+  });
+
+  html += '</tbody></table>';
+  g('acoes-wrap').innerHTML = html;
+}
+
+/* ════════════════════════ DRAWER ════════════════════════ */
+function openDrawer(id){
+  var s = MBR_DATA.sessions.find(function(x){ return x.id===id; });
+  if(!s) return;
+
+  g('drTitle').textContent = 'MBR '+s.month+' · '+s.quarter;
+
+  var col = pctColor(s.okrAvg);
+  var stCls = {'Aberta':'b-aberta','Em Andamento':'b-andamento','Concluída':'b-concluida','Cancelada':'b-cancelada'};
+  var html = '';
+
+  /* KPIs da sessão */
+  html += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px">';
+  html += '<div class="kpi"><div class="v" style="color:'+col+'">'+s.okrAvg+'%</div><div class="l">Progresso OKRs</div></div>';
+  html += '<div class="kpi"><div class="v" style="color:var(--blue)">'+s.attendance+'%</div><div class="l">Participação</div></div>';
+  html += '<div class="kpi"><div class="v">'+s.actions.length+'</div><div class="l">Ações geradas</div></div>';
+  html += '</div>';
+
+  /* KRs */
+  html += '<div class="dr-sec"><div class="dr-sec-h">Key Results · Evolução do Mês</div>';
+  s.krs.forEach(function(kr){
+    var delta = kr.curr - kr.prev;
+    var dc = delta>0?'up':delta<0?'dn':'eq';
+    var da = delta>0?'▲ +'+delta+'%':delta<0?'▼ '+delta+'%':'= igual';
+    var c = pctColor(kr.curr);
+    html += '<div class="kr-row">'+
+      '<div class="kr-row-name">'+
+        '<div style="font-size:10px;font-weight:700;color:var(--red)">'+esc(kr.num)+'</div>'+
+        esc(kr.name)+
+      '</div>'+
+      '<div class="kr-row-pcts">'+
+        '<div class="pct-big" style="color:'+c+'">'+kr.curr+'%</div>'+
+        '<div class="delta '+dc+'">'+da+'</div>'+
+      '</div>'+
+      '<div class="kr-row-bar">'+
+        '<div class="mini-bar" style="height:6px"><div class="mini-fill" style="height:6px;width:'+Math.min(kr.curr,100)+'%;background:'+c+'"></div></div>'+
+      '</div>'+
+    '</div>';
+  });
+  html += '</div>';
+
+  /* Problemas */
+  if(s.problems.length){
+    html += '<div class="dr-sec"><div class="dr-sec-h">Pontos de Atenção & Riscos ('+s.problems.length+')</div>';
+    s.problems.forEach(function(p){
+      var cc = p.crit==='Alta'?'red':p.crit==='Média'?'amber':'gray';
+      html += '<div class="prob-row">'+
+        '<span class="tag '+cc+'">'+esc(p.crit)+'</span>'+
+        '<span class="tag gray">'+esc(p.tipo)+'</span>'+
+        '<span style="flex:1;font-size:12.5px">'+esc(p.desc)+'</span>'+
+      '</div>';
+    });
+    html += '</div>';
+  }
+
+  /* Ações */
+  if(s.actions.length){
+    html += '<div class="dr-sec"><div class="dr-sec-h">Ações Geradas ('+s.actions.length+')</div>';
+    s.actions.forEach(function(a){
+      html += '<div class="ac-row">'+
+        '<div class="ac-row-desc">'+esc(a.desc)+'</div>'+
+        '<div class="ac-row-meta">'+
+          '<span>👤 <b>'+esc(a.resp)+'</b></span>'+
+          '<span>📅 '+esc(a.prazo)+'</span>'+
+          '<span><span class="tag gray">'+esc(a.tipo)+'</span></span>'+
+          '<span><span class="badge '+(stCls[a.status]||'')+'">'+esc(a.status)+'</span></span>'+
+        '</div>'+
+      '</div>';
+    });
+    html += '</div>';
+  }
+
+  g('drBody').innerHTML = html;
+  g('overlay').classList.add('open');
+}
+function closeDrawer(e){ if(e.target===g('overlay')) closeDrawerDirect(); }
+function closeDrawerDirect(){ g('overlay').classList.remove('open'); }
+
+/* ════════════════════════ NAVEGAÇÃO ════════════════════════ */
+function switchView(v, btn){
+  document.querySelectorAll('.view').forEach(function(el){ el.classList.remove('active'); });
+  var el = g('view-'+v); if(el) el.classList.add('active');
+  document.querySelectorAll('.nb').forEach(function(b){ b.classList.remove('act'); });
+  if(btn) btn.classList.add('act');
+}
+
+function renderAll(){
+  buildMesOptions();
+  renderAcomp();
+  renderKrs();
+  renderAcoes();
+}
+
+/* ─── Tema ─── */
+function toggleTheme(){
+  var dark = document.documentElement.getAttribute('data-theme')==='dark';
+  document.documentElement.setAttribute('data-theme', dark?'light':'dark');
+  g('themeTxt').textContent = dark?'Tema Escuro':'Tema Claro';
+}
+
+/* ─── Sidebar ─── */
+function toggleNG(btn){btn.classList.toggle('open');var bd=btn.nextElementSibling;if(bd)bd.classList.toggle('open');}
+function toggleSidebar(){
+  var sb = g('sidebar'); sb.classList.toggle('col');
+  var ic = document.querySelector('#stoggleBtn .stoggle-ic');
+  if(ic) ic.textContent = sb.classList.contains('col')?'»':'«';
+}
+
+/* ══════════════════════════════════════════════════════════
+   DADOS DE SQUADS / CLUSTERS / OKRs POR SQUAD
+   ══════════════════════════════════════════════════════════ */
+var MBR_SQUADS = {
+  "INFRA BASE": {
+    clusterOrder:["NETWORK","NETSHIELD","VIRTUALIZACAO E BARE METAL","NETWORK ACCESS & TRANSPORT","ARMAZENAMENTO E PROTEÇÃO DE DADOS"],
+    clusters:{
+      "NETWORK":[
+        {key:"CloudNetX",  name:"Cloud Network X"},
+        {key:"NetObserv",  name:"Network Observability"},
+        {key:"NetModern",  name:"Network Modernization"},
+        {key:"NetIncEve",  name:"Network Inc Evening"},
+        {key:"RouteSwch",  name:"Routing & Switching"},
+        {key:"LoadBalnc",  name:"Load Balancing"},
+        {key:"NetChgEve",  name:"Network Changes Evening"},
+        {key:"ConnIncNgt", name:"Connectivity Inc Night"},
+        {key:"IPManageX",  name:"IP Management X"},
+        {key:"NetChgNgt",  name:"Network Changes Night"},
+        {key:"NetMajDay",  name:"Network Major Day"},
+        {key:"NetMinDay",  name:"Network Minor Day"}
+      ],
+      "NETSHIELD":[
+        {key:"CDNWAFCore",name:"CDN / WAF Core"},
+        {key:"FWIPSProxy", name:"Firewall IPS Proxy"},
+        {key:"SecOpsEve",  name:"SecOps Evening"},
+        {key:"SecIncDay",  name:"Security Incidents Day"},
+        {key:"ExtVPNTeam", name:"External VPN"}
+      ],
+      "VIRTUALIZACAO E BARE METAL":[
+        {key:"PLAINVM",  name:"Plain VM"},
+        {key:"BAREMETAL",name:"Bare Metal"},
+        {key:"IndVirt",  name:"Industrial Virtualization"},
+        {key:"MIGRAAVS", name:"Migration AVS"}
+      ],
+      "NETWORK ACCESS & TRANSPORT":[
+        {key:"AccIncDay",name:"Access Inc Day"},
+        {key:"WANAccess", name:"WAN Access"},
+        {key:"TEMAccess", name:"TEM Access"},
+        {key:"LinkAcces", name:"Link Access"}
+      ],
+      "ARMAZENAMENTO E PROTEÇÃO DE DADOS":[
+        {key:"STORAGE",name:"Storage"},
+        {key:"BACKUP", name:"Backup"}
+      ]
+    }
+  }
+};
+
+/* OKRs por squad para Q2 2026 */
+var MBR_SQUAD_OKRS = { "INFRA BASE": { "Q2 2026": {
+  "CloudNetX":{objetivo:"Modernizar a malha de rede SDN para suporte a workloads de nuvem",
+    krs:[{num:"KR-01",name:"Migrar 80% dos switches core para SDN",curr:45,target:80},
+         {num:"KR-02",name:"Reduzir latência média da malha em 25%",curr:52,target:25},
+         {num:"KR-03",name:"Documentar 100% das rotas críticas",curr:70,target:100}],
+    capacity:{planned:42,delivered:27,added:6,velocity:9,sprintsDone:4,totalSprints:6}},
+  "NetObserv":{objetivo:"Elevar observabilidade da infraestrutura de rede a 100%",
+    krs:[{num:"KR-01",name:"100% dos ativos com monitoramento ativo",curr:60,target:100},
+         {num:"KR-02",name:"Reduzir alarmes falsos positivos em 40%",curr:35,target:40},
+         {num:"KR-03",name:"Dashboard unificado de observabilidade em produção",curr:80,target:100}],
+    capacity:{planned:38,delivered:24,added:4,velocity:8,sprintsDone:4,totalSprints:6}},
+  "NetModern":{objetivo:"Modernizar equipamentos de rede fim-de-vida do datacenter",
+    krs:[{num:"KR-01",name:"Substituir 100% dos switches EOL do DC principal",curr:40,target:100},
+         {num:"KR-02",name:"Reduzir consumo de energia da rede em 15%",curr:28,target:15},
+         {num:"KR-03",name:"Zero incidentes causados por hardware EOL",curr:75,target:100}],
+    capacity:{planned:36,delivered:20,added:5,velocity:8,sprintsDone:4,totalSprints:6}},
+  "NetIncEve":{objetivo:"Garantir resolução ágil de incidentes de rede no turno noturno",
+    krs:[{num:"KR-01",name:"Reduzir MTTR de incidentes noturnos em 40%",curr:55,target:40},
+         {num:"KR-02",name:"100% dos runbooks atualizados e validados",curr:65,target:100},
+         {num:"KR-03",name:"Reduzir acionamentos indevidos em 30%",curr:42,target:30}],
+    capacity:{planned:32,delivered:22,added:2,velocity:7,sprintsDone:4,totalSprints:6}},
+  "RouteSwch":{objetivo:"Otimizar topologia de roteamento para alta disponibilidade",
+    krs:[{num:"KR-01",name:"Convergência de rota < 50ms em 100% do core",curr:48,target:100},
+         {num:"KR-02",name:"Implementar RPKI em 100% dos BGP peers",curr:60,target:100},
+         {num:"KR-03",name:"Reduzir rotas estáticas legadas em 70%",curr:38,target:70}],
+    capacity:{planned:40,delivered:25,added:4,velocity:9,sprintsDone:4,totalSprints:6}},
+  "LoadBalnc":{objetivo:"Garantir balanceamento inteligente e resiliente das cargas",
+    krs:[{num:"KR-01",name:"100% dos serviços críticos com LB ativo",curr:82,target:100},
+         {num:"KR-02",name:"Reduzir latência de health check em 30%",curr:55,target:30},
+         {num:"KR-03",name:"Auto-scaling em 5 serviços críticos",curr:40,target:100}],
+    capacity:{planned:30,delivered:20,added:3,velocity:7,sprintsDone:4,totalSprints:6}},
+  "NetChgEve":{objetivo:"Executar mudanças de rede noturnas com segurança e rastreabilidade",
+    krs:[{num:"KR-01",name:"Reduzir falhas em mudanças de rede em 50%",curr:45,target:50},
+         {num:"KR-02",name:"100% das mudanças com rollback documentado",curr:72,target:100},
+         {num:"KR-03",name:"Reduzir tempo médio de execução em 20%",curr:38,target:20}],
+    capacity:{planned:28,delivered:17,added:2,velocity:6,sprintsDone:4,totalSprints:6}},
+  "ConnIncNgt":{objetivo:"Garantir continuidade na resolução de incidentes noturnos",
+    krs:[{num:"KR-01",name:"MTTR noturno de conectividade < 30min",curr:50,target:100},
+         {num:"KR-02",name:"Reduzir escalonamentos desnecessários em 40%",curr:35,target:40},
+         {num:"KR-03",name:"100% dos incidentes com registro completo",curr:78,target:100}],
+    capacity:{planned:26,delivered:16,added:3,velocity:6,sprintsDone:4,totalSprints:6}},
+  "IPManageX":{objetivo:"Modernizar e automatizar o gerenciamento do espaço de endereçamento IP",
+    krs:[{num:"KR-01",name:"100% dos IPs gerenciados via IPAM automatizado",curr:55,target:100},
+         {num:"KR-02",name:"Reduzir conflitos de endereçamento a zero",curr:68,target:100},
+         {num:"KR-03",name:"Inventário IP 100% atualizado e auditado",curr:62,target:100}],
+    capacity:{planned:30,delivered:19,added:4,velocity:7,sprintsDone:4,totalSprints:6}},
+  "NetChgNgt":{objetivo:"Executar janelas de mudança noturna com mínimo impacto",
+    krs:[{num:"KR-01",name:"Reduzir incidentes causados por mudança em 60%",curr:42,target:60},
+         {num:"KR-02",name:"100% das mudanças com janela < 2h",curr:68,target:100},
+         {num:"KR-03",name:"Automatizar 50% dos scripts de mudança",curr:30,target:50}],
+    capacity:{planned:26,delivered:16,added:2,velocity:6,sprintsDone:4,totalSprints:6}},
+  "NetMajDay":{objetivo:"Tratar mudanças de grande porte com planejamento e controle rigoroso",
+    krs:[{num:"KR-01",name:"Zero rollbacks não planejados em mudanças major",curr:75,target:100},
+         {num:"KR-02",name:"Reduzir lead time de aprovação em 30%",curr:40,target:30},
+         {num:"KR-03",name:"100% das mudanças com simulação prévia",curr:55,target:100}],
+    capacity:{planned:24,delivered:15,added:2,velocity:5,sprintsDone:4,totalSprints:6}},
+  "NetMinDay":{objetivo:"Executar mudanças menores de rede com agilidade e rastreabilidade",
+    krs:[{num:"KR-01",name:"Reduzir SLA de mudanças menores para < 4h",curr:58,target:100},
+         {num:"KR-02",name:"Automação de 60% das mudanças de baixo risco",curr:35,target:60},
+         {num:"KR-03",name:"100% das mudanças registradas no ITSM",curr:82,target:100}],
+    capacity:{planned:28,delivered:18,added:3,velocity:6,sprintsDone:4,totalSprints:6}},
+  "CDNWAFCore":{objetivo:"Maximizar proteção e performance da borda de aplicações críticas",
+    krs:[{num:"KR-01",name:"Bloquear 99.9% dos ataques DDoS detectados",curr:72,target:100},
+         {num:"KR-02",name:"Reduzir latência de borda em 20%",curr:45,target:20},
+         {num:"KR-03",name:"100% das aplicações críticas com WAF ativo",curr:88,target:100}],
+    capacity:{planned:38,delivered:25,added:3,velocity:8,sprintsDone:4,totalSprints:6}},
+  "FWIPSProxy":{objetivo:"Fortalecer postura de segurança e reduzir superfície de ataque",
+    krs:[{num:"KR-01",name:"Micro-segmentação em 100% das zonas críticas",curr:55,target:100},
+         {num:"KR-02",name:"Reduzir vulnerabilidades críticas em 70%",curr:62,target:70},
+         {num:"KR-03",name:"100% dos firewalls com política padronizada",curr:78,target:100}],
+    capacity:{planned:40,delivered:26,added:3,velocity:9,sprintsDone:4,totalSprints:6}},
+  "SecOpsEve":{objetivo:"Detectar e responder a ameaças no turno noturno com eficiência",
+    krs:[{num:"KR-01",name:"Reduzir MTTD em 50%",curr:38,target:50},
+         {num:"KR-02",name:"100% dos alertas P1 respondidos em < 15min",curr:65,target:100},
+         {num:"KR-03",name:"Implantar SOAR para automação de triagem",curr:30,target:100}],
+    capacity:{planned:35,delivered:20,added:6,velocity:7,sprintsDone:4,totalSprints:6}},
+  "SecIncDay":{objetivo:"Responder a incidentes de segurança com velocidade e rastreabilidade",
+    krs:[{num:"KR-01",name:"100% dos incidentes P1/P2 com post-mortem",curr:80,target:100},
+         {num:"KR-02",name:"Reduzir falsos positivos de SIEM em 40%",curr:42,target:40},
+         {num:"KR-03",name:"Zero SLAs de resposta descumpridos no quarter",curr:70,target:100}],
+    capacity:{planned:32,delivered:22,added:2,velocity:8,sprintsDone:4,totalSprints:6}},
+  "ExtVPNTeam":{objetivo:"Garantir conectividade VPN segura e escalável para acessos externos",
+    krs:[{num:"KR-01",name:"Disponibilidade VPN ≥ 99.9%",curr:82,target:100},
+         {num:"KR-02",name:"Migrar 100% dos clientes legados para MFA",curr:48,target:100},
+         {num:"KR-03",name:"Reduzir tickets de conectividade VPN em 30%",curr:35,target:30}],
+    capacity:{planned:30,delivered:18,added:4,velocity:7,sprintsDone:4,totalSprints:6}},
+  "PLAINVM":{objetivo:"Otimizar a plataforma de virtualização para máxima eficiência",
+    krs:[{num:"KR-01",name:"Reduzir TCO de VMs em 20%",curr:30,target:20},
+         {num:"KR-02",name:"Automatizar 80% do provisionamento de VMs",curr:48,target:80},
+         {num:"KR-03",name:"Zero VMs órfãs ao fim do quarter",curr:55,target:100}],
+    capacity:{planned:45,delivered:28,added:7,velocity:10,sprintsDone:4,totalSprints:6}},
+  "BAREMETAL":{objetivo:"Garantir performance e disponibilidade do parque de servidores físicos",
+    krs:[{num:"KR-01",name:"Substituir 100% dos servidores EOL críticos",curr:42,target:100},
+         {num:"KR-02",name:"Disponibilidade do parque BM ≥ 99.95%",curr:68,target:100},
+         {num:"KR-03",name:"Reduzir MTTR de falha HW em 30%",curr:50,target:30}],
+    capacity:{planned:40,delivered:24,added:5,velocity:9,sprintsDone:4,totalSprints:6}},
+  "IndVirt":{objetivo:"Virtualizar ambientes industriais críticos com segurança e isolamento",
+    krs:[{num:"KR-01",name:"Virtualizar 60% dos servidores industriais",curr:35,target:60},
+         {num:"KR-02",name:"Zero incidentes de segurança em OT/IT",curr:80,target:100},
+         {num:"KR-03",name:"Implementar isolamento de rede OT em 100%",curr:45,target:100}],
+    capacity:{planned:38,delivered:22,added:6,velocity:8,sprintsDone:4,totalSprints:6}},
+  "MIGRAAVS":{objetivo:"Executar migração para Azure VMware Solution dentro do prazo",
+    krs:[{num:"KR-01",name:"Migrar 40% das VMs para AVS no Q2",curr:28,target:40},
+         {num:"KR-02",name:"Zero downtime em migrações críticas",curr:90,target:100},
+         {num:"KR-03",name:"Reduzir custo de infraestrutura em 25%",curr:15,target:25}],
+    capacity:{planned:50,delivered:28,added:9,velocity:10,sprintsDone:4,totalSprints:6}},
+  "AccIncDay":{objetivo:"Assegurar resolução rápida de incidentes de acesso à rede",
+    krs:[{num:"KR-01",name:"MTTR de incidentes de acesso < 2h",curr:60,target:100},
+         {num:"KR-02",name:"Reduzir reincidência de problemas em 40%",curr:35,target:40},
+         {num:"KR-03",name:"100% dos runbooks de acesso atualizados",curr:70,target:100}],
+    capacity:{planned:30,delivered:19,added:3,velocity:7,sprintsDone:4,totalSprints:6}},
+  "WANAccess":{objetivo:"Garantir conectividade WAN estável e otimizada para todas as unidades",
+    krs:[{num:"KR-01",name:"Disponibilidade WAN ≥ 99.98%",curr:75,target:100},
+         {num:"KR-02",name:"Migrar 80% dos links legados para SD-WAN",curr:42,target:80},
+         {num:"KR-03",name:"Reduzir custo de links WAN em 15%",curr:30,target:15}],
+    capacity:{planned:36,delivered:22,added:4,velocity:8,sprintsDone:4,totalSprints:6}},
+  "TEMAccess":{objetivo:"Otimizar gestão e automação de acesso tecnológico para usuários",
+    krs:[{num:"KR-01",name:"Automatizar 70% das solicitações de acesso",curr:40,target:70},
+         {num:"KR-02",name:"Reduzir SLA de provisionamento em 50%",curr:55,target:50},
+         {num:"KR-03",name:"Zero incidentes críticos de acesso sem RCA",curr:80,target:100}],
+    capacity:{planned:32,delivered:20,added:4,velocity:7,sprintsDone:4,totalSprints:6}},
+  "LinkAcces":{objetivo:"Garantir alta disponibilidade e performance dos links de acesso",
+    krs:[{num:"KR-01",name:"Disponibilidade de links de acesso ≥ 99.9%",curr:78,target:100},
+         {num:"KR-02",name:"Reduzir tempo de ativação de novos links em 30%",curr:45,target:30},
+         {num:"KR-03",name:"100% dos links monitorados com SLA definido",curr:62,target:100}],
+    capacity:{planned:28,delivered:18,added:3,velocity:6,sprintsDone:4,totalSprints:6}},
+  "STORAGE":{objetivo:"Garantir alta disponibilidade e escalabilidade do ambiente de armazenamento",
+    krs:[{num:"KR-01",name:"Disponibilidade do storage ≥ 99.99%",curr:72,target:100},
+         {num:"KR-02",name:"Reduzir RPO médio para < 4h",curr:40,target:100},
+         {num:"KR-03",name:"Migrar 60% do storage legado para nova plataforma",curr:28,target:60}],
+    capacity:{planned:35,delivered:18,added:8,velocity:7,sprintsDone:4,totalSprints:6}},
+  "BACKUP":{objetivo:"Assegurar proteção total dos dados com backup eficiente e verificável",
+    krs:[{num:"KR-01",name:"100% dos sistemas críticos com backup testado",curr:65,target:100},
+         {num:"KR-02",name:"Reduzir RTO de restore crítico para < 2h",curr:48,target:100},
+         {num:"KR-03",name:"Zero falhas de backup sem alerta em < 1h",curr:80,target:100}],
+    capacity:{planned:28,delivered:18,added:3,velocity:6,sprintsDone:4,totalSprints:6}}
+} } };
+
+/* ════════════════════════════════════════════════
+   LÓGICA DO SLIDE / APRESENTAÇÃO
+   ════════════════════════════════════════════════ */
+var SLD = {nivel:"tribo",cluster:"",squad:"",mes:""};
+var COL_COLORS = ["#CC0000","#1e3799","#6c2eb9","#374151","#166534","#b45309","#0369a1","#be185d"];
+
+/* % esperado conforme mês do quarter */
+function expectedPct(quarter, mes){
+  var map = {
+    "Q1 2026":["Janeiro","Fevereiro","Março"],
+    "Q2 2026":["Abril","Maio","Junho"],
+    "Q3 2026":["Julho","Agosto","Setembro"],
+    "Q4 2026":["Outubro","Novembro","Dezembro"]
+  };
+  var meses = map[quarter];
+  if(!meses) return 100;
+  var idx = meses.indexOf(mes);
+  if(idx < 0) return 100;
+  return Math.round((idx+1)/meses.length*100);
+}
+
+/* Risco do KR: compara realizado vs esperado proporcional à meta */
+function krRisk(curr, target, expPct){
+  var exp = expPct * (target/100);
+  if(curr >= exp*0.9) return "ok";
+  if(curr >= exp*0.65) return "med";
+  return "high";
+}
+
+/* Colunas de dados para o slide */
+function getSlideColumns(nivel, tribo, cluster, squad, quarter){
+  var cols = [];
+  var def = MBR_SQUADS[tribo];
+  var okrsQ = MBR_SQUAD_OKRS[tribo] && MBR_SQUAD_OKRS[tribo][quarter];
+  if(!def || !okrsQ) return cols;
+
+  if(nivel === "tribo"){
+    def.clusterOrder.forEach(function(cl){
+      var sqs = def.clusters[cl]||[];
+      var krAgg={}, capAgg={planned:0,delivered:0,added:0,velocity:0,sprintsDone:4,totalSprints:6,n:0};
+      sqs.forEach(function(sq){
+        var d=okrsQ[sq.key]; if(!d) return;
+        d.krs.forEach(function(kr){
+          if(!krAgg[kr.num]) krAgg[kr.num]={num:kr.num,name:kr.name,target:kr.target,sum:0,cnt:0};
+          krAgg[kr.num].sum+=kr.curr; krAgg[kr.num].cnt++;
+        });
+        if(d.capacity){capAgg.planned+=d.capacity.planned;capAgg.delivered+=d.capacity.delivered;capAgg.added+=d.capacity.added;capAgg.velocity+=d.capacity.velocity;capAgg.n++;}
+      });
+      var krs=Object.keys(krAgg).map(function(k){var x=krAgg[k];return{num:x.num,name:x.name,target:x.target,curr:x.cnt?Math.round(x.sum/x.cnt):0};}).slice(0,5);
+      cols.push({label:cl,shortLabel:cl.length>20?cl.slice(0,19)+"…":cl,objetivo:sqs.length+" squad"+(sqs.length>1?"s":"")+" no cluster",krs:krs,capacity:capAgg.n?capAgg:null});
+    });
+  } else if(nivel === "cluster"){
+    (def.clusters[cluster]||[]).forEach(function(sq){
+      var d=okrsQ[sq.key]; if(!d) return;
+      cols.push({label:sq.name,shortLabel:sq.name,objetivo:d.objetivo,krs:d.krs.slice(0,5),capacity:d.capacity||null});
+    });
+  } else {
+    var d=okrsQ[squad]; if(!d) return cols;
+    var sqDef=null;
+    def.clusterOrder.forEach(function(cl){(def.clusters[cl]||[]).forEach(function(s){if(s.key===squad)sqDef=s;});});
+    cols.push({label:sqDef?sqDef.name:squad,shortLabel:sqDef?sqDef.name:squad,objetivo:d.objetivo,krs:d.krs.slice(0,5),capacity:d.capacity||null});
+  }
+  return cols;
+}
+
+/* Gera Destaques automaticamente */
+function genDestaques(cols, expPct){
+  var out=[];
+  cols.forEach(function(col){
+    col.krs.forEach(function(kr){
+      if(krRisk(kr.curr,kr.target,expPct)==="ok" && kr.curr>=40)
+        out.push(col.shortLabel+": "+kr.num+" — "+kr.curr+"% (meta "+kr.target+"%)"+( kr.curr>=kr.target?" ✓ meta atingida":""));
+    });
+  });
+  var onCap=cols.filter(function(c){
+    if(!c.capacity) return false;
+    var rem=(c.capacity.planned+c.capacity.added)-c.capacity.delivered;
+    var capL=(c.capacity.totalSprints-c.capacity.sprintsDone)*c.capacity.velocity;
+    return rem<=capL*1.05;
+  });
+  if(onCap.length) out.push(onCap.length+" coluna(s) com capacidade produtiva adequada para o restante do quarter");
+  if(!out.length) out.push("Acompanhe a evolução dos KRs na próxima sessão MBR");
+  return out.slice(0,6);
+}
+
+/* Gera Pontos de Atenção e Riscos automaticamente */
+function genRiscos(cols, expPct){
+  var out=[];
+  /* KRs em risco */
+  cols.forEach(function(col){
+    col.krs.forEach(function(kr){
+      var lv=krRisk(kr.curr,kr.target,expPct);
+      var expV=Math.round(expPct*(kr.target/100));
+      if(lv==="high") out.push({lv:"high",txt:col.shortLabel+" / "+kr.num+": realizado "+kr.curr+"% vs "+expV+"% esperado — OKR em risco alto"});
+      else if(lv==="med") out.push({lv:"med",txt:col.shortLabel+" / "+kr.num+": realizado "+kr.curr+"% vs "+expV+"% esperado — requer atenção"});
+    });
+  });
+  /* Capacidade produtiva e itens adicionados */
+  cols.forEach(function(col){
+    var cap=col.capacity; if(!cap) return;
+    var rem=(cap.planned+cap.added)-cap.delivered;
+    var capL=(cap.totalSprints-cap.sprintsDone)*cap.velocity;
+    var sprL=cap.totalSprints-cap.sprintsDone;
+    if(cap.added>0){
+      var pctAdd=cap.planned>0?Math.round(cap.added/cap.planned*100):0;
+      out.push({lv:pctAdd>20?"high":"med",txt:col.shortLabel+": "+cap.added+" ite"+(cap.added>1?"ns adicionados":"m adicionado")+" ao backlog durante o quarter (+"+pctAdd+"% do escopo original) — avaliar impacto nos OKRs planejados"});
+    }
+    if(rem>capL*1.05){
+      out.push({lv:"high",txt:col.shortLabel+": "+rem+" itens pendentes vs capacidade estimada de ~"+capL+" itens em "+sprL+" sprint"+(sprL>1?"s":"")+" restante"+(sprL>1?"s":"")+" — risco de não concluir entregas comprometidas com os OKRs"});
+    } else if(rem>0 && rem<=capL*1.05){
+      out.push({lv:"ok",txt:col.shortLabel+": capacidade restante (~"+capL+" itens / "+sprL+" sprints) suficiente para os "+rem+" itens pendentes"});
+    }
+  });
+  /* Progresso médio geral */
+  var total=0,cnt=0;
+  cols.forEach(function(c){c.krs.forEach(function(k){total+=k.curr;cnt++;});});
+  if(cnt){
+    var avg=Math.round(total/cnt);
+    if(avg<expPct*0.7) out.push({lv:"high",txt:"Progresso médio dos KRs ("+avg+"%) está "+(expPct-avg)+"pp abaixo do esperado ("+expPct+"%) — quarter em risco sistêmico"});
+  }
+  if(!out.length) out.push({lv:"ok",txt:"Nenhum risco crítico identificado. Manter cadência e monitorar na próxima sessão MBR"});
+  return out.slice(0,6);
+}
+
+/* Renderiza o slide */
+function renderSlide(){
+  var nivel   = g("sNivel")   ? g("sNivel").value   : "tribo";
+  var cluster = g("sCluster") ? g("sCluster").value : "";
+  var squad   = g("sSquad")   ? g("sSquad").value   : "";
+  var mes     = g("sMes")     ? g("sMes").value      : "";
+  var triboFil= g("sTribo")   ? g("sTribo").value    : "";
+  var tribo   = (DATA.loaded.okrs && triboFil) ? triboFil : MBR.tribo;
+  var quarter = MBR.quarter;
+
+  var cols = getSlideColumns(nivel, tribo, cluster, squad, quarter);
+  if(!cols.length){ g("slide-out").innerHTML='<div class="empty">Nenhum dado para os filtros selecionados.</div>'; return; }
+  if(cols.length>5) cols = cols.slice(0,5);
+
+  var expPct    = expectedPct(quarter, mes);
+  var slideTitle= nivel==="tribo"?tribo:nivel==="cluster"?cluster:(cols[0]?cols[0].label:tribo);
+  var slideSub  = nivel==="tribo"?"Visão Consolidada da Tribo":nivel==="cluster"?"Cluster · "+tribo:"Squad · "+tribo;
+  var periodLbl = mes?mes+" · "+quarter:quarter;
+  var grid      = "repeat("+cols.length+",1fr)";
+
+  /* header */
+  var h="<div class='mbr-slide'>"+
+    "<div class='sl-head'>"+
+      "<div class='sl-head-l'>"+
+        "<div class='sl-title'>"+esc(nivel==="squad"?"Squad: ":nivel==="cluster"?"Cluster: ":"")+esc(slideTitle)+"</div>"+
+        "<div class='sl-sub'>"+esc(slideSub)+"</div>"+
+        (expPct<100?"<div class='sl-exp'>Progresso esperado até <b>"+esc(mes||quarter)+"</b>: <b>"+expPct+"%</b></div>":"")+
+      "</div>"+
+      "<div class='sl-head-r'>"+
+        "<div class='sl-branding'>movimento<b>change</b> · Bradesco</div>"+
+        "<div class='sl-period'>"+esc(periodLbl)+"</div>"+
+      "</div>"+
+    "</div>";
+
+  /* col headers */
+  h+="<div style='display:grid;grid-template-columns:"+grid+"'>";
+  cols.forEach(function(col,i){
+    h+="<div class='sl-col-head' style='background:"+COL_COLORS[i%COL_COLORS.length]+"'>"+
+      "<span class='sl-col-num'>"+(i+1)+"</span>"+
+      "<span class='sl-col-name'>"+esc(col.shortLabel)+"</span>"+
+    "</div>";
+  });
+  h+="</div>";
+
+  /* objectives section */
+  h+="<div class='sl-section-bar'>Objectives</div>";
+  h+="<div style='display:grid;grid-template-columns:"+grid+";border-bottom:2px solid #e3e6ea'>";
+  cols.forEach(function(col,i){
+    var color=COL_COLORS[i%COL_COLORS.length];
+    var avg=col.krs.length?Math.round(col.krs.reduce(function(a,k){return a+k.curr;},0)/col.krs.length):0;
+    var lv=krRisk(avg,100,expPct);
+    var bc=lv==="ok"?"on-track":lv==="med"?"med-risk":"high-risk";
+    h+="<div style='border-right:1px solid #e3e6ea;padding:6px 8px 4px'>"+
+      "<div class='sl-obj-cell' style='border-color:"+color+"22;background:"+color+"08'>"+
+        "<span class='sl-obj-text'>"+esc(col.objetivo)+"</span>"+
+        "<span class='pct-badge "+bc+"'>"+avg+"%</span>"+
+      "</div></div>";
+  });
+  h+="</div>";
+
+  /* key results section */
+  h+="<div class='sl-section-bar'>Key Results"+
+    (expPct<100?" <span style='font-weight:500;font-size:9px;margin-left:10px'>Esperado até "+esc(mes||quarter)+": <b>"+expPct+"%</b></span>":"")+
+  "</div>";
+  h+="<div style='display:grid;grid-template-columns:"+grid+";border-bottom:2px solid #e3e6ea'>";
+  cols.forEach(function(col,i){
+    var color=COL_COLORS[i%COL_COLORS.length];
+    h+="<div style='border-right:1px solid #e3e6ea'><div class='sl-kr-area'>";
+    col.krs.forEach(function(kr){
+      var lv=krRisk(kr.curr,kr.target,expPct);
+      var bc=lv==="ok"?"on-track":lv==="med"?"med-risk":"high-risk";
+      var rc=lv==="ok"?"":"risk-"+lv;
+      var expV=Math.round(expPct*(kr.target/100));
+      h+="<div class='sl-kr-row "+rc+"'>"+
+        "<div style='flex:1'>"+
+          "<div class='sl-kr-lbl' style='color:"+color+"'>"+esc(kr.num)+"</div>"+
+          "<div class='sl-kr-text'>"+esc(kr.name)+"</div>"+
+        "</div>"+
+        "<div class='sl-kr-right'>"+
+          "<span class='pct-badge "+bc+"'>"+kr.curr+"%</span>"+
+          (expPct<100?"<span class='exp-lbl'>esp: "+expV+"%</span>":"")+
+        "</div>"+
+      "</div>";
+    });
+    h+="</div></div>";
+  });
+  h+="</div>";
+
+  /* bottom panels */
+  var destaques=genDestaques(cols,expPct);
+  var riscos=genRiscos(cols,expPct);
+  h+="<div class='sl-bottom'>";
+  h+="<div class='sl-panel' style='border-right:1px solid #e3e6ea'>"+
+    "<div class='sl-panel-title'>Destaques</div><ol>";
+  destaques.forEach(function(d){h+="<li>"+esc(d)+"</li>";});
+  h+="</ol></div>";
+  h+="<div class='sl-panel risks'>"+
+    "<div class='sl-panel-title'>Pontos de Atenção e Riscos</div><ol>";
+  riscos.forEach(function(r){
+    var tag=r.lv==="high"?"<span class='risk-tag high'>Alta</span>":r.lv==="med"?"<span class='risk-tag med'>Média</span>":"<span class='risk-tag ok'>OK</span>";
+    h+="<li>"+tag+esc(r.txt)+"</li>";
+  });
+  h+="</ol></div>";
+  h+="</div></div>";
+
+  g("slide-out").innerHTML=h;
+}
+
+/* Filtros do slide */
+function onNivelChange(){
+  var n=g("sNivel").value;
+  g("fg-cluster").style.display=(n==="cluster"||n==="squad")?"":"none";
+  g("fg-squad").style.display=n==="squad"?"":"none";
+  if(n==="cluster"||n==="squad") buildClusterOptions();
+  if(n==="squad") buildSquadOptions();
+  renderSlide();
+}
+function onClusterChange(){
+  if(g("sNivel").value==="squad") buildSquadOptions();
+  renderSlide();
+}
+function buildClusterOptions(){
+  var def=MBR_SQUADS[MBR.tribo]; if(!def) return;
+  g("sCluster").innerHTML=def.clusterOrder.map(function(c){return"<option>"+esc(c)+"</option>";}).join("");
+}
+function buildSquadOptions(){
+  var def=MBR_SQUADS[MBR.tribo]; if(!def) return;
+  var cl=g("sCluster")?g("sCluster").value:"";
+  var sqs=def.clusters[cl]||[];
+  g("sSquad").innerHTML=sqs.map(function(s){return"<option value='"+esc(s.key)+"'>"+esc(s.name)+"</option>";}).join("");
+}
+function buildMesOptions(){
+  var ss=filteredSessions().filter(function(s){return s.status==="realizado";});
+  var sel=g("sMes"); if(!sel) return;
+  sel.innerHTML="<option value=''>Último MBR realizado</option>"+
+    ss.map(function(s){return"<option>"+esc(s.month)+"</option>";}).join("");
+  if(ss.length) sel.value=ss[ss.length-1].month;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CAMADA DE DADOS REAIS — CSV / localStorage
+   ══════════════════════════════════════════════════════════════ */
+var DATA={okrs:[],krs:[],deps:[],features:[],stories:[],hier:[],loaded:{okrs:false,krs:false,deps:false,features:false,stories:false,hier:false}};
+
+/* ─── CSV parser simples ─── */
+function parseCSV(text){
+  function pl(l){var f=[],c='',q=false;for(var i=0;i<l.length;i++){var ch=l[i];if(ch==='"'){q=!q;}else if(ch===','&&!q){f.push(c.trim());c='';}else{c+=ch;}}f.push(c.trim());return f;}
+  var lines=text.split(/\r?\n/),hdr=pl(lines[0]).map(function(h){return h.replace(/^"|"$/g,'').trim().toLowerCase();});
+  return lines.slice(1).filter(function(l){return l.trim();}).map(function(l){var v=pl(l),o={};hdr.forEach(function(h,i){o[h]=(v[i]||'').replace(/^"|"$/g,'').trim();});return o;});
+}
+/* ─── helpers ─── */
+function col(r,alts){for(var i=0;i<alts.length;i++){var k=alts[i].toLowerCase();if(r[k]!==undefined&&r[k]!=='')return r[k];}return '';}
+function uniq(arr){var s={},o=[];arr.forEach(function(x){if(x&&!s[x]){s[x]=1;o.push(x);}});return o;}
+function normQ(q){var m=/^(\d{4})-Q(\d)$/i.exec((q||'').trim());if(m)return 'Q'+m[2]+' '+m[1];return (q||'').trim();}
+function isOverdue(d){if(!d)return false;var dt=new Date(d.replace(/(\d{2})\/(\d{2})\/(\d{4})/,'$3-$2-$1'));return !isNaN(dt)&&dt<new Date();}
+function daysUntil(d){if(!d)return null;var dt=new Date(d.replace(/(\d{2})\/(\d{2})\/(\d{4})/,'$3-$2-$1'));if(isNaN(dt))return null;return Math.ceil((dt-new Date())/86400000);}
+
+/* ─── localStorage ─── */
+function saveLS(k,v){try{localStorage.setItem('mbr_'+k,JSON.stringify(v));}catch(e){}}
+function loadFromLS(){
+  try{
+    /* OKRs e KRs compartilhados pelo okrs.html */
+    _loadOkrsFromOkrs();
+    /* Hierarquia compartilhada pelo estrutura.html */
+    _loadHierFromEstrutura();
+    /* Features, Stories e Dependências compartilhados pelo planejamento.html */
+    _loadPlanFromPlan();
+  }catch(e){}
+}
+function _loadPlanFromPlan(){
+  try{
+    var rawF=localStorage.getItem('plan_features');
+    var rawS=localStorage.getItem('plan_stories');
+    var rawD=localStorage.getItem('plan_deps');
+    if(rawF){DATA.features=JSON.parse(rawF);DATA.features.forEach(function(f){f.type='feature';f.deliv=/em medi|medi[çc]|validado|done|entregue|conclu/i.test(f.st||'');});DATA.loaded.features=DATA.features.length>0;}
+    if(rawS){DATA.stories=JSON.parse(rawS);DATA.stories.forEach(function(s){s.type='story';});DATA.loaded.stories=DATA.stories.length>0;}
+    if(rawD){
+      DATA.deps=JSON.parse(rawD).map(function(d){
+        var st=d.state||d.st||'';
+        return{n:d.num||d.n||'',just:d.just||'',st:st,crit:d.crit||'',impact:d.impact||'',preSquad:d.preSquad||'',tribo:d.tribo||'',objN:d.objN||'',memo:d.memo||'',due:d.due||'',active:!/finaliz|encerr|cancel|closed|done|conclu/i.test(st),overdue:isOverdue(d.due||'')};
+      });
+      DATA.loaded.deps=DATA.deps.length>0;
+    }
+    var ts=localStorage.getItem('plan_ts');
+    if(ts)DATA._planTs=ts;
+  }catch(e){}
+}
+function _loadOkrsFromOkrs(){
+  try{
+    var rawO=localStorage.getItem('okr_objetivos');
+    var rawK=localStorage.getItem('okr_krs');
+    if(rawO){
+      DATA.okrs=JSON.parse(rawO);
+      DATA.loaded.okrs=DATA.okrs.length>0;
+    }
+    if(rawK){
+      /* KRS_BY_GOAL = { "OKR_ID": [{nome,est,prog,sit,trim},...] } → achatar em array */
+      var byGoal=JSON.parse(rawK);
+      DATA.krs=[];
+      Object.keys(byGoal).forEach(function(okrNum){
+        (byGoal[okrNum]||[]).forEach(function(kr,i){
+          DATA.krs.push({
+            okr:   okrNum,
+            numero:'KR-'+(i+1),
+            nome:  kr.nome||kr.n||'',
+            prog:  kr.prog||0,
+            meta:  100,
+            est:   kr.est||'',
+            trim:  normQ(kr.trim||'')
+          });
+        });
+      });
+      DATA.loaded.krs=DATA.krs.length>0;
+    }
+    var ts=localStorage.getItem('okr_ts');
+    if(ts)DATA._okrTs=ts;
+  }catch(e){DATA.okrs=[];DATA.krs=[];DATA.loaded.okrs=false;DATA.loaded.krs=false;}
+}
+function _loadHierFromEstrutura(){
+  try{
+    var rawT=localStorage.getItem('est_tribes');
+    var rawC=localStorage.getItem('est_clusters');
+    var rawS=localStorage.getItem('est_squads');
+    var rawV=localStorage.getItem('est_verts');
+    if(!rawT&&!rawS){DATA.hier=[];DATA.loaded.hier=false;return;}
+    var tribes  = rawT  ? JSON.parse(rawT)  : [];
+    var clusters= rawC  ? JSON.parse(rawC)  : [];
+    var squads  = rawS  ? JSON.parse(rawS)  : [];
+    var verts   = rawV  ? JSON.parse(rawV)  : [];
+    /* índices para join */
+    var clIdx={};clusters.forEach(function(c){clIdx[c.n]=c;});
+    var trIdx={};tribes.forEach(function(t){trIdx[t.n]=t;});
+    var vtIdx={};verts.forEach(function(v){vtIdx[v.n]=v;});
+    DATA.hier=squads.filter(function(s){return s.active!==false;}).map(function(s){
+      var cl=clIdx[s.cn]||{};
+      var tr=trIdx[cl.tn]||{};
+      var vt=vtIdx[tr.vn]||{};
+      return{
+        vert:   vt.name||cl.v||tr.v||'',
+        tribo:  cl.t||tr.name||'',
+        triben: cl.tn||tr.n||'',
+        cluster:cl.name||s.c||'',
+        squad:  s.name,
+        squadn: s.n,
+        ttl:    tr.ttl||'',
+        cpo:    cl.cpo||s.po||'',
+        sem:    s.sem||'',
+        active: true
+      };
+    });
+    DATA.loaded.hier=DATA.hier.length>0;
+  }catch(e){DATA.hier=[];DATA.loaded.hier=false;}
+}
+function clearLS(k){
+  if(Array.isArray(DATA[k]))DATA[k]=[];
+  DATA.loaded[k]=false;
+  try{localStorage.removeItem('mbr_'+k);}catch(e){}
+  updateDataStatus();
+}
+
+/* ─── Loaders ─── */
+function loadObjetivos(text){
+  DATA.okrs=parseCSV(text).map(function(r){
+    return{numero:col(r,['numero','number','id','obj_id','okr_numero']),nome:col(r,['nome','name','objetivo','descricao','summary','objetivo_nome']),cat:col(r,['cat','categoria','type','tipo','category']),est:col(r,['est','estado','status','state']),prog:parseFloat(col(r,['prog','progresso','progress','percentual','pct','atual']))||0,trim:normQ(col(r,['trim','trimestre','quarter','periodo','q'])),tribe:col(r,['tribe','tribo','tribe_name','nome_tribo']),triben:col(r,['triben','tribe_number','tribo_numero']),squad:col(r,['squad','squad_name','nome_squad']),vert:col(r,['vert','vertical','vertical_name']),owner:col(r,['owner','responsavel']),ini:col(r,['ini','inicio','start_date']),fim:col(r,['fim','end','end_date'])};
+  }).filter(function(o){return o.numero||o.nome;});
+  DATA.loaded.okrs=DATA.okrs.length>0;saveLS('okrs',DATA.okrs);rebuildSlideFilters();updateDataStatus();
+}
+function loadKRs(text){
+  DATA.krs=parseCSV(text).map(function(r){
+    return{okr:col(r,['okr','okr_numero','parent','objetivo_numero','objetivo_id']),numero:col(r,['numero','number','id','kr_id','kr_numero']),nome:col(r,['nome','name','descricao','key_result','kr_descricao','summary']),prog:parseFloat(col(r,['prog','progresso','progress','atual','percentual','current']))||0,meta:parseFloat(col(r,['meta','target','alvo','goal']))||100,est:col(r,['est','estado','status','state']),tribe:col(r,['tribe','tribo']),squad:col(r,['squad']),trim:normQ(col(r,['trim','quarter','trimestre','periodo']))};
+  }).filter(function(k){return k.nome;});
+  DATA.loaded.krs=DATA.krs.length>0;saveLS('krs',DATA.krs);updateDataStatus();
+}
+function loadDeps(text){
+  DATA.deps=parseCSV(text).map(function(r){
+    var st=col(r,['state','estado','status']),due=col(r,['u_expected_end','prazo','due_date','data_prevista','end_date','fim','data_fim']);
+    return{n:col(r,['number','numero','n','id']),just:col(r,['u_justification','justificativa','description','descricao']),st:st,crit:col(r,['u_criticality','criticality','criticidade','crit']),impact:col(r,['u_dependency_impact','impacto','impact']),preSquad:col(r,['u_prerequesite_squad.name','u_prerequisite_squad','presquad','squad_pre_requisito']),tribo:col(r,['tribe','tribo','u_tribe','u_tribe.name','tribo_name','nome_tribo']),objN:col(r,['u_prerequisite_goal.u_number','objetivo','okr']),memo:col(r,['u_qbr_memo.u_number','memo']),due:due,active:!/finaliz|encerr|cancel|closed|done/i.test(st),overdue:isOverdue(due)};
+  }).filter(function(d){return d.n||d.just;});
+  DATA.loaded.deps=DATA.deps.length>0;saveLS('deps',DATA.deps);updateDataStatus();
+}
+function _parseBacklogRow(r,forceType){
+  var st=col(r,['st','status','state','estado']),q=normQ(col(r,['q','quarter','trimestre','periodo'])),t=forceType||col(r,['type','tipo','item_type','tipo_item']);
+  return{n:col(r,['n','number','numero','id']),ek:col(r,['ek','key','chave','jira_key']),nm:col(r,['nm','name','nome','summary','titulo','descricao']),tm:col(r,['tm','team','squad','time','squad_name']),cl:col(r,['cl','cluster']),q:q,st:st,sp:parseInt(col(r,['sp','sprint','sprint_number']))||null,pi:col(r,['pi','program_increment']),cf:col(r,['cf','feature','feature_name','nome_feature']),type:forceType||((/story|us\b/i.test(t))?'story':'feature'),deliv:/em medi|medi[çc]|validado|done|entregue|conclu/i.test(st)};
+}
+function loadFeaturesOnly(text){
+  DATA.features=parseCSV(text).map(function(r){return _parseBacklogRow(r,'feature');}).filter(function(r){return r.nm||r.ek;});
+  DATA.loaded.features=DATA.features.length>0;saveLS('features',DATA.features);updateDataStatus();
+}
+function loadStoriesOnly(text){
+  DATA.stories=parseCSV(text).map(function(r){return _parseBacklogRow(r,'story');}).filter(function(r){return r.nm||r.ek;});
+  DATA.loaded.stories=DATA.stories.length>0;saveLS('stories',DATA.stories);updateDataStatus();
+}
+/* mantém loadFeatures para compatibilidade (detecta tipo automaticamente) */
+function loadFeatures(text){
+  var rows=parseCSV(text).map(function(r){return _parseBacklogRow(r,null);}).filter(function(r){return r.nm||r.ek;});
+  DATA.features=rows.filter(function(r){return r.type==='feature';});
+  DATA.stories=rows.filter(function(r){return r.type==='story';});
+  if(!DATA.features.length&&!DATA.stories.length)DATA.features=rows;
+  DATA.loaded.features=DATA.features.length>0;DATA.loaded.stories=DATA.stories.length>0;
+  saveLS('features',DATA.features);saveLS('stories',DATA.stories);updateDataStatus();
+}
+function handleFile(inputId,loaderFn){
+  var inp=g(inputId);if(!inp||!inp.files||!inp.files[0])return;
+  var fr=new FileReader();fr.onload=function(e){loaderFn(e.target.result);inp.value='';};fr.readAsText(inp.files[0],'UTF-8');
+}
+
+/* ─── Status UI ─── */
+function updateDataStatus(){
+  /* cards do Planejamento (deps, features, stories) */
+  var planTs=DATA._planTs?new Date(DATA._planTs).toLocaleString('pt-BR'):'—';
+  [{k:'deps',id:'ds-deps',det:'ds-deps-detail',lbl:'Dependências',extra:function(d){return d.length?' (<b>'+d.filter(function(x){return x.active&&x.overdue;}).length+'</b> vencidas · <b>'+d.filter(function(x){return !x.active;}).length+'</b> encerradas)'  :'';}}
+  ,{k:'features',id:'ds-feat',det:'ds-feat-detail',lbl:'Features',extra:function(d){return d.length?' (<b>'+d.filter(function(x){return x.deliv;}).length+'</b> entregues)':'';}  }
+  ,{k:'stories', id:'ds-stor',det:'ds-stor-detail', lbl:'Stories',extra:function(d){return '';}}
+  ].forEach(function(it){
+    var el=g(it.id),det=g(it.det);
+    var d=DATA[it.k]||[],n=d.length;
+    if(el)el.innerHTML=it.lbl+'<span class="dm-status '+(n>0?'loaded':'empty')+'">'+(n>0?n+' reg.':'sem dados')+'</span>';
+    if(det&&n>0)det.innerHTML='<b>'+n+'</b>'+it.extra(d)+'<br><span style="font-size:10px;color:var(--muted)">Sincronizado do Planejamento em '+planTs+'</span>';
+  });
+  /* card de OKRs — compartilhado do okrs.html */
+  var okrEl=g('ds-okrs'),okrDet=g('ds-okrs-detail');
+  if(okrEl){var no=DATA.okrs.length;okrEl.innerHTML='Objetivos<span class="dm-status '+(no>0?'loaded':'empty')+'">'+(no>0?no+' OKRs':'sem dados')+'</span>';}
+  if(okrDet&&DATA.loaded.okrs){
+    var ts=DATA._okrTs?new Date(DATA._okrTs).toLocaleString('pt-BR'):'—';
+    var verts=uniq(DATA.okrs.map(function(o){return o.vert;}).filter(Boolean)).length;
+    var tribs=uniq(DATA.okrs.map(function(o){return o.tribe;}).filter(Boolean)).length;
+    okrDet.innerHTML='<b>'+DATA.okrs.length+'</b> objetivos · <b>'+verts+'</b> verticais · <b>'+tribs+'</b> tribos<br><span style="font-size:10px;color:var(--muted)">Sincronizado do OKRs em '+ts+'</span>';
+  }
+  /* card de KRs — compartilhado do okrs.html */
+  var krEl=g('ds-krs'),krDet=g('ds-krs-detail');
+  if(krEl){var nk=DATA.krs.length;krEl.innerHTML='Key Results<span class="dm-status '+(nk>0?'loaded':'empty')+'">'+(nk>0?nk+' KRs':'sem dados')+'</span>';}
+  if(krDet&&DATA.loaded.krs){
+    var ts2=DATA._okrTs?new Date(DATA._okrTs).toLocaleString('pt-BR'):'—';
+    krDet.innerHTML='<b>'+DATA.krs.length+'</b> KRs vinculados a <b>'+uniq(DATA.krs.map(function(k){return k.okr;}).filter(Boolean)).length+'</b> objetivos<br><span style="font-size:10px;color:var(--muted)">Sincronizado do OKRs em '+ts2+'</span>';
+  }
+  var sm=g('dm-summary');if(!sm)return;
+  var p=[];
+  /* card de hierarquia — status + timestamp */
+  var hierEl=g('ds-hier'),hierDet=g('ds-hier-detail');
+  if(hierEl){
+    var hn=DATA.hier.length;
+    hierEl.innerHTML='Hierarquia Org. <span class="dm-status '+(hn>0?'loaded':'empty')+'">'+(hn>0?hn+' squads':'sem dados')+'</span>';
+  }
+  if(hierDet&&DATA.loaded.hier){
+    var hV=uniq(DATA.hier.map(function(h){return h.vert;}).filter(Boolean)).length;
+    var hT=uniq(DATA.hier.map(function(h){return h.tribo;}).filter(Boolean)).length;
+    var hC=uniq(DATA.hier.map(function(h){return h.cluster;}).filter(Boolean)).length;
+    var ts=localStorage.getItem('est_ts');
+    var tsLbl=ts?new Date(ts).toLocaleString('pt-BR'):'—';
+    hierDet.innerHTML='<b>'+hV+'</b> verticais · <b>'+hT+'</b> tribos · <b>'+hC+'</b> clusters · <b>'+DATA.hier.length+'</b> squads<br><span style="font-size:10px;color:var(--muted)">Sincronizado do Estrutura em '+tsLbl+'</span>';
+  }
+  if(DATA.hier.length){
+    var hV2=uniq(DATA.hier.map(function(h){return h.vert;}).filter(Boolean)).length;
+    var hT2=uniq(DATA.hier.map(function(h){return h.tribo;}).filter(Boolean)).length;
+    p.push('<b>'+DATA.hier.length+'</b> squads · '+hV2+' verticais · '+hT2+' tribos (Estrutura)');
+  } else if(DATA.okrs.length){
+    p.push('<b>'+DATA.okrs.length+'</b> OKRs · '+uniq(DATA.okrs.map(function(o){return o.vert;}).filter(Boolean)).length+' verticais · '+uniq(DATA.okrs.map(function(o){return o.tribe;}).filter(Boolean)).length+' tribos · '+uniq(DATA.okrs.map(function(o){return o.squad;}).filter(Boolean)).length+' squads');
+  }
+  if(DATA.krs.length)p.push('<b>'+DATA.krs.length+'</b> KRs');
+  if(DATA.deps.length)p.push('<b>'+DATA.deps.length+'</b> Deps (<b>'+DATA.deps.filter(function(d){return d.active&&d.overdue;}).length+'</b> vencidas · <b>'+DATA.deps.filter(function(d){return!d.active;}).length+'</b> encerradas)');
+  if(DATA.features.length)p.push('<b>'+DATA.features.length+'</b> Features (<b>'+DATA.features.filter(function(f){return f.deliv;}).length+'</b> entregues)');
+  if(DATA.stories.length)p.push('<b>'+DATA.stories.length+'</b> Stories');
+  sm.innerHTML=p.length?'✅ '+p.join(' &nbsp;·&nbsp; '):'Nenhum dado carregado — importe os arquivos CSV abaixo';
+}
+
+/* ─── Filtros da apresentação: cascade com dados reais ─── */
+/* fonte preferencial: hier → okrs → fallback estático */
+function hierSource(){return DATA.loaded.hier?'hier':DATA.loaded.okrs?'okrs':'';}
+
+function rebuildSlideFilters(){
+  var vSel=g('sVert'),tSel=g('sTribo');if(!vSel||!tSel)return;
+  var src=hierSource();
+  var verts=[];
+  if(src==='hier') verts=uniq(DATA.hier.map(function(h){return h.vert;}).filter(Boolean)).sort();
+  else if(src==='okrs') verts=uniq(DATA.okrs.map(function(o){return o.vert;}).filter(Boolean)).sort();
+  if(verts.length){
+    var curV=vSel.value;
+    vSel.innerHTML='<option value="">Todas as verticais</option>'+verts.map(function(v){return'<option'+(v===curV?' selected':'')+'>'+esc(v)+'</option>';}).join('');
+  }
+  rebuildTriboOpts();
+}
+
+function rebuildTriboOpts(){
+  var tSel=g('sTribo');if(!tSel)return;
+  var vert=g('sVert')?g('sVert').value:'';
+  var src=hierSource(), tribos=[];
+  if(src==='hier'){
+    tribos=uniq(DATA.hier.filter(function(h){return !vert||h.vert===vert;}).map(function(h){return h.tribo;}).filter(Boolean)).sort();
+  } else if(src==='okrs'){
+    tribos=uniq(DATA.okrs.filter(function(o){return !vert||o.vert===vert;}).map(function(o){return o.tribe;}).filter(Boolean)).sort();
+  }
+  var cur=tSel.value;
+  tSel.innerHTML='<option value="">Todas as tribos</option>'+tribos.map(function(t){return'<option'+(t===cur?' selected':'')+'>'+esc(t)+'</option>';}).join('');
+  rebuildClusterOpts();
+  rebuildSquadOpts();
+}
+
+function rebuildClusterOpts(){
+  var cSel=g('sCluster');if(!cSel)return;
+  var vert=g('sVert')?g('sVert').value:'';
+  var tribo=g('sTribo')?g('sTribo').value:'';
+  var src=hierSource(), clusters=[];
+  if(src==='hier'){
+    clusters=uniq(DATA.hier.filter(function(h){
+      return h.cluster&&(!vert||h.vert===vert)&&(!tribo||h.tribo===tribo);
+    }).map(function(h){return h.cluster;}).filter(Boolean)).sort();
+  } else {
+    var def=MBR_SQUADS[MBR.tribo];
+    if(def)clusters=def.clusterOrder.slice();
+  }
+  var cur=cSel.value;
+  cSel.innerHTML=clusters.map(function(c){return'<option'+(c===cur?' selected':'')+'>'+esc(c)+'</option>';}).join('');
+}
+
+function rebuildSquadOpts(){
+  var sSel=g('sSquad');if(!sSel||g('sNivel').value!=='squad')return;
+  var vert=g('sVert')?g('sVert').value:'';
+  var tribo=g('sTribo')?g('sTribo').value:'';
+  var cluster=g('sCluster')?g('sCluster').value:'';
+  var src=hierSource(), squads=[];
+  if(src==='hier'){
+    squads=uniq(DATA.hier.filter(function(h){
+      return h.squad&&(!vert||h.vert===vert)&&(!tribo||h.tribo===tribo)&&(!cluster||h.cluster===cluster);
+    }).map(function(h){return h.squad;}).filter(Boolean)).sort();
+  } else if(src==='okrs'){
+    squads=uniq(DATA.okrs.filter(function(o){return o.squad&&(!tribo||o.tribe===tribo);}).map(function(o){return o.squad;}).filter(Boolean)).sort();
+  } else {
+    buildSquadOptions(); return;
+  }
+  sSel.innerHTML=squads.map(function(s){return'<option>'+esc(s)+'</option>';}).join('');
+}
+
+function onVertChange(){rebuildTriboOpts();onNivelChange();}
+function onTriboChange(){rebuildClusterOpts();rebuildSquadOpts();renderSlide();}
+
+/* ─── Slide com dados reais ─── */
+function buildKrsForOkrs(okrs){
+  if(DATA.loaded.krs){
+    var out=[];
+    okrs.forEach(function(o){
+      var okrKrs=DATA.krs.filter(function(k){return k.okr===o.numero;});
+      if(okrKrs.length){okrKrs.forEach(function(k){out.push({num:k.numero||'KR',name:k.nome,curr:k.prog,target:k.meta||100});});}
+      else{out.push({num:o.numero||'OKR',name:o.nome,curr:o.prog,target:100});}
+    });
+    return out;
+  }
+  return okrs.map(function(o,i){return{num:'OKR-'+(i+1),name:o.nome,curr:o.prog,target:100};});
+}
+function featuresFor(squad,quarter){
+  if(!DATA.loaded.features)return{deliv:[],pending:[],all:[]};
+  var all=DATA.features.filter(function(f){return(!squad||f.tm===squad)&&(!quarter||f.q===quarter);});
+  return{deliv:all.filter(function(f){return f.deliv;}),pending:all.filter(function(f){return!f.deliv;}),all:all};
+}
+function capacityFor(squad,quarter){
+  if(!DATA.loaded.features)return null;
+  var feats=DATA.features.filter(function(f){return(!squad||f.tm===squad)&&(!quarter||f.q===quarter);});
+  var stories=DATA.stories.filter(function(s){return(!squad||s.tm===squad)&&(!quarter||s.q===quarter);});
+  var deliv=feats.filter(function(f){return f.deliv;}).length;
+  var mesVal=g('sMes')?g('sMes').value:'';
+  var meses=['Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro','Janeiro','Fevereiro','Março'];
+  var mIdx=meses.indexOf(mesVal)+1||2;
+  var vel=Math.max(1,Math.round(stories.length/Math.max(1,mIdx)));
+  return{planned:feats.length,delivered:deliv,added:0,velocity:vel,sprintsDone:mIdx*2,totalSprints:6};
+}
+function getSlideColumnsReal(nivel,triboFil,clusterFil,squadFil,quarter){
+  var cols=[],okrs=DATA.okrs.filter(function(o){
+    if(normQ(o.trim)!==quarter)return false;
+    if(triboFil&&o.tribe!==triboFil)return false;
+    return true;
+  });
+  if(!okrs.length)return cols;
+  if(nivel==='squad'&&squadFil){
+    var sqOkrs=okrs.filter(function(o){return o.squad===squadFil;});
+    if(!sqOkrs.length)sqOkrs=okrs.slice(0,1);
+    cols.push({label:squadFil,shortLabel:squadFil.length>22?squadFil.slice(0,21)+'…':squadFil,objetivo:sqOkrs[0]?sqOkrs[0].nome:'—',krs:buildKrsForOkrs(sqOkrs).slice(0,5),features:featuresFor(squadFil,quarter),capacity:capacityFor(squadFil,quarter)});
+  } else {
+    var squads=uniq(okrs.filter(function(o){return o.cat!=='Tribo'&&o.squad;}).map(function(o){return o.squad;}));
+    if(!squads.length)squads=uniq(okrs.map(function(o){return o.squad;}).filter(Boolean));
+    squads.forEach(function(sq){
+      var sqOkrs=okrs.filter(function(o){return o.squad===sq;});
+      if(!sqOkrs.length)return;
+      cols.push({label:sq,shortLabel:sq.length>22?sq.slice(0,21)+'…':sq,objetivo:sqOkrs[0].nome,krs:buildKrsForOkrs(sqOkrs).slice(0,5),features:featuresFor(sq,quarter),capacity:capacityFor(sq,quarter)});
+    });
+  }
+  return cols;
+}
+
+/* Sobrescreve getSlideColumns para usar dados reais quando disponíveis */
+var _sldColSample=getSlideColumns;
+function getSlideColumns(nivel,tribo,cluster,squad,quarter){
+  if(DATA.loaded.okrs){var r=getSlideColumnsReal(nivel,tribo,cluster,squad,quarter);if(r.length)return r;}
+  return _sldColSample(nivel,tribo,cluster,squad,quarter);
+}
+
+/* Sobrescreve genDestaques para incluir features entregues + deps encerradas */
+var _destSample=genDestaques;
+function genDestaques(cols,expPct){
+  var out=_destSample(cols,expPct);
+  if(DATA.loaded.features){
+    var tot=cols.reduce(function(a,c){return a+(c.features&&c.features.deliv?c.features.deliv.length:0);},0);
+    if(tot)out.unshift(tot+' feature'+(tot>1?'s':'')+' entregue'+(tot>1?'s':'')+' no período — contribuição direta para os OKRs');
+  }
+  if(DATA.loaded.deps){
+    var closed=DATA.deps.filter(function(d){return !d.active;}).length;
+    if(closed)out.push(closed+' dependência'+(closed>1?'s':'')+' encerrada'+(closed>1?'s':'')+' com sucesso no quarter');
+  }
+  return out.slice(0,6);
+}
+
+/* Sobrescreve genRiscos para incluir features atrasadas + dependências */
+var _riscoSample=genRiscos;
+function genRiscos(cols,expPct){
+  var out=[];
+  /* KRs em risco */
+  cols.forEach(function(col){
+    col.krs.forEach(function(kr){
+      var lv=krRisk(kr.curr,kr.target,expPct),expV=Math.round(expPct*(kr.target/100));
+      if(lv==='high')out.push({lv:'high',txt:col.shortLabel+' / '+kr.num+': realizado '+kr.curr+'% vs '+expV+'% esperado — OKR em risco alto'});
+      else if(lv==='med')out.push({lv:'med',txt:col.shortLabel+' / '+kr.num+': realizado '+kr.curr+'% vs '+expV+'% esperado — requer atenção'});
+    });
+  });
+  /* Features pendentes / atrasadas */
+  if(DATA.loaded.features){
+    var pendRows=[];
+    cols.forEach(function(c){if(c.features&&c.features.pending&&c.features.pending.length)pendRows.push({col:c.shortLabel,n:c.features.pending.length,deliv:c.features.deliv?c.features.deliv.length:0,tot:c.features.all?c.features.all.length:0});});
+    if(pendRows.length){
+      var totPend=pendRows.reduce(function(a,x){return a+x.n;},0);
+      out.push({lv:'high',txt:totPend+' feature'+(totPend>1?'s':'')+' pendente'+(totPend>1?'s':'')+' sem entrega — '+pendRows.slice(0,2).map(function(x){return x.col+': '+x.deliv+'/'+x.tot+' entregues';}).join('; ')+(pendRows.length>2?' +mais…':'')});
+    }
+  }
+  /* Dependências vencidas e próximas a vencer */
+  if(DATA.loaded.deps){
+    var tribo=g('sTribo')?g('sTribo').value:'';
+    var scope=DATA.deps.filter(function(d){return !tribo||!d.tribo||d.tribo===tribo;});
+    var venc=scope.filter(function(d){return d.active&&d.overdue;});
+    var soon=scope.filter(function(d){var dy=daysUntil(d.due);return d.active&&!d.overdue&&dy!==null&&dy<=14;});
+    var active=scope.filter(function(d){return d.active;});
+    var closed=scope.filter(function(d){return !d.active;});
+    if(venc.length)out.push({lv:'high',txt:venc.length+' dependência'+(venc.length>1?'s':'')+' vencida'+(venc.length>1?'s':'')+' sem resolução ('+venc.filter(function(d){return/alta/i.test(d.crit);}).length+' crítica'+(venc.length>1?'s':'')+') — risco direto nas entregas dos OKRs'});
+    if(soon.length)out.push({lv:'med',txt:soon.length+' dependência'+(soon.length>1?'s':'')+' vence nos próximos 14 dias — monitorar para não impactar as sprints finais'});
+    if(!venc.length&&!soon.length&&active.length)out.push({lv:'ok',txt:active.length+' dependência'+(active.length>1?'s':'')+' ativa'+(active.length>1?'s':'')+' dentro do prazo'+(closed.length?' · '+closed.length+' encerrada'+(closed.length>1?'s':''):'')});
+  }
+  /* Capacidade / escopo adicionado */
+  cols.forEach(function(col){
+    var cap=col.capacity;if(!cap||!cap.planned)return;
+    var rem=(cap.planned+cap.added)-cap.delivered,capL=(cap.totalSprints-cap.sprintsDone)*cap.velocity;
+    if(cap.added>0){var p=Math.round(cap.added/cap.planned*100);out.push({lv:p>20?'high':'med',txt:col.shortLabel+': +'+cap.added+' ite'+(cap.added>1?'ns':'m')+' adicionados no quarter (+'+p+'%) — avaliar impacto nos OKRs planejados'});}
+    if(rem>capL*1.05)out.push({lv:'high',txt:col.shortLabel+': '+rem+' itens pendentes vs capacidade ~'+capL+' em '+(cap.totalSprints-cap.sprintsDone)+' sprints — risco de não concluir as entregas dos OKRs'});
+  });
+  /* Progresso médio geral */
+  var avg=0,cnt=0;cols.forEach(function(c){c.krs.forEach(function(k){avg+=k.curr;cnt++;});});
+  if(cnt){avg=Math.round(avg/cnt);if(avg<expPct*0.7)out.push({lv:'high',txt:'Progresso médio dos KRs ('+avg+'%) está '+(expPct-avg)+'pp abaixo do esperado ('+expPct+'%) — quarter em risco'});}
+  if(!out.length)out.push({lv:'ok',txt:'Nenhum risco crítico identificado. Manter cadência e monitorar na próxima sessão MBR'});
+  return out.slice(0,6);
+}
+
+/* ─── INIT ─── */
+loadFromLS();
+buildGlobalFilters();
+buildMesOptions();
+rebuildSlideFilters();
+updateDataStatus();
+renderAll();
+</script>
+</body>
+</html>
