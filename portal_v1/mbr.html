@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MBR · Monthly Business Review · Bradesco Program Board</title>
+<title>MBR · Monthly Business Review · Bradesco Program Board v1.2.0</title>
 <style>
   :root{
     --red:#CC0000;--red-d:#A30000;
@@ -202,6 +202,30 @@
     .agenda-wrap{grid-template-columns:1fr}
     .sessions-grid{grid-template-columns:1fr}
     .drawer{width:100vw}
+  }
+  /* ── Responsive v1.2.0 ──────────────────────────── */
+  @media(max-width:1024px){
+    .sl-body{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .slide-controls .row{flex-wrap:wrap}
+  }
+  @media(max-width:768px){
+    .shell{flex-direction:column;height:auto;min-height:100vh}
+    .sidebar{width:100%!important;flex-direction:row;height:auto;overflow-x:auto}
+    .sidebar .nb{padding:6px 8px;font-size:10px}
+    .sl-body{grid-template-columns:1fr}
+    .dm-cols{grid-template-columns:1fr 1fr}
+    .slide-controls .row{gap:6px}
+    .btn-gen,.btn-print{font-size:11px;padding:7px 12px}
+  }
+  @media(max-width:480px){
+    .dm-cols{grid-template-columns:1fr}
+    .sl-section-title{font-size:8.5px}
+  }
+  @media print{
+    .sidebar,.fbar,.topbar,.slide-controls,.dm-card,.dm-upload{display:none!important}
+    .right{height:auto;overflow:visible}
+    #sl-content{display:block!important}
+    body{background:#fff}
   }
 
   /* ─── APRESENTAÇÃO / SLIDE ─── */
@@ -439,7 +463,7 @@
         <div class="dm-grid">
           <div class="dm-card" style="border-top:3px solid var(--red)">
             <div class="dm-card-title" id="ds-hier">Hierarquia Org. <span class="dm-status empty">sem dados</span></div>
-            <div class="dm-cols" id="ds-hier-detail" style="margin-bottom:10px">Dados compartilhados pelo módulo <b>Estrutura</b>. Importe os CSVs lá e volte aqui.</div>
+            <div class="dm-cols" id="ds-hier-detail" style="margin-bottom:10px">Dados compartilhados pelo módulo <b>Estrutura</b>. Importe tribe.csv, cluster.csv, squad.csv e people.csv lá e volte aqui para recarregar.</div>
             <div class="dm-upload">
               <a href="estrutura.html" class="dm-file-btn" style="text-decoration:none">🏛️ Ir para Estrutura</a>
               <button class="dm-clear-btn" onclick="clearLS('hier');loadFromLS();updateDataStatus()">↺ Recarregar</button>
@@ -447,7 +471,7 @@
           </div>
           <div class="dm-card">
             <div class="dm-card-title" id="ds-okrs">Objetivos <span class="dm-status empty">sem dados</span></div>
-            <div class="dm-cols" id="ds-okrs-detail">Dados compartilhados pelo módulo <b>OKRs & KRs</b>. Importe o <code>Objetivo_novo.csv</code> lá e volte aqui.</div>
+            <div class="dm-cols" id="ds-okrs-detail">Dados compartilhados pelo módulo <b>OKRs &amp; KRs</b>. Importe <code>Objetivo_novo.csv</code> (cols: objetivo.numero, objetivo.progresso, objetivo.estado, trim, tribe, squad) lá e volte aqui para recarregar.</div>
             <div class="dm-upload" style="margin-top:10px">
               <a href="okrs.html" class="dm-file-btn" style="text-decoration:none">🎯 Ir para OKRs</a>
               <button class="dm-clear-btn" onclick="loadFromLS();rebuildSlideFilters();updateDataStatus()">↺ Recarregar</button>
@@ -455,7 +479,7 @@
           </div>
           <div class="dm-card">
             <div class="dm-card-title" id="ds-krs">Key Results <span class="dm-status empty">sem dados</span></div>
-            <div class="dm-cols" id="ds-krs-detail">Dados compartilhados pelo módulo <b>OKRs & KRs</b>. Importe o <code>KRs.csv</code> lá e volte aqui.</div>
+            <div class="dm-cols" id="ds-krs-detail">Dados compartilhados pelo módulo <b>OKRs &amp; KRs</b>. Importe <code>KRs.csv</code> (cols: goal.u_number, nome, progresso, base_value, target_value, realized_value, tipo) lá e volte aqui. Valores reais (base/meta/real) aparecem no slide quando disponíveis.</div>
             <div class="dm-upload" style="margin-top:10px">
               <a href="okrs.html" class="dm-file-btn" style="text-decoration:none">🎯 Ir para OKRs</a>
               <button class="dm-clear-btn" onclick="loadFromLS();updateDataStatus()">↺ Recarregar</button>
@@ -493,10 +517,11 @@
           <div class="dm-upload" style="margin-top:10px;flex-wrap:wrap;gap:6px">
             <button class="dm-file-btn" onclick="exportSnapshot()">⬇️ Exportar Snapshot</button>
             <label class="dm-file-btn" style="cursor:pointer">📂 Importar JSON<input type="file" accept=".json" style="display:none" onchange="importSnapshot(this)"></label>
+            <button class="dm-file-btn" style="background:#127a3e;color:#fff;border-color:#127a3e" onclick="printSlide()" title="Gera uma versão para impressão/PDF do slide atual (use Ctrl+P ou Imprimir do navegador)">🖨️ Exportar PDF</button>
           </div>
         </div>
         <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;font-size:12.5px;color:var(--muted);line-height:1.7;box-shadow:var(--shadow)">
-          💡 Dados compartilhados pelos módulos do portal via <code>localStorage</code>. O <b>Snapshot JSON</b> permite salvar tudo em um arquivo e carregar offline — útil para apresentações sem acesso aos demais módulos.
+          💡 <b>Fluxo de dados:</b> os módulos do portal compartilham dados via <code>localStorage</code>. Para atualizar o MBR: abra cada módulo (Estrutura → OKRs → Planejamento), importe os CSVs e clique em ↺ Recarregar aqui. O <b>Snapshot JSON</b> exporta tudo em um arquivo — ideal para apresentações offline ou outra máquina. O botão <b>🖨️ Exportar PDF</b> gera o slide atual formatado para impressão.
         </div>
       </div>
 
@@ -589,6 +614,28 @@
           <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;box-shadow:var(--shadow)">
             <div style="font-size:14px;font-weight:900;margin-bottom:10px">📦 Lógica de capacidade</div>
             <p style="font-size:13px;color:var(--muted);line-height:1.7">Para cada squad, compara-se <b style="color:var(--txt)">(itens planejados + adicionados no quarter − entregues)</b> com a <b style="color:var(--txt)">capacidade restante</b> (sprints restantes × velocidade média). Itens adicionados ao longo do quarter são sinalizados como potencial impacto nas entregas comprometidas com os OKRs.</p>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-left:4px solid #127a3e;border-radius:var(--radius);padding:20px 24px;box-shadow:var(--shadow)">
+            <div style="font-size:14px;font-weight:900;margin-bottom:12px;color:#127a3e">🆕 Novidades v1.2.0</div>
+            <ul style="font-size:12.5px;color:var(--muted);line-height:1.8">
+              <li><b style="color:var(--txt)">📅 expectedPct() dinâmico:</b> o percentual esperado de cada KR agora funciona para qualquer ano — 2025, 2026, 2027 e além (não mais hardcoded para 2026).</li>
+              <li><b style="color:var(--txt)">🖨️ Exportar PDF:</b> botão "Exportar PDF" na aba Gerenciar Dados abre uma janela formatada do slide atual para impressão ou salvar como PDF.</li>
+              <li><b style="color:var(--txt)">📦 Snapshot JSON aprimorado:</b> exporta e importa todos os dados (okrs, krs, deps, features, stories, hier) em um único arquivo — ideal para apresentações offline.</li>
+              <li><b style="color:var(--txt)">📈 KRs enriquecidos no slide:</b> base / real / meta / tipo exibidos por KR quando disponíveis via CSV; projeção linear ao fim do quarter com indicador de risco.</li>
+              <li><b style="color:var(--txt)">🗂️ Backlog &amp; Entrega no slide:</b> seção com features e stories planejadas vs entregues, com % de conclusão por squad/cluster.</li>
+              <li><b style="color:var(--txt)">🔗 Dependências no slide:</b> seção com KPIs (total, abertas, vencidas, alta criticidade) e lista das mais críticas.</li>
+              <li><b style="color:var(--txt)">📱 Responsivo:</b> layout adapta-se a tablets (≤1024px) e mobile (≤768px).</li>
+            </ul>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;box-shadow:var(--shadow)">
+            <div style="font-size:14px;font-weight:900;margin-bottom:12px">💾 Gerenciar Dados — Fontes e Fluxo</div>
+            <p style="font-size:12.5px;color:var(--muted);line-height:1.7;margin-bottom:10px">O MBR consolida dados de todos os módulos do portal via <code>localStorage</code>. Fluxo recomendado de atualização antes de cada MBR:</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;font-size:12px">
+              <div style="background:var(--bg2);border-radius:6px;padding:10px 12px"><b>① Estrutura</b><br><span style="color:var(--muted)">Abrir estrutura.html → Gerenciar Dados → importar CSVs de estrutura (tribe, cluster, squad, people)</span></div>
+              <div style="background:var(--bg2);border-radius:6px;padding:10px 12px"><b>② OKRs &amp; KRs</b><br><span style="color:var(--muted)">Abrir okrs.html → Gerenciar Dados → importar Objetivo_novo.csv e KRs.csv com base_value, target_value, realized_value</span></div>
+              <div style="background:var(--bg2);border-radius:6px;padding:10px 12px"><b>③ Planejamento</b><br><span style="color:var(--muted)">Abrir planejamento.html → Gerenciar Dados → importar qbr_memo.csv, Dependencias.csv e (novo) Objetivo_novo.csv + KRs.csv</span></div>
+              <div style="background:var(--bg2);border-radius:6px;padding:10px 12px"><b>④ MBR</b><br><span style="color:var(--muted)">Voltar ao MBR → Gerenciar Dados → clicar ↺ Recarregar em cada seção. Ou usar "Exportar Snapshot" e enviar para outra máquina.</span></div>
+            </div>
           </div>
         </div>
       </div>
@@ -1397,15 +1444,22 @@ function mbrSquadAssert(sqKey,quarter){
   return{total:sts.length,wSpr:wSpr.length,noSpr:sts.length-wSpr.length,pastPlanned:pastPl.length,pastDeliv:pastDl.length,assertPct:pct,totalSpills:spillN};
 }
 
+/* Mapa de meses por quarter — dinâmico para qualquer ano (E4) */
+var _QUARTER_MONTHS_MAP = (function(){
+  var base = {Q1:["Janeiro","Fevereiro","Março"],Q2:["Abril","Maio","Junho"],Q3:["Julho","Agosto","Setembro"],Q4:["Outubro","Novembro","Dezembro"]};
+  var out = {};
+  var curY = new Date().getFullYear();
+  for(var y = 2025; y <= curY + 2; y++){
+    for(var q = 1; q <= 4; q++){
+      out["Q"+q+" "+y] = base["Q"+q];
+    }
+  }
+  return out;
+})();
+
 function expectedPct(quarter, mes){
-  var map = {
-    "Q1 2026":["Janeiro","Fevereiro","Março"],
-    "Q2 2026":["Abril","Maio","Junho"],
-    "Q3 2026":["Julho","Agosto","Setembro"],
-    "Q4 2026":["Outubro","Novembro","Dezembro"]
-  };
-  var meses = map[quarter];
-  if(!meses) return 100;
+  var meses = _QUARTER_MONTHS_MAP[quarter];
+  if(!meses || !mes) return 100;
   var idx = meses.indexOf(mes);
   if(idx < 0) return 100;
   return Math.round((idx+1)/meses.length*100);
@@ -1528,10 +1582,9 @@ function mbrKRStatus(kr, expPct){
   if(prog>=expPct){sLbl='🟢 Conforme';sCol='#127a3e';}
   else if(prog>=Math.round(expPct*0.7)){sLbl='🟡 Abaixo';sCol='#b45309';}
   else{sLbl='🔴 Em risco';sCol='#CC0000';}
-  /* projeção ao fim do quarter (3 meses) */
-  var qMap={'Q1 2026':['Janeiro','Fevereiro','Março'],'Q2 2026':['Abril','Maio','Junho'],'Q3 2026':['Julho','Agosto','Setembro'],'Q4 2026':['Outubro','Novembro','Dezembro']};
+  /* projeção ao fim do quarter (3 meses) — usa mapa dinâmico */
   var quarter=MBR.quarter,mes=g('sMes')?g('sMes').value:'';
-  var mArr=qMap[quarter]||[],mIdx=mArr.indexOf(mes)+1||1;
+  var mArr=(_QUARTER_MONTHS_MAP[quarter])||[],mIdx=mArr.indexOf(mes)+1||1;
   var remaining=3-mIdx,rLbl=null,rCol=null;
   if(mIdx>0&&remaining>=0){var pace=prog/mIdx,proj=Math.round(prog+pace*remaining);if(proj>=100){rLbl='proj. '+proj+'%';rCol='#127a3e';}else if(proj>=75){rLbl='proj. '+proj+'% ⚠️';rCol='#b45309';}else{rLbl='proj. '+proj+'% 🔴';rCol='#CC0000';}}
   return{prog:prog,expPct:expPct,sLbl:sLbl,sCol:sCol,rLbl:rLbl,rCol:rCol};
@@ -1976,6 +2029,36 @@ function clearLS(k){
   try{localStorage.removeItem('mbr_'+k);}catch(e){}
   updateDataStatus();
 }
+/* ── Export PDF via window.print() (I10) ── */
+function printSlide(){
+  var slideEl=document.getElementById('sl-content');
+  if(!slideEl){alert('Gere o slide primeiro antes de exportar.');return;}
+  var printWin=window.open('','_blank','width=1100,height=800');
+  printWin.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>MBR '+esc(MBR.quarter||'')+'</title>');
+  printWin.document.write('<style>');
+  printWin.document.write('*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,sans-serif}');
+  printWin.document.write('body{background:#fff;color:#1a1a1a;font-size:11px;line-height:1.4;padding:16px}');
+  printWin.document.write('.sl-slide{max-width:none;padding:0}');
+  printWin.document.write('.sl-header{background:#CC0000;color:#fff;padding:14px 18px;border-radius:8px 8px 0 0;margin-bottom:0}');
+  printWin.document.write('.sl-body{padding:12px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}');
+  printWin.document.write('.sl-col{border:1px solid #e5e7eb;border-radius:6px;overflow:hidden}');
+  printWin.document.write('.sl-col-h{background:#f4f6f8;border-bottom:1px solid #e5e7eb;padding:8px 12px;font-weight:800;font-size:10.5px}');
+  printWin.document.write('.sl-section{padding:10px 12px;border-bottom:1px solid #f0f0f0}');
+  printWin.document.write('.sl-section-title{font-size:9.5px;font-weight:700;text-transform:uppercase;color:#6b7280;margin-bottom:6px}');
+  printWin.document.write('.sl-kr-row{display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:1px solid #f5f5f5;font-size:9px}');
+  printWin.document.write('@media print{body{padding:0}button{display:none}@page{margin:10mm;size:A4 landscape}}');
+  printWin.document.write('</style></head><body>');
+  /* clonar apenas os dados — remove tooltips interativos */
+  var clone=slideEl.cloneNode(true);
+  clone.querySelectorAll('button,input,select,.dm-upload,.dm-file-btn').forEach(function(el){el.remove();});
+  printWin.document.write(clone.outerHTML);
+  printWin.document.write('<div style="margin-top:12px;text-align:right;font-size:9px;color:#9ca3af">Gerado em: '+new Date().toLocaleString('pt-BR')+' · Portal Big Room Planning v1.2.0</div>');
+  printWin.document.write('<div style="text-align:center;margin-top:8px"><button onclick="window.print();window.close()" style="background:#CC0000;color:#fff;border:none;padding:8px 20px;border-radius:6px;font-size:12px;cursor:pointer">🖨️ Imprimir / Salvar PDF</button></div>');
+  printWin.document.write('</body></html>');
+  printWin.document.close();
+  printWin.focus();
+}
+
 /* ── Snapshot JSON: exportar / importar todos os dados em arquivo único ── */
 function exportSnapshot(){
   var snap={
