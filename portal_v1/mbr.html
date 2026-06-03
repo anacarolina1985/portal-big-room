@@ -67,6 +67,29 @@
   .fac::-webkit-calendar-picker-indicator{opacity:.5;cursor:pointer}
   .fac:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 2px rgba(204,0,0,.15)}
   .facts{display:flex;gap:4px;align-items:center;flex-shrink:0;padding-left:6px;border-left:1px solid var(--border)}
+  /* ── Custom dropdown select (cac) ── */
+  .cac{position:relative;flex:1;min-width:0}
+  .cac-btn{display:flex;align-items:center;width:100%;padding:3px 6px;border:1.5px solid var(--border);border-radius:5px;background:var(--card);color:var(--txt);font-size:10px;cursor:pointer;outline:none;transition:border-color .15s;height:26px;text-align:left;gap:4px;font-family:inherit}
+  .cac-btn:hover,.cac.cac-open .cac-btn{border-color:var(--red)}
+  .cac.cac-open .cac-btn{box-shadow:0 0 0 2px rgba(204,0,0,.15)}
+  .cac-val{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .cac-val.ph{color:var(--muted)}
+  .cac-arr{font-size:8px;color:var(--muted);transition:transform .15s;flex-shrink:0}
+  .cac.cac-open .cac-arr{transform:rotate(180deg)}
+  .cac-drop{display:none;position:absolute;top:calc(100% + 2px);left:0;min-width:100%;background:var(--card);border:1.5px solid var(--red);border-radius:5px;box-shadow:0 4px 16px rgba(0,0,0,.15);z-index:9999;max-height:180px;overflow-y:auto}
+  .cac.cac-open .cac-drop{display:block}
+  .cac-opt{padding:5px 8px;font-size:10px;cursor:pointer;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cac-opt:hover,.cac-opt.cac-hi{background:rgba(204,0,0,.07)}
+  .cac-opt.cac-sel{color:var(--red);font-weight:700}
+  /* Bolinha de status do filtro Ativo */
+  .fdot{display:inline-block;width:8px;height:8px;border-radius:50%;vertical-align:middle;margin-right:2px;transition:background .2s,box-shadow .2s;flex-shrink:0}
+  .fdot-all{background:var(--muted);opacity:.7}
+  .fdot-active{background:var(--green);box-shadow:0 0 0 2px rgba(18,122,62,.2)}
+  .fdot-inactive{background:var(--red);box-shadow:0 0 0 2px rgba(204,0,0,.2)}
+  #fg-fa.fa-active .fl,
+  #fg-fa.fa-active .fs{color:var(--green);}
+  #fg-fa.fa-inactive .fl,
+  #fg-fa.fa-inactive .fs{color:var(--red);}
   .fstatus{background:var(--bg2);border-bottom:1px solid var(--border);padding:3px 14px;font-size:9.5px;font-weight:600;display:flex;align-items:center;flex-wrap:wrap;gap:4px;flex-shrink:0}
   .btn{padding:3px 10px;border:1.5px solid var(--border);border-radius:5px;cursor:pointer;font-size:9.5px;font-weight:700;transition:all .15s;height:26px;white-space:nowrap}
   .btn-ghost{background:transparent;color:var(--muted)}
@@ -354,12 +377,12 @@
       <div class="tright"></div>
     </header>
     <div class="fbar">
-      <div class="fg"><label class="fl">🌍 Vertical</label><input class="fs fac" id="fv" list="dl-fv" placeholder="Todos" autocomplete="off" oninput="onAC('fv')" onchange="onAC('fv')"><datalist id="dl-fv"></datalist></div>
-      <div class="fg"><label class="fl">👥 Tribo</label><input class="fs fac" id="ft" list="dl-ft" placeholder="Todos" autocomplete="off" oninput="onAC('ft')" onchange="onAC('ft')"><datalist id="dl-ft"></datalist></div>
-      <div class="fg"><label class="fl">🎯 Cluster</label><input class="fs fac" id="fc" list="dl-fc" placeholder="Todos" autocomplete="off" oninput="onAC('fc')" onchange="onAC('fc')"><datalist id="dl-fc"></datalist></div>
-      <div class="fg"><label class="fl">⚙️ Squad</label><input class="fs fac" id="fs" list="dl-fs" placeholder="Todos" autocomplete="off" oninput="onAC('fs')" onchange="onAC('fs')"><datalist id="dl-fs"></datalist></div>
-      <div class="fg"><label class="fl">📅 Quarter</label><select class="fs" id="fq" onchange="onAC('fq')"><option value="">Todos</option></select></div>
-      <div class="fg"><label class="fl">🔘 Ativo</label><select class="fs" id="fa" onchange="onAC('fa')"><option value="">Todos</option><option value="sim">Apenas Ativos</option><option value="nao">Apenas Inativos</option></select></div>
+      <div class="fg"><label class="fl">🌍 Vertical</label><input class="fs fac" id="fv" list="dl-fv" placeholder="Todos" autocomplete="off" onfocus="this.select()" oninput="onAC('fv')" onchange="onAC('fv')"><datalist id="dl-fv"></datalist></div>
+      <div class="fg"><label class="fl">👥 Tribo</label><input class="fs fac" id="ft" list="dl-ft" placeholder="Todos" autocomplete="off" onfocus="this.select()" oninput="onAC('ft')" onchange="onAC('ft')"><datalist id="dl-ft"></datalist></div>
+      <div class="fg"><label class="fl">🎯 Cluster</label><input class="fs fac" id="fc" list="dl-fc" placeholder="Todos" autocomplete="off" onfocus="this.select()" oninput="onAC('fc')" onchange="onAC('fc')"><datalist id="dl-fc"></datalist></div>
+      <div class="fg"><label class="fl">⚙️ Squad</label><input class="fs fac" id="fs" list="dl-fs" placeholder="Todos" autocomplete="off" onfocus="this.select()" oninput="onAC('fs')" onchange="onAC('fs')"><datalist id="dl-fs"></datalist></div>
+      <div class="fg"><label class="fl">📅 Quarter</label><input class="fs fac" id="fq" list="dl-fq" placeholder="Todos" autocomplete="off" onfocus="this.select()" oninput="onAC('fq')" onchange="onAC('fq')"><datalist id="dl-fq"></datalist></div>
+      <div class="fg" id="fg-fa"><label class="fl"><span class="fdot fdot-all" id="dot-fa"></span>Ativo</label><select class="fs fac" id="fa" onchange="onAC('fa')"><option value="">Todos</option><option value="sim">Apenas Ativos</option><option value="nao">Apenas Inativos</option></select></div>
       <div class="facts">
         <button class="btn btn-ghost" onclick="clearF()">↺ Limpar</button>
         <button class="btn btn-red" onclick="doFilter()">✓ Aplicar</button>
@@ -831,6 +854,14 @@ function popDL(id, opts, keepVal){
 }
 
 var _acTimer=null;
+function activeValue(text){
+  text=(text||'').toString().trim().toLowerCase();
+  return text==='apenas ativos' || text==='sim' ? 'sim' :
+         text==='apenas inativos' || text==='nao' ? 'nao' : '';
+}
+function activeLabel(val){
+  return val==='sim' ? 'Apenas Ativos' : val==='nao' ? 'Apenas Inativos' : '';
+}
 function onAC(field){
   if(_acTimer) clearTimeout(_acTimer);
   _acTimer=setTimeout(function(){ _acApply(field); }, 120);
@@ -842,7 +873,8 @@ function _acApply(field){
   F.c=g('fc')?g('fc').value.trim():'';
   F.s=g('fs')?g('fs').value.trim():'';
   F.q=g('fq')?g('fq').value:'';
-  F.a=g('fa')?g('fa').value:'';
+  var faRaw=g('fa')?g('fa').value.trim():'';
+  F.a=activeValue(faRaw);
   var hier=DATA.loaded.hier?DATA.hier:[];
   if(F.v!==prev.v){
     popDL('ft',hier.filter(function(h){return!F.v||h.vert===F.v;}).map(function(h){return h.tribo;}),'');
@@ -866,7 +898,8 @@ function doFilter(){
   F.c=g('fc')?g('fc').value.trim():'';
   F.s=g('fs')?g('fs').value.trim():'';
   F.q=g('fq')?g('fq').value:'';
-  F.a=g('fa')?g('fa').value:'';
+  var faRaw=g('fa')?g('fa').value.trim():'';
+  F.a=activeValue(faRaw);
   MBR.tribo   = F.t || MBR_DATA.tribos[0];
   MBR.quarter = F.q || '';
   renderAll();
@@ -875,14 +908,15 @@ function doFilter(){
 
 function clearF(){
   F={v:'',t:'',c:'',s:'',q:'',a:''};
-  ['fv','ft','fc','fs'].forEach(function(id){if(g(id))g(id).value='';});
-  if(g('fq'))g('fq').value=''; if(g('fa'))g('fa').value='';
+  ['fv','ft','fc','fs','fa'].forEach(function(id){if(g(id))g(id).value='';});
+  if(g('fq'))g('fq').value='';
+  updateDot();
   MBR.tribo   = MBR_DATA.tribos[0];
   MBR.quarter = '';
   var hier=DATA.loaded.hier?DATA.hier:[];
   popDL('fv',hier.map(function(h){return h.vert;}),'');
   popDL('ft',DATA.loaded.hier?hier.map(function(h){return h.tribo;}):MBR_DATA.tribos,'');
-  popDL('fc',[],''); popDL('fs',[],'');
+  popDL('fc',[],''); popDL('fs',[],'' );
   renderAll();
   updateFStatus();
 }
@@ -895,20 +929,37 @@ function updateFStatus(){
   if(F.c)parts.push('C: '+F.c.substring(0,16));
   if(F.s)parts.push('S: '+F.s.substring(0,16));
   if(F.q)parts.push('Q: '+F.q);
+  if(F.a) parts.push('A: '+activeLabel(F.a));
   el.textContent=parts.length?parts.join(' › '):'Exibindo todo o MBR';
   bar.style.display=parts.length?'':'none';
 }
 
 function buildGlobalFilters(){
-  /* Quarter options */
-  var fq=g('fq');
-  if(fq) fq.innerHTML='<option value="">Todos</option>'+MBR_DATA.quarters.map(function(q){return'<option value="'+q+'">'+q+'</option>';}).join('');
+  /* Quarter datalist */
+  popDL('fq', MBR_DATA.quarters, F.q);
   /* Hierarchy datalists */
   var hier=DATA.loaded.hier?DATA.hier:[];
   popDL('fv',hier.map(function(h){return h.vert;}),'');
   popDL('ft',DATA.loaded.hier?hier.map(function(h){return h.tribo;}):MBR_DATA.tribos,'');
   popDL('fc',[],''); popDL('fs',[],'');
 }
+
+/* ── Custom dropdown (cac) ── */
+function cacToggle(id){var w=document.getElementById('cac-'+id);if(!w)return;var o=w.classList.contains('cac-open');document.querySelectorAll('.cac.cac-open').forEach(function(el){el.classList.remove('cac-open');});if(!o)w.classList.add('cac-open');}
+function cacPick(e,id,val,label){e.preventDefault();var inp=document.getElementById(id);if(inp)inp.value=val;var v=document.getElementById('cacv-'+id);if(v){v.textContent=val?label:'Todos';v.classList.toggle('ph',!val);}var drop=document.getElementById('cacd-'+id);if(drop)drop.querySelectorAll('.cac-opt').forEach(function(el){el.classList.toggle('cac-sel',el.dataset.val===val);});var w=document.getElementById('cac-'+id);if(w)w.classList.remove('cac-open');updateDot();if(typeof onAC==='function')onAC(id);}
+function updateDot(){
+  var dot=document.getElementById('dot-fa');
+  var fg=document.getElementById('fg-fa');
+  var v=activeValue(g('fa')?g('fa').value:'');
+  if(dot) dot.className='fdot '+(v==='sim'?'fdot-active':v==='nao'?'fdot-inactive':'fdot-all');
+  if(fg){
+    fg.classList.remove('fa-active','fa-inactive');
+    if(v==='sim') fg.classList.add('fa-active');
+    else if(v==='nao') fg.classList.add('fa-inactive');
+  }
+}
+function cacReset(id){var inp=document.getElementById(id);if(inp)inp.value='';var v=document.getElementById('cacv-'+id);if(v){v.textContent='Todos';v.classList.add('ph');}var drop=document.getElementById('cacd-'+id);if(drop)drop.querySelectorAll('.cac-opt').forEach(function(el){el.classList.toggle('cac-sel',el.dataset.val==='');});}
+document.addEventListener('click',function(e){if(!e.target.closest||!e.target.closest('.cac'))document.querySelectorAll('.cac.cac-open').forEach(function(w){w.classList.remove('cac-open');});});
 
 function filteredSessions(){
   return MBR_DATA.sessions.filter(function(s){
@@ -2858,6 +2909,7 @@ function _reloadAll(){
   try{
     loadFromLS();
     buildGlobalFilters();
+    updateDot();
     buildMesOptions();
     _rebuildFiltersNoEvent();
     updateDataStatus();
