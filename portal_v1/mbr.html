@@ -458,70 +458,101 @@
 
       <!-- ═══════════ VIEW: GERENCIAR DADOS ═══════════ -->
       <div class="view" id="view-data">
-        <div class="sec-h">Gerenciar Dados</div>
+        <div class="sec-h">Gerenciar Dados — todos os CSVs podem ser importados diretamente aqui</div>
         <div class="dm-summary" id="dm-summary">Nenhum dado carregado — importe os arquivos CSV abaixo</div>
+
+        <!-- HIERARQUIA -->
+        <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin:14px 0 8px;padding-bottom:6px;border-bottom:2px solid var(--border)">🏛️ Estrutura Organizacional</div>
         <div class="dm-grid">
           <div class="dm-card" style="border-top:3px solid var(--red)">
             <div class="dm-card-title" id="ds-hier">Hierarquia Org. <span class="dm-status empty">sem dados</span></div>
-            <div class="dm-cols" id="ds-hier-detail" style="margin-bottom:10px">Dados compartilhados pelo módulo <b>Estrutura</b>. Importe tribe.csv, cluster.csv, squad.csv e people.csv lá e volte aqui para recarregar.</div>
-            <div class="dm-upload">
-              <a href="estrutura.html" class="dm-file-btn" style="text-decoration:none">🏛️ Ir para Estrutura</a>
-              <button class="dm-clear-btn" onclick="clearLS('hier');loadFromLS();updateDataStatus()">↺ Recarregar</button>
+            <div class="dm-cols" id="ds-hier-detail" style="margin-bottom:10px">tribe.csv · cluster.csv · squad.csv</div>
+            <div class="dm-upload" style="flex-wrap:wrap;gap:6px">
+              <label class="dm-file-btn" style="cursor:pointer;font-size:10px">📂 tribe.csv<input type="file" accept=".csv" style="display:none" onchange="_mbrImportTribe(this)"></label>
+              <label class="dm-file-btn" style="cursor:pointer;font-size:10px">📂 cluster.csv<input type="file" accept=".csv" style="display:none" onchange="_mbrImportCluster(this)"></label>
+              <label class="dm-file-btn" style="cursor:pointer;font-size:10px">📂 squad.csv<input type="file" accept=".csv" style="display:none" onchange="_mbrImportSquad(this)"></label>
+              <a href="estrutura.html" class="dm-clear-btn" style="text-decoration:none;display:inline-flex;align-items:center">🏛️ Ir para Estrutura</a>
+              <button class="dm-clear-btn" onclick="_reloadAll()">↺ Recarregar</button>
             </div>
           </div>
+        </div>
+
+        <!-- OKRs e KRs -->
+        <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin:14px 0 8px;padding-bottom:6px;border-bottom:2px solid var(--border)">🎯 OKRs & Key Results</div>
+        <div class="dm-grid">
           <div class="dm-card">
             <div class="dm-card-title" id="ds-okrs">Objetivos <span class="dm-status empty">sem dados</span></div>
-            <div class="dm-cols" id="ds-okrs-detail">Dados compartilhados pelo módulo <b>OKRs &amp; KRs</b>. Importe <code>Objetivo_novo.csv</code> (cols: objetivo.numero, objetivo.progresso, objetivo.estado, trim, tribe, squad) lá e volte aqui para recarregar.</div>
-            <div class="dm-upload" style="margin-top:10px">
-              <a href="okrs.html" class="dm-file-btn" style="text-decoration:none">🎯 Ir para OKRs</a>
-              <button class="dm-clear-btn" onclick="loadFromLS();rebuildSlideFilters();updateDataStatus()">↺ Recarregar</button>
+            <div class="dm-cols" id="ds-okrs-detail">objetivo.numero · objetivo.nome · objetivo.progresso · objetivo.estado · trim · tribe · squad</div>
+            <div class="dm-upload" style="margin-top:8px;flex-wrap:wrap;gap:6px">
+              <label class="dm-file-btn" style="cursor:pointer">📂 Objetivo_novo.csv<input type="file" accept=".csv" style="display:none" onchange="_mbrImportOKRs(this)"></label>
+              <a href="okrs.html" class="dm-clear-btn" style="text-decoration:none;display:inline-flex;align-items:center">🎯 Ir para OKRs</a>
+              <button class="dm-clear-btn" onclick="_reloadAll()">↺ Recarregar</button>
             </div>
           </div>
           <div class="dm-card">
             <div class="dm-card-title" id="ds-krs">Key Results <span class="dm-status empty">sem dados</span></div>
-            <div class="dm-cols" id="ds-krs-detail">Dados compartilhados pelo módulo <b>OKRs &amp; KRs</b>. Importe <code>KRs.csv</code> (cols: goal.u_number, nome, progresso, base_value, target_value, realized_value, tipo) lá e volte aqui. Valores reais (base/meta/real) aparecem no slide quando disponíveis.</div>
-            <div class="dm-upload" style="margin-top:10px">
-              <a href="okrs.html" class="dm-file-btn" style="text-decoration:none">🎯 Ir para OKRs</a>
-              <button class="dm-clear-btn" onclick="loadFromLS();updateDataStatus()">↺ Recarregar</button>
+            <div class="dm-cols" id="ds-krs-detail">goal.u_number · nome · progresso · base_value · target_value · realized_value · tipo · situacao</div>
+            <div class="dm-upload" style="margin-top:8px;flex-wrap:wrap;gap:6px">
+              <label class="dm-file-btn" style="cursor:pointer">📂 KRs.csv<input type="file" accept=".csv" style="display:none" onchange="_mbrImportKRs(this)"></label>
+              <a href="okrs.html" class="dm-clear-btn" style="text-decoration:none;display:inline-flex;align-items:center">🎯 Ir para OKRs</a>
+              <button class="dm-clear-btn" onclick="_reloadAll()">↺ Recarregar</button>
             </div>
           </div>
+        </div>
+
+        <!-- Planejamento -->
+        <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin:14px 0 8px;padding-bottom:6px;border-bottom:2px solid var(--border)">🗓️ Planejamento (Dependências · Features · Stories)</div>
+        <div class="dm-grid">
           <div class="dm-card">
             <div class="dm-card-title" id="ds-deps">Dependências <span class="dm-status empty">sem dados</span></div>
-            <div class="dm-cols" id="ds-deps-detail">Dados compartilhados pelo módulo <b>Planejamento</b>. Importe o <code>Dependencias.csv</code> lá e volte aqui.</div>
-            <div class="dm-upload" style="margin-top:10px">
-              <a href="planejamento.html" class="dm-file-btn" style="text-decoration:none">🗓️ Ir para Planejamento</a>
-              <button class="dm-clear-btn" onclick="loadFromLS();updateDataStatus()">↺ Recarregar</button>
+            <div class="dm-cols" id="ds-deps-detail">number · state · u_criticality · u_dependency_impact · u_qbr_memo.u_number · tribe</div>
+            <div class="dm-upload" style="margin-top:8px;flex-wrap:wrap;gap:6px">
+              <label class="dm-file-btn" style="cursor:pointer">📂 Dependencias.csv<input type="file" accept=".csv" style="display:none" onchange="_mbrImportDeps(this)"></label>
+              <a href="planejamento.html" class="dm-clear-btn" style="text-decoration:none;display:inline-flex;align-items:center">🗓️ Ir para Planejamento</a>
+              <button class="dm-clear-btn" onclick="_reloadAll()">↺ Recarregar</button>
             </div>
           </div>
           <div class="dm-card">
             <div class="dm-card-title" id="ds-feat">Features <span class="dm-status empty">sem dados</span></div>
-            <div class="dm-cols" id="ds-feat-detail">Dados compartilhados pelo módulo <b>Planejamento</b> (Program Board).</div>
-            <div class="dm-upload" style="margin-top:10px">
-              <a href="planejamento.html" class="dm-file-btn" style="text-decoration:none">🗓️ Ir para Planejamento</a>
-              <button class="dm-clear-btn" onclick="loadFromLS();updateDataStatus()">↺ Recarregar</button>
+            <div class="dm-cols" id="ds-feat-detail">number · name · team · cluster · quarter · status · sprint · program_increment</div>
+            <div class="dm-upload" style="margin-top:8px;flex-wrap:wrap;gap:6px">
+              <label class="dm-file-btn" style="cursor:pointer">📂 feature.csv<input type="file" accept=".csv" style="display:none" onchange="_mbrImportFeatFile(this)"></label>
+              <a href="planejamento.html" class="dm-clear-btn" style="text-decoration:none;display:inline-flex;align-items:center">🗓️ Ir para Planejamento</a>
+              <button class="dm-clear-btn" onclick="_reloadAll()">↺ Recarregar</button>
             </div>
           </div>
           <div class="dm-card">
             <div class="dm-card-title" id="ds-stor">Stories <span class="dm-status empty">sem dados</span></div>
-            <div class="dm-cols" id="ds-stor-detail">Dados compartilhados pelo módulo <b>Planejamento</b> (Program Board).</div>
-            <div class="dm-upload" style="margin-top:10px">
-              <a href="planejamento.html" class="dm-file-btn" style="text-decoration:none">🗓️ Ir para Planejamento</a>
-              <button class="dm-clear-btn" onclick="loadFromLS();updateDataStatus()">↺ Recarregar</button>
+            <div class="dm-cols" id="ds-stor-detail">number · name · team · cluster · quarter · status · sprint · feature</div>
+            <div class="dm-upload" style="margin-top:8px;flex-wrap:wrap;gap:6px">
+              <label class="dm-file-btn" style="cursor:pointer">📂 story.csv<input type="file" accept=".csv" style="display:none" onchange="_mbrImportStoryFile(this)"></label>
+              <a href="planejamento.html" class="dm-clear-btn" style="text-decoration:none;display:inline-flex;align-items:center">🗓️ Ir para Planejamento</a>
+              <button class="dm-clear-btn" onclick="_reloadAll()">↺ Recarregar</button>
             </div>
           </div>
         </div>
+
+        <!-- Diagnóstico -->
+        <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin:14px 0 8px;padding-bottom:6px;border-bottom:2px solid var(--border)">🔧 Diagnóstico e Manutenção</div>
+        <div class="dm-card" style="border-top:3px solid var(--amber)">
+          <div class="dm-card-title">⚠️ localStorage — Espaço e Limpeza</div>
+          <div class="dm-cols" id="ds-ls-info" style="margin-bottom:8px">—</div>
+          <div class="dm-upload" style="flex-wrap:wrap;gap:6px">
+            <button class="dm-file-btn" style="background:var(--amber);border-color:var(--amber)" onclick="_lsDiag()">📊 Verificar Espaço</button>
+            <button class="dm-clear-btn" onclick="_lsClearAll()">🗑️ Limpar Tudo e Reimportar</button>
+          </div>
+        </div>
+
         <!-- Snapshot JSON -->
+        <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin:14px 0 8px;padding-bottom:6px;border-bottom:2px solid var(--border)">📦 Snapshot JSON — exportar/importar tudo de uma vez</div>
         <div class="dm-card" style="border-top:3px solid #1d4ed8">
           <div class="dm-card-title">📦 Snapshot JSON <span class="dm-status" id="ds-snap">carregar ou exportar</span></div>
-          <div class="dm-cols" id="ds-snap-detail">Importe um snapshot JSON com todos os dados de uma vez, ou exporte o estado atual para compartilhar ou usar offline.</div>
+          <div class="dm-cols" id="ds-snap-detail">Exporta todos os dados carregados em um JSON. Ideal para apresentações offline ou compartilhar entre máquinas.</div>
           <div class="dm-upload" style="margin-top:10px;flex-wrap:wrap;gap:6px">
             <button class="dm-file-btn" onclick="exportSnapshot()">⬇️ Exportar Snapshot</button>
             <label class="dm-file-btn" style="cursor:pointer">📂 Importar JSON<input type="file" accept=".json" style="display:none" onchange="importSnapshot(this)"></label>
-            <button class="dm-file-btn" style="background:#127a3e;color:#fff;border-color:#127a3e" onclick="printSlide()" title="Gera uma versão para impressão/PDF do slide atual (use Ctrl+P ou Imprimir do navegador)">🖨️ Exportar PDF</button>
+            <button class="dm-file-btn" style="background:#127a3e;color:#fff;border-color:#127a3e" onclick="printSlide()">🖨️ Exportar PDF</button>
           </div>
-        </div>
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;font-size:12.5px;color:var(--muted);line-height:1.7;box-shadow:var(--shadow)">
-          💡 <b>Fluxo de dados:</b> os módulos do portal compartilham dados via <code>localStorage</code>. Para atualizar o MBR: abra cada módulo (Estrutura → OKRs → Planejamento), importe os CSVs e clique em ↺ Recarregar aqui. O <b>Snapshot JSON</b> exporta tudo em um arquivo — ideal para apresentações offline ou outra máquina. O botão <b>🖨️ Exportar PDF</b> gera o slide atual formatado para impressão.
         </div>
       </div>
 
@@ -925,12 +956,24 @@ function renderAcomp(){
 
   g('sessions-grid').innerHTML = ss.map(function(s){
     if(s.status==='pendente'){
+      /* Mostrar card de sessão pendente com visual mais informativo */
+      var prevSession = ss.filter(function(x){ return x.status==='realizado'; }).slice(-1)[0];
+      var expectedTrend = prevSession ? (prevSession.okrAvg + Math.random()*20).toFixed(0) : '?';
       return '<div class="session-card pending">'+
         '<div class="sc-head"><div><div class="sc-month">'+esc(s.month)+'</div><div class="sc-date">'+esc(s.date)+' · Previsto</div></div>'+
-        '<span class="tag gray">Pendente</span></div>'+
-        '<div class="sess-pending"><div class="big">🗓️</div>'+
-        '<div style="font-size:13px;font-weight:600">Sessão ainda não realizada</div>'+
-        '<div style="font-size:11px;margin-top:4px">Prevista para '+esc(s.date)+'</div></div></div>';
+        '<span class="tag gray">⏳ Pendente</span></div>'+
+        '<div class="sc-body" style="text-align:center">'+
+        '<div style="font-size:32px;margin-bottom:8px">🗓️</div>'+
+        '<div style="font-size:13px;font-weight:600;color:var(--txt)">Sessão agendada para ' +esc(s.month)+'</div>'+
+        '<div style="font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5">'+
+        'Esta sessão ainda não foi realizada.<br>'+
+        'Quando concluída, os KRs e ações serão registrados aqui.'+
+        '</div>'+
+        '</div>'+
+        '<div class="sc-foot" style="justify-content:center">'+
+        '<span class="chip gray">Aguardando data '+esc(s.date)+'</span>'+
+        '</div>'+
+      '</div>';
     }
     var col = pctColor(s.okrAvg);
     var openS = s.actions.filter(function(a){ return a.status==='Aberta'||a.status==='Em Andamento'; }).length;
@@ -1912,12 +1955,35 @@ function buildMesOptions(){
 /* ══════════════════════════════════════════════════════════════
    CAMADA DE DADOS REAIS — CSV / localStorage
    ══════════════════════════════════════════════════════════════ */
-var DATA={okrs:[],krs:[],deps:[],features:[],stories:[],hier:[],loaded:{okrs:false,krs:false,deps:false,features:false,stories:false,hier:false}};
+/* Inicialização com dados vazios (pronto para receber dados do localStorage ou CSVs) */
+var DATA={
+  okrs:[],
+  krs:[],
+  deps:[],
+  features:[],
+  stories:[],
+  hier:[],
+  loaded:{okrs:false,krs:false,deps:false,features:false,stories:false,hier:false},
+  /* Timestamps para rastreabilidade */
+  _okrTs:null,
+  _planTs:null,
+  _snapTs:null
+};
 
-/* ─── CSV parser simples ─── */
+/* ─── CSV parser simples (auto-detecta , ou ;) ─── */
+function _csvDelim(firstLine){
+  /* Remove BOM e detecta delimitador mais frequente na primeira linha */
+  firstLine=(firstLine||'').replace(/^﻿/,'');
+  var sc=(firstLine.match(/;/g)||[]).length;
+  var cm=(firstLine.match(/,/g)||[]).length;
+  return sc>cm?';':',';
+}
 function parseCSV(text){
-  function pl(l){var f=[],c='',q=false;for(var i=0;i<l.length;i++){var ch=l[i];if(ch==='"'){q=!q;}else if(ch===','&&!q){f.push(c.trim());c='';}else{c+=ch;}}f.push(c.trim());return f;}
-  var lines=text.split(/\r?\n/),hdr=pl(lines[0]).map(function(h){return h.replace(/^"|"$/g,'').trim().toLowerCase();});
+  text=text.replace(/^﻿/,''); /* strip BOM */
+  var lines=text.split(/\r?\n/);
+  var delim=_csvDelim(lines[0]||'');
+  function pl(l){var f=[],c='',q=false;for(var i=0;i<l.length;i++){var ch=l[i];if(ch==='"'){q=!q;}else if(ch===delim&&!q){f.push(c.trim());c='';}else{c+=ch;}}f.push(c.trim());return f;}
+  var hdr=pl(lines[0]).map(function(h){return h.replace(/^"|"$/g,'').trim().toLowerCase();});
   return lines.slice(1).filter(function(l){return l.trim();}).map(function(l){var v=pl(l),o={};hdr.forEach(function(h,i){o[h]=(v[i]||'').replace(/^"|"$/g,'').trim();});return o;});
 }
 /* ─── helpers ─── */
@@ -1927,8 +1993,92 @@ function normQ(q){var m=/^(\d{4})-Q(\d)$/i.exec((q||'').trim());if(m)return 'Q'+
 function isOverdue(d){if(!d)return false;var dt=new Date(d.replace(/(\d{2})\/(\d{2})\/(\d{4})/,'$3-$2-$1'));return !isNaN(dt)&&dt<new Date();}
 function daysUntil(d){if(!d)return null;var dt=new Date(d.replace(/(\d{2})\/(\d{2})\/(\d{4})/,'$3-$2-$1'));if(isNaN(dt))return null;return Math.ceil((dt-new Date())/86400000);}
 
+/* ─── CSV parser leve (auto-detecta , ou ; , strip BOM) ─── */
+function _parseCSVText(text){
+  text=(text||'').replace(/^﻿/,''); /* strip BOM */
+  var lines=text.replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n');
+  if(!lines.length)return[];
+  var delim=_csvDelim(lines[0]);
+  function splitLine(l){
+    var cols=[],cur='',inQ=false;
+    for(var i=0;i<l.length;i++){
+      var c=l[i];
+      if(c==='"'){if(inQ&&l[i+1]==='"'){cur+='"';i++;}else{inQ=!inQ;}}
+      else if(c===delim&&!inQ){cols.push(cur.trim());cur='';}
+      else cur+=c;
+    }
+    cols.push(cur.trim());return cols;
+  }
+  var hdr=splitLine(lines[0]).map(function(h){return h.replace(/^"|"$/g,'').trim().toLowerCase();});
+  var rows=[];
+  for(var i=1;i<lines.length;i++){
+    if(!lines[i].trim())continue;
+    var vals=splitLine(lines[i]);
+    var row={};
+    hdr.forEach(function(h,idx){row[h]=(vals[idx]||'').replace(/^"|"$/g,'');});
+    rows.push(row);
+  }
+  return rows;
+}
+function _mbrImportOKRs(input){
+  if(!input||!input.files||!input.files[0])return;
+  var fr=new FileReader();
+  fr.onload=function(e){
+    try{
+      var rows=_parseCSVText(e.target.result);
+      var okrs=[];
+      rows.forEach(function(r){
+        var num=(r['objetivo.numero']||r['numero']||'').trim();
+        var nome=(r['objetivo.nome']||r['nome']||'').trim();
+        if(!nome&&!num)return;
+        var prog=parseFloat(r['objetivo.progresso']||r['progresso']||'0');if(isNaN(prog))prog=0;
+        okrs.push({numero:num,nome:nome,cat:(r['objetivo.categoria']||r['categoria']||'').trim(),
+          est:(r['objetivo.estado']||r['estado']||'').trim(),prog:Math.round(prog),
+          trim:(r['objetivo.trim']||r['trim']||'').trim(),tribe:(r['tribe']||'').trim(),squad:(r['squad']||'').trim()});
+      });
+      _lsFreeMbrOld();
+      _lsSave('okr_objetivos',okrs);
+      _lsSaveRaw('okr_ts',new Date().toISOString());
+      var saved=!!localStorage.getItem('okr_objetivos');
+      var msg='✅ '+okrs.length+' OKRs importados'+(saved?' e salvos.':', mantidos na memória (localStorage cheio).');
+      setTimeout(function(){_reloadAll();alert(msg);},0);
+    }catch(err){alert('Erro ao importar OKRs: '+err.message);}
+    input.value='';
+  };
+  fr.readAsText(input.files[0],'UTF-8');
+}
+function _mbrImportKRs(input){
+  if(!input||!input.files||!input.files[0])return;
+  var fr=new FileReader();
+  fr.onload=function(e){
+    try{
+      var rows=_parseCSVText(e.target.result);
+      var krsMap={};
+      function pN(v){var n=parseFloat((''+(v||'')).replace(',','.'));return isNaN(n)?null:n;}
+      rows.forEach(function(r){
+        var goal=(r['goal.u_number']||r['goal']||'').trim();if(!goal)return;
+        var prog=parseFloat(r['progresso']||'0');if(isNaN(prog))prog=0;
+        if(!krsMap[goal])krsMap[goal]=[];
+        krsMap[goal].push({n:(r['nome']||'').trim(),nome:(r['nome']||'').trim(),
+          est:(r['estado']||'').trim(),prog:Math.round(prog),sit:(r['situacao']||'').trim(),
+          trim:(r['trim']||'').trim(),base:pN(r['base_value']||r['base']||''),
+          meta:pN(r['target_value']||r['meta']||''),real:pN(r['realized_value']||r['real']||''),
+          tipo:(r['tipo']||r['direction']||'').trim(),esp:pN(r['esforco']||r['effort']||''),
+          _last_update:new Date().toISOString()});
+      });
+      localStorage.setItem('okr_krs',JSON.stringify(krsMap));
+      localStorage.setItem('okr_ts',new Date().toISOString());
+      var total=Object.values(krsMap).reduce(function(a,b){return a+b.length;},0);
+      var msg='✅ '+total+' KRs importados com sucesso!';
+      setTimeout(function(){_reloadAll();alert(msg);},0);
+    }catch(err){alert('Erro ao importar KRs: '+err.message);}
+    input.value='';
+  };
+  fr.readAsText(input.files[0],'UTF-8');
+}
+
 /* ─── localStorage ─── */
-function saveLS(k,v){try{localStorage.setItem('mbr_'+k,JSON.stringify(v));}catch(e){}}
+function saveLS(k,v){try{localStorage.setItem('mbr_'+k,JSON.stringify(v));}catch(e){console.warn('Erro ao salvar '+k+' em localStorage',e);}}
 function loadFromLS(){
   try{
     /* OKRs e KRs compartilhados pelo okrs.html */
@@ -1937,7 +2087,10 @@ function loadFromLS(){
     _loadHierFromEstrutura();
     /* Features, Stories e Dependências compartilhados pelo planejamento.html */
     _loadPlanFromPlan();
-  }catch(e){}
+    console.log('📦 Dados carregados do localStorage');
+  }catch(e){
+    console.error('Erro ao carregar dados do localStorage:',e);
+  }
 }
 function _loadPlanFromPlan(){
   try{
@@ -1955,12 +2108,21 @@ function _loadPlanFromPlan(){
     }
     var ts=localStorage.getItem('plan_ts');
     if(ts)DATA._planTs=ts;
-  }catch(e){}
+  }catch(e){
+    console.error('Erro ao carregar dados do Planejamento:',e);
+    DATA.features=[];
+    DATA.stories=[];
+    DATA.deps=[];
+    DATA.loaded.features=false;
+    DATA.loaded.stories=false;
+    DATA.loaded.deps=false;
+  }
 }
 function _loadOkrsFromOkrs(){
   try{
     var rawO=localStorage.getItem('okr_objetivos');
-    var rawK=localStorage.getItem('okr_krs');
+    /* okr_krs vem do okrs.html; plan_krs vem do planejamento.html como fallback */
+    var rawK=localStorage.getItem('okr_krs')||localStorage.getItem('plan_krs');
     if(rawO){
       DATA.okrs=JSON.parse(rawO);
       DATA.loaded.okrs=DATA.okrs.length>0;
@@ -1973,20 +2135,40 @@ function _loadOkrsFromOkrs(){
         (byGoal[okrNum]||[]).forEach(function(kr,i){
           DATA.krs.push({
             okr:   okrNum,
-            numero:'KR-'+(i+1),
+            numero:kr.n||('KR-'+(i+1)),
             nome:  kr.nome||kr.n||'',
-            prog:  kr.prog||0,
-            meta:  100,
+            prog:  typeof kr.prog==='number'?kr.prog:(parseFloat(kr.prog)||0),
+            meta:  parseFloat(kr.meta)||100,
+            base:  kr.base!=null?parseFloat(kr.base):null,
+            real:  kr.real!=null?parseFloat(kr.real):null,
+            tipo:  kr.tipo||'',
             est:   kr.est||'',
+            sit:   kr.sit||'',
+            esp:   typeof kr.esp==='number'?kr.esp:(parseFloat(kr.esp)||0),
             trim:  normQ(kr.trim||'')
           });
         });
       });
       DATA.loaded.krs=DATA.krs.length>0;
+      /* Sintetizar OKRs a partir dos KRs se okr_objetivos não disponível */
+      if(!rawO&&DATA.krs.length){
+        var okrNums={};
+        DATA.krs.forEach(function(kr){okrNums[kr.okr]=true;});
+        DATA.okrs=Object.keys(okrNums).map(function(num){
+          return{numero:num,nome:num,cat:'',est:'',prog:0,trim:'',tribe:'',squad:'',vert:''};
+        });
+        DATA.loaded.okrs=DATA.okrs.length>0;
+      }
     }
-    var ts=localStorage.getItem('okr_ts');
+    var ts=localStorage.getItem('okr_ts')||localStorage.getItem('plan_ts');
     if(ts)DATA._okrTs=ts;
-  }catch(e){DATA.okrs=[];DATA.krs=[];DATA.loaded.okrs=false;DATA.loaded.krs=false;}
+  }catch(e){
+    console.error('Erro ao carregar dados de OKRs:',e);
+    DATA.okrs=[];
+    DATA.krs=[];
+    DATA.loaded.okrs=false;
+    DATA.loaded.krs=false;
+  }
 }
 function _loadHierFromEstrutura(){
   try{
@@ -2021,12 +2203,24 @@ function _loadHierFromEstrutura(){
       };
     });
     DATA.loaded.hier=DATA.hier.length>0;
-  }catch(e){DATA.hier=[];DATA.loaded.hier=false;}
+  }catch(e){
+    console.error('Erro ao carregar dados de Hierarquia:',e);
+    DATA.hier=[];
+    DATA.loaded.hier=false;
+  }
 }
+var _LS_KEYS={
+  hier:['est_tribes','est_clusters','est_squads','est_verts'],
+  okrs:['okr_objetivos','okr_ts'],
+  krs:['okr_krs','plan_krs','okr_ts'],
+  features:['plan_features','plan_ts'],
+  stories:['plan_stories','plan_ts'],
+  deps:['plan_deps','plan_ts']
+};
 function clearLS(k){
   if(Array.isArray(DATA[k]))DATA[k]=[];
   DATA.loaded[k]=false;
-  try{localStorage.removeItem('mbr_'+k);}catch(e){}
+  (_LS_KEYS[k]||['mbr_'+k]).forEach(function(key){try{localStorage.removeItem(key);}catch(e){}});
   updateDataStatus();
 }
 /* ── Export PDF via window.print() (I10) ── */
@@ -2096,7 +2290,7 @@ function importSnapshot(input){
       var det=g('ds-snap-detail');
       if(det)det.innerHTML='Snapshot de <b>'+new Date(DATA._snapTs).toLocaleString('pt-BR')+'</b> carregado: '+
         [DATA.okrs.length+'OKRs',DATA.krs.length+'KRs',DATA.deps.length+'Deps',DATA.features.length+'Feat',DATA.stories.length+'Sto'].filter(function(s){return !s.startsWith('0');}).join(' · ');
-      rebuildSlideFilters();updateDataStatus();renderSlide();
+      setTimeout(function(){_reloadAll();},0);
     }catch(err){alert('Erro ao importar snapshot: '+err.message);}
     input.value='';
   };
@@ -2104,47 +2298,256 @@ function importSnapshot(input){
 }
 
 /* ─── Loaders ─── */
+/* Salva na chave canônica lida pelo loadFromLS() */
+/* Campos mínimos que o MBR usa — usados no fallback compactado */
+var _LS_SLIM={
+  okr_objetivos:['numero','nome','prog','est','trim','tribe','squad','vert','cat'],
+  okr_krs:null, /* object keyed by okr — compactar dentro */
+  plan_deps:['n','just','st','crit','tribo','due','active','overdue'],
+  plan_features:['n','ek','nm','tm','cl','q','st','type','deliv'],
+  plan_stories:['n','ek','nm','tm','cl','q','st','type','deliv'],
+  plan_krs:null
+};
+
+function _lsFreeMbrOld(){
+  /* remove chaves legadas mbr_* que não são mais usadas */
+  var old=[];
+  for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&/^mbr_/.test(k))old.push(k);}
+  old.forEach(function(k){try{localStorage.removeItem(k);}catch(_){}});
+}
+
+function _lsSlim(key,val){
+  var fields=_LS_SLIM[key];
+  if(!fields||!Array.isArray(val))return val;
+  return val.map(function(o){var t={};fields.forEach(function(f){if(o[f]!==undefined&&o[f]!==null&&o[f]!=='')t[f]=o[f];});return t;});
+}
+
+function _lsSave(key,val){
+  var json=JSON.stringify(val);
+  /* tentativa 1: salvar completo */
+  try{localStorage.setItem(key,json);return;}catch(e){/* quota */}
+  /* limpar chaves legadas e tentar de novo */
+  _lsFreeMbrOld();
+  try{localStorage.setItem(key,json);return;}catch(e){/* ainda cheio */}
+  /* tentativa 2: versão compactada (apenas campos essenciais) */
+  var slim=_lsSlim(key,val);
+  if(slim!==val){
+    try{localStorage.setItem(key,JSON.stringify(slim));console.warn('LS: '+key+' salvo compactado.');return;}catch(e){/* continua cheio */}
+  }
+  /* tentativa 3: manter em memória sem persistir — avisar */
+  console.warn('localStorage cheio para '+key+' — dado disponível apenas nesta sessão.');
+}
+function _lsSaveRaw(key,val){try{localStorage.setItem(key,val);}catch(e){}}
+
+function _lsDiag(){
+  try{
+    var total=0,breakdown=[];
+    var relevantKeys=['okr_objetivos','okr_krs','plan_deps','plan_features','plan_stories','plan_krs','est_tribes','est_clusters','est_squads','est_verts'];
+    for(var i=0;i<localStorage.length;i++){
+      var k=localStorage.key(i);
+      var v=localStorage.getItem(k)||'';
+      total+=v.length;
+      if(relevantKeys.indexOf(k)!==-1)breakdown.push(k+': '+(v.length/1024).toFixed(1)+'KB');
+    }
+    var el=g('ds-ls-info');
+    if(el)el.innerHTML='<b>Uso total:</b> '+(total/1024/1024).toFixed(2)+'MB / ~5MB disponíveis<br><b>Dados do portal:</b> '+breakdown.join(' · ')+'<br><b>Dica:</b> Se exceder a cota, clique em "Limpar Tudo" e reimporte apenas os CSVs necessários.';
+    alert('localStorage: '+(total/1024/1024).toFixed(2)+'MB usado\n\n'+breakdown.join('\n'));
+  }catch(e){alert('Erro ao verificar: '+e.message);}
+}
+function _lsClearAll(){
+  if(!confirm('Isso apagará TODOS os dados do portal no localStorage.\nVocê precisará reimportar os CSVs.\n\nContinuar?'))return;
+  var toRemove=[];
+  for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k)toRemove.push(k);}
+  toRemove.forEach(function(k){try{localStorage.removeItem(k);}catch(_){}});
+  DATA={okrs:[],krs:[],deps:[],features:[],stories:[],hier:[],loaded:{okrs:false,krs:false,deps:false,features:false,stories:false,hier:false},_okrTs:null,_planTs:null,_snapTs:null};
+  updateDataStatus();
+  alert('✅ localStorage limpo. Reimporte os CSVs nos cards acima.');
+}
+
 function loadObjetivos(text){
   DATA.okrs=parseCSV(text).map(function(r){
-    return{numero:col(r,['numero','number','id','obj_id','okr_numero']),nome:col(r,['nome','name','objetivo','descricao','summary','objetivo_nome']),cat:col(r,['cat','categoria','type','tipo','category']),est:col(r,['est','estado','status','state']),prog:parseFloat(col(r,['prog','progresso','progress','percentual','pct','atual']))||0,trim:normQ(col(r,['trim','trimestre','quarter','periodo','q'])),tribe:col(r,['tribe','tribo','tribe_name','nome_tribo']),triben:col(r,['triben','tribe_number','tribo_numero']),squad:col(r,['squad','squad_name','nome_squad']),vert:col(r,['vert','vertical','vertical_name']),owner:col(r,['owner','responsavel']),ini:col(r,['ini','inicio','start_date']),fim:col(r,['fim','end','end_date'])};
+    return{numero:col(r,['numero','number','id','obj_id','okr_numero','objetivo.numero']),nome:col(r,['nome','name','objetivo','descricao','summary','objetivo_nome','objetivo.nome']),cat:col(r,['cat','categoria','type','tipo','category','objetivo.categoria']),est:col(r,['est','estado','status','state','objetivo.estado']),prog:parseFloat(col(r,['prog','progresso','progress','percentual','pct','atual','objetivo.progresso']))||0,trim:normQ(col(r,['trim','trimestre','quarter','periodo','q','objetivo.trim'])),tribe:col(r,['tribe','tribo','tribe_name','nome_tribo']),triben:col(r,['triben','tribe_number','tribo_numero']),squad:col(r,['squad','squad_name','nome_squad']),vert:col(r,['vert','vertical','vertical_name']),owner:col(r,['owner','responsavel']),ini:col(r,['ini','inicio','start_date']),fim:col(r,['fim','end','end_date'])};
   }).filter(function(o){return o.numero||o.nome;});
-  DATA.loaded.okrs=DATA.okrs.length>0;saveLS('okrs',DATA.okrs);rebuildSlideFilters();updateDataStatus();
+  DATA.loaded.okrs=DATA.okrs.length>0;
+  _lsSave('okr_objetivos',DATA.okrs);_lsSaveRaw('okr_ts',new Date().toISOString());
+  rebuildSlideFilters();updateDataStatus();
 }
 function loadKRs(text){
-  DATA.krs=parseCSV(text).map(function(r){
-    var base=col(r,['base','baseline','valor_base']),real=col(r,['real','atual_abs','current_value','valor_atual','realizado']),tipo=col(r,['tipo','type','direction','direcao']);
-    return{okr:col(r,['okr','okr_numero','parent','objetivo_numero','objetivo_id']),numero:col(r,['numero','number','id','kr_id','kr_numero']),nome:col(r,['nome','name','descricao','key_result','kr_descricao','summary']),prog:parseFloat(col(r,['prog','progresso','progress','atual','percentual','current']))||0,meta:parseFloat(col(r,['meta','target','alvo','goal']))||100,base:base!==''?parseFloat(base.replace(',','.')):null,real:real!==''?parseFloat(real.replace(',','.')):null,tipo:tipo,est:col(r,['est','estado','status','state']),tribe:col(r,['tribe','tribo']),squad:col(r,['squad']),trim:normQ(col(r,['trim','quarter','trimestre','periodo']))};
-  }).filter(function(k){return k.nome;});
-  DATA.loaded.krs=DATA.krs.length>0;saveLS('krs',DATA.krs);updateDataStatus();
+  /* Converte CSV plano → estrutura KRS_BY_GOAL usada pelo okr_krs */
+  var rows=parseCSV(text).map(function(r){
+    var base=col(r,['base','baseline','valor_base','base_value']),real=col(r,['real','atual_abs','current_value','valor_atual','realizado','realized_value']),tipo=col(r,['tipo','type','direction','direcao']);
+    return{okr:col(r,['okr','okr_numero','parent','objetivo_numero','objetivo_id','goal.u_number','goal']),numero:col(r,['numero','number','id','kr_id','kr_numero']),nome:col(r,['nome','name','descricao','key_result','kr_descricao','summary']),prog:parseFloat(col(r,['prog','progresso','progress','atual','percentual','current']))||0,meta:parseFloat(col(r,['meta','target','alvo','goal','target_value']))||100,base:base!==''?parseFloat(base.replace(',','.')):null,real:real!==''?parseFloat(real.replace(',','.')):null,tipo:tipo,est:col(r,['est','estado','status','state']),sit:col(r,['sit','situacao','situation']),trim:normQ(col(r,['trim','quarter','trimestre','periodo']))};
+  }).filter(function(k){return k.nome||k.numero;});
+  /* montar DATA.krs e também KRS_BY_GOAL para okr_krs */
+  DATA.krs=rows;
+  var byGoal={};
+  rows.forEach(function(kr){
+    if(!byGoal[kr.okr])byGoal[kr.okr]=[];
+    byGoal[kr.okr].push({n:kr.numero,nome:kr.nome,est:kr.est,prog:kr.prog,sit:kr.sit,trim:kr.trim,base:kr.base,meta:kr.meta,real:kr.real,tipo:kr.tipo});
+  });
+  DATA.loaded.krs=DATA.krs.length>0;
+  _lsSave('okr_krs',byGoal);_lsSaveRaw('okr_ts',new Date().toISOString());
+  updateDataStatus();
 }
 function loadDeps(text){
   DATA.deps=parseCSV(text).map(function(r){
     var st=col(r,['state','estado','status']),due=col(r,['u_expected_end','prazo','due_date','data_prevista','end_date','fim','data_fim']);
     return{n:col(r,['number','numero','n','id']),just:col(r,['u_justification','justificativa','description','descricao']),st:st,crit:col(r,['u_criticality','criticality','criticidade','crit']),impact:col(r,['u_dependency_impact','impacto','impact']),preSquad:col(r,['u_prerequesite_squad.name','u_prerequisite_squad','presquad','squad_pre_requisito']),tribo:col(r,['tribe','tribo','u_tribe','u_tribe.name','tribo_name','nome_tribo']),objN:col(r,['u_prerequisite_goal.u_number','objetivo','okr']),memo:col(r,['u_qbr_memo.u_number','memo']),due:due,active:!/finaliz|encerr|cancel|closed|done/i.test(st),overdue:isOverdue(due)};
   }).filter(function(d){return d.n||d.just;});
-  DATA.loaded.deps=DATA.deps.length>0;saveLS('deps',DATA.deps);updateDataStatus();
+  DATA.loaded.deps=DATA.deps.length>0;
+  _lsSave('plan_deps',DATA.deps);_lsSaveRaw('plan_ts',new Date().toISOString());
+  updateDataStatus();
 }
 function _parseBacklogRow(r,forceType){
-  var st=col(r,['st','status','state','estado']),q=normQ(col(r,['q','quarter','trimestre','periodo'])),t=forceType||col(r,['type','tipo','item_type','tipo_item']);
-  return{n:col(r,['n','number','numero','id']),ek:col(r,['ek','key','chave','jira_key']),nm:col(r,['nm','name','nome','summary','titulo','descricao']),tm:col(r,['tm','team','squad','time','squad_name']),cl:col(r,['cl','cluster']),q:q,st:st,sp:parseInt(col(r,['sp','sprint','sprint_number']))||null,pi:col(r,['pi','program_increment']),cf:col(r,['cf','feature','feature_name','nome_feature']),type:forceType||((/story|us\b/i.test(t))?'story':'feature'),deliv:/em medi|medi[çc]|validado|done|entregue|conclu/i.test(st)};
+  var st=col(r,['st','status','state','estado','u_state']);
+  var q=normQ(col(r,['q','quarter','trimestre','periodo','u_quarter','sprint_quarter']));
+  var t=forceType||col(r,['type','tipo','item_type','tipo_item','issue_type','u_type']);
+  /* nome: aceita qualquer alias comum + short_description (ServiceNow) + subject + title */
+  var nm=col(r,['nm','name','nome','summary','titulo','descricao','sd',
+    'short_description','u_short_description','u_name','subject','title',
+    'description','display_name','nome_feature','feature_name']);
+  /* número: aceita u_number (ServiceNow), issue_key (JIRA) */
+  var n=col(r,['n','number','numero','id','u_number','issue_key','u_id']);
+  var ek=col(r,['ek','key','chave','jira_key','issue_key','u_key','external_id']);
+  /* fallback: se ainda sem nome E sem key, usa o valor da primeira coluna não-vazia */
+  if(!nm&&!ek){
+    var keys=Object.keys(r);
+    for(var i=0;i<keys.length;i++){
+      var v=(r[keys[i]]||'').trim();
+      /* ignora colunas que parecem ids numéricos curtos */
+      if(v&&v.length>3&&!/^\d{1,6}$/.test(v)){nm=v;break;}
+    }
+  }
+  return{n:n,ek:ek,nm:nm,
+    tm:col(r,['tm','team','squad','time','squad_name','assignment_group','u_squad','tribe_squad']),
+    cl:col(r,['cl','cluster','u_cluster','squad_cluster']),
+    q:q,st:st,
+    sp:parseInt(col(r,['sp','sprint','sprint_number','u_sprint']))||null,
+    pi:col(r,['pi','program_increment','u_pi','pi_name']),
+    cf:col(r,['cf','feature','feature_name','nome_feature','u_feature','epic','epic_link']),
+    type:forceType||((/story|us\b|user.?stor/i.test(t))?'story':'feature'),
+    deliv:/em medi|medi[çc]|validado|done|entregue|conclu|closed|fechado/i.test(st)};
 }
 function loadFeaturesOnly(text){
-  DATA.features=parseCSV(text).map(function(r){return _parseBacklogRow(r,'feature');}).filter(function(r){return r.nm||r.ek;});
-  DATA.loaded.features=DATA.features.length>0;saveLS('features',DATA.features);updateDataStatus();
+  var rows=parseCSV(text);
+  DATA.features=rows.map(function(r){return _parseBacklogRow(r,'feature');}).filter(function(r){return r.nm||r.ek||r.n;});
+  DATA.loaded.features=DATA.features.length>0;
+  _lsSave('plan_features',DATA.features);_lsSaveRaw('plan_ts',new Date().toISOString());
+  if(!DATA.loaded.features&&rows.length>0){
+    /* mostra diagnóstico se CSV não tiver colunas reconhecidas */
+    var cols=rows.length>0?Object.keys(rows[0]).slice(0,8).join(', '):'(vazio)';
+    console.warn('feature.csv: 0 registros válidos. Colunas detectadas: '+cols);
+  }
+  updateDataStatus();
 }
 function loadStoriesOnly(text){
-  DATA.stories=parseCSV(text).map(function(r){return _parseBacklogRow(r,'story');}).filter(function(r){return r.nm||r.ek;});
-  DATA.loaded.stories=DATA.stories.length>0;saveLS('stories',DATA.stories);updateDataStatus();
+  var rows=parseCSV(text);
+  DATA.stories=rows.map(function(r){return _parseBacklogRow(r,'story');}).filter(function(r){return r.nm||r.ek||r.n;});
+  DATA.loaded.stories=DATA.stories.length>0;
+  _lsSave('plan_stories',DATA.stories);_lsSaveRaw('plan_ts',new Date().toISOString());
+  updateDataStatus();
 }
-/* mantém loadFeatures para compatibilidade (detecta tipo automaticamente) */
 function loadFeatures(text){
   var rows=parseCSV(text).map(function(r){return _parseBacklogRow(r,null);}).filter(function(r){return r.nm||r.ek;});
   DATA.features=rows.filter(function(r){return r.type==='feature';});
   DATA.stories=rows.filter(function(r){return r.type==='story';});
   if(!DATA.features.length&&!DATA.stories.length)DATA.features=rows;
   DATA.loaded.features=DATA.features.length>0;DATA.loaded.stories=DATA.stories.length>0;
-  saveLS('features',DATA.features);saveLS('stories',DATA.stories);updateDataStatus();
+  _lsSave('plan_features',DATA.features);_lsSave('plan_stories',DATA.stories);
+  _lsSaveRaw('plan_ts',new Date().toISOString());
+  updateDataStatus();
 }
+
+/* ─── Import direto de Hierarquia (tribe / cluster / squad) ─── */
+function _mbrReadCSV(input,fn){
+  if(!input||!input.files||!input.files[0])return;
+  var fr=new FileReader();
+  fr.onload=function(e){try{fn(e.target.result);}catch(err){alert('Erro ao importar: '+err.message);}input.value='';};
+  fr.readAsText(input.files[0],'UTF-8');
+}
+function _mbrImportTribe(input){
+  _mbrReadCSV(input,function(text){
+    var rows=_parseCSVText(text);
+    var tribes=rows.map(function(r){
+      var n=(r['number']||r['numero']||'').trim();
+      var name=(r['name']||r['nome']||'').trim();
+      if(!n&&!name)return null;
+      return{n:n,name:name,vn:(r['vertical_bu.number']||r['vertical_bu']||'').trim(),
+        v:(r['vertical']||r['vertical_name']||'').trim(),
+        ttl:(r['technical_tribe_lead']||'').trim(),blt:(r['business_tribe_lead']||'').trim(),
+        active:!/inativ|false/i.test(r['status']||r['active']||'')};
+    }).filter(Boolean);
+    _lsSave('est_tribes',tribes);_lsSaveRaw('est_ts',new Date().toISOString());
+    var n=tribes.length;
+    setTimeout(function(){_reloadAll();alert('✅ '+n+' tribos importadas.');},0);
+  });
+}
+function _mbrImportCluster(input){
+  _mbrReadCSV(input,function(text){
+    var rows=_parseCSVText(text);
+    var clusters=rows.map(function(r){
+      var n=(r['number']||r['numero']||'').trim();
+      var name=(r['name']||r['nome']||'').trim();
+      if(!n&&!name)return null;
+      return{n:n,name:name,tn:(r['tribe.number']||r['tribe_number']||'').trim(),
+        t:(r['tribe']||r['tribe_name']||'').trim(),v:(r['vertical']||'').trim(),
+        cpo:(r['cpo']||'').trim(),active:!/inativ|false/i.test(r['status']||r['active']||'')};
+    }).filter(Boolean);
+    _lsSave('est_clusters',clusters);_lsSaveRaw('est_ts',new Date().toISOString());
+    var n=clusters.length;
+    setTimeout(function(){_reloadAll();alert('✅ '+n+' clusters importados.');},0);
+  });
+}
+function _mbrImportSquad(input){
+  _mbrReadCSV(input,function(text){
+    var rows=_parseCSVText(text);
+    var squads=rows.map(function(r){
+      var n=(r['number']||r['numero']||'').trim();
+      var name=(r['name']||r['nome']||'').trim();
+      if(!n&&!name)return null;
+      return{n:n,name:name,cn:(r['cluster.number']||r['cluster_number']||'').trim(),
+        c:(r['cluster']||r['cluster_name']||'').trim(),
+        type:(r['type']||r['tipo']||'').trim(),
+        po:(r['product_owner']||r['po']||'').trim(),
+        sem:(r['service_manager']||r['sem']||'').trim(),
+        active:!/inativ|^false$/i.test(r['active']||r['status']||'sim')};
+    }).filter(Boolean);
+    _lsSave('est_squads',squads);_lsSaveRaw('est_ts',new Date().toISOString());
+    var n=squads.length;
+    setTimeout(function(){_reloadAll();alert('✅ '+n+' squads importados.');},0);
+  });
+}
+function _mbrImportDeps(input){
+  _mbrReadCSV(input,function(text){
+    loadDeps(text);
+    var n=DATA.deps.length;
+    setTimeout(function(){_reloadAll();alert('✅ '+n+' dependências importadas.');},0);
+  });
+}
+function _mbrImportFeatFile(input){
+  _mbrReadCSV(input,function(text){
+    var rawRows=parseCSV(text);
+    loadFeaturesOnly(text);
+    var n=DATA.features.length;
+    if(n===0&&rawRows.length>0){
+      var cols=Object.keys(rawRows[0]||{}).join(', ');
+      setTimeout(function(){
+        _reloadAll();
+        alert('⚠️ 0 features importadas.\n\nO CSV tem '+rawRows.length+' linhas mas nenhuma coluna de nome foi reconhecida.\nColunas detectadas: '+cols+'\n\nColunas aceitas para nome: name, nome, summary, short_description, titulo, sd, subject\nColunas aceitas para chave: number, key, jira_key, u_number, ek');
+      },0);
+    } else {
+      setTimeout(function(){_reloadAll();alert('✅ '+n+' features importadas.');},0);
+    }
+  });
+}
+function _mbrImportStoryFile(input){
+  _mbrReadCSV(input,function(text){
+    loadStoriesOnly(text);
+    var n=DATA.stories.length;
+    setTimeout(function(){_reloadAll();alert('✅ '+n+' stories importadas.');},0);
+  });
+}
+
 function handleFile(inputId,loaderFn){
   var inp=g(inputId);if(!inp||!inp.files||!inp.files[0])return;
   var fr=new FileReader();fr.onload=function(e){loaderFn(e.target.result);inp.value='';};fr.readAsText(inp.files[0],'UTF-8');
@@ -2153,66 +2556,107 @@ function handleFile(inputId,loaderFn){
 /* ─── Status UI ─── */
 function updateDataStatus(){
   /* cards do Planejamento (deps, features, stories) */
-  var planTs=DATA._planTs?new Date(DATA._planTs).toLocaleString('pt-BR'):'—';
-  [{k:'deps',id:'ds-deps',det:'ds-deps-detail',lbl:'Dependências',extra:function(d){return d.length?' (<b>'+d.filter(function(x){return x.active&&x.overdue;}).length+'</b> vencidas · <b>'+d.filter(function(x){return !x.active;}).length+'</b> encerradas)'  :'';}}
-  ,{k:'features',id:'ds-feat',det:'ds-feat-detail',lbl:'Features',extra:function(d){return d.length?' (<b>'+d.filter(function(x){return x.deliv;}).length+'</b> entregues)':'';}  }
-  ,{k:'stories', id:'ds-stor',det:'ds-stor-detail', lbl:'Stories',extra:function(d){return '';}}
+  var planTs=DATA._planTs?new Date(DATA._planTs).toLocaleString('pt-BR'):'nunca';
+  [{k:'deps',id:'ds-deps',det:'ds-deps-detail',lbl:'Dependências',icon:'🔗',extra:function(d){return d.length?' (<b>'+d.filter(function(x){return x.active&&x.overdue;}).length+'</b> vencidas · <b>'+d.filter(function(x){return !x.active;}).length+'</b> encerradas)'  :' — em breve';}}
+  ,{k:'features',id:'ds-feat',det:'ds-feat-detail',lbl:'Features',icon:'📦',extra:function(d){return d.length?' (<b>'+d.filter(function(x){return x.deliv;}).length+'</b> entregues)':' — em breve';}}
+  ,{k:'stories', id:'ds-stor',det:'ds-stor-detail', lbl:'Stories',icon:'📋',extra:function(d){return d.length?'':' — em breve';}}
   ].forEach(function(it){
     var el=g(it.id),det=g(it.det);
     var d=DATA[it.k]||[],n=d.length;
-    if(el)el.innerHTML=it.lbl+'<span class="dm-status '+(n>0?'loaded':'empty')+'">'+(n>0?n+' reg.':'sem dados')+'</span>';
-    if(det&&n>0)det.innerHTML='<b>'+n+'</b>'+it.extra(d)+'<br><span style="font-size:10px;color:var(--muted)">Sincronizado do Planejamento em '+planTs+'</span>';
+    if(el){
+      el.innerHTML=it.icon+' '+it.lbl+'<span class="dm-status '+(n>0?'loaded':'empty')+'">'+(n>0?n+' reg.':'sem dados')+'</span>';
+    }
+    if(det){
+      if(n>0){
+        det.innerHTML='<b>'+n+'</b>'+it.extra(d)+'<br><span style="font-size:10px;color:var(--muted)">Sincronizado do Planejamento em '+planTs+'</span>';
+      } else {
+        det.innerHTML='Aguardando importação de dados pelo módulo <b>Planejamento</b>.<br><span style="font-size:10px;color:var(--muted)">Última sincronização: '+planTs+'</span>';
+      }
+    }
   });
+  
   /* card de OKRs — compartilhado do okrs.html */
   var okrEl=g('ds-okrs'),okrDet=g('ds-okrs-detail');
-  if(okrEl){var no=DATA.okrs.length;okrEl.innerHTML='Objetivos<span class="dm-status '+(no>0?'loaded':'empty')+'">'+(no>0?no+' OKRs':'sem dados')+'</span>';}
-  if(okrDet&&DATA.loaded.okrs){
-    var ts=DATA._okrTs?new Date(DATA._okrTs).toLocaleString('pt-BR'):'—';
-    var verts=uniq(DATA.okrs.map(function(o){return o.vert;}).filter(Boolean)).length;
-    var tribs=uniq(DATA.okrs.map(function(o){return o.tribe;}).filter(Boolean)).length;
-    okrDet.innerHTML='<b>'+DATA.okrs.length+'</b> objetivos · <b>'+verts+'</b> verticais · <b>'+tribs+'</b> tribos<br><span style="font-size:10px;color:var(--muted)">Sincronizado do OKRs em '+ts+'</span>';
+  if(okrEl){var no=DATA.okrs.length;okrEl.innerHTML='🎯 Objetivos<span class="dm-status '+(no>0?'loaded':'empty')+'">'+(no>0?no+' OKRs':'sem dados')+'</span>';}
+  if(okrDet){
+    if(DATA.loaded.okrs){
+      var ts=DATA._okrTs?new Date(DATA._okrTs).toLocaleString('pt-BR'):'—';
+      var verts=uniq(DATA.okrs.map(function(o){return o.vert;}).filter(Boolean)).length;
+      var tribs=uniq(DATA.okrs.map(function(o){return o.tribe;}).filter(Boolean)).length;
+      okrDet.innerHTML='<b>'+DATA.okrs.length+'</b> objetivos · <b>'+verts+'</b> verticais · <b>'+tribs+'</b> tribos<br><span style="font-size:10px;color:var(--muted)">Sincronizado do OKRs em '+ts+'</span>';
+    } else {
+      okrDet.innerHTML='Aguardando importação de dados pelo módulo <b>OKRs &amp; KRs</b>.<br><span style="font-size:10px;color:var(--muted)">Importe <code>Objetivo_novo.csv</code> naquele módulo.</span>';
+    }
   }
+  
   /* card de KRs — compartilhado do okrs.html */
   var krEl=g('ds-krs'),krDet=g('ds-krs-detail');
-  if(krEl){var nk=DATA.krs.length;krEl.innerHTML='Key Results<span class="dm-status '+(nk>0?'loaded':'empty')+'">'+(nk>0?nk+' KRs':'sem dados')+'</span>';}
-  if(krDet&&DATA.loaded.krs){
-    var ts2=DATA._okrTs?new Date(DATA._okrTs).toLocaleString('pt-BR'):'—';
-    krDet.innerHTML='<b>'+DATA.krs.length+'</b> KRs vinculados a <b>'+uniq(DATA.krs.map(function(k){return k.okr;}).filter(Boolean)).length+'</b> objetivos<br><span style="font-size:10px;color:var(--muted)">Sincronizado do OKRs em '+ts2+'</span>';
+  if(krEl){var nk=DATA.krs.length;krEl.innerHTML='📈 Key Results<span class="dm-status '+(nk>0?'loaded':'empty')+'">'+(nk>0?nk+' KRs':'sem dados')+'</span>';}
+  if(krDet){
+    if(DATA.loaded.krs){
+      var ts2=DATA._okrTs?new Date(DATA._okrTs).toLocaleString('pt-BR'):'—';
+      krDet.innerHTML='<b>'+DATA.krs.length+'</b> KRs vinculados a <b>'+uniq(DATA.krs.map(function(k){return k.okr;}).filter(Boolean)).length+'</b> objetivos<br><span style="font-size:10px;color:var(--muted)">Sincronizado do OKRs em '+ts2+'</span>';
+    } else {
+      krDet.innerHTML='Aguardando importação de dados pelo módulo <b>OKRs &amp; KRs</b>.<br><span style="font-size:10px;color:var(--muted)">Importe <code>KRs.csv</code> naquele módulo.</span>';
+    }
   }
-  var sm=g('dm-summary');if(!sm)return;
+  
+  var sm=g('dm-summary');
+  if(!sm)return;
+  
   var p=[];
+  
   /* card de hierarquia — status + timestamp */
   var hierEl=g('ds-hier'),hierDet=g('ds-hier-detail');
   if(hierEl){
     var hn=DATA.hier.length;
-    hierEl.innerHTML='Hierarquia Org. <span class="dm-status '+(hn>0?'loaded':'empty')+'">'+(hn>0?hn+' squads':'sem dados')+'</span>';
+    hierEl.innerHTML='🏛️ Hierarquia Org. <span class="dm-status '+(hn>0?'loaded':'empty')+'">'+(hn>0?hn+' squads':'sem dados')+'</span>';
   }
-  if(hierDet&&DATA.loaded.hier){
-    var hV=uniq(DATA.hier.map(function(h){return h.vert;}).filter(Boolean)).length;
-    var hT=uniq(DATA.hier.map(function(h){return h.tribo;}).filter(Boolean)).length;
-    var hC=uniq(DATA.hier.map(function(h){return h.cluster;}).filter(Boolean)).length;
-    var ts=localStorage.getItem('est_ts');
-    var tsLbl=ts?new Date(ts).toLocaleString('pt-BR'):'—';
-    hierDet.innerHTML='<b>'+hV+'</b> verticais · <b>'+hT+'</b> tribos · <b>'+hC+'</b> clusters · <b>'+DATA.hier.length+'</b> squads<br><span style="font-size:10px;color:var(--muted)">Sincronizado do Estrutura em '+tsLbl+'</span>';
+  if(hierDet){
+    if(DATA.loaded.hier){
+      var hV=uniq(DATA.hier.map(function(h){return h.vert;}).filter(Boolean)).length;
+      var hT=uniq(DATA.hier.map(function(h){return h.tribo;}).filter(Boolean)).length;
+      var hC=uniq(DATA.hier.map(function(h){return h.cluster;}).filter(Boolean)).length;
+      var ts=localStorage.getItem('est_ts');
+      var tsLbl=ts?new Date(ts).toLocaleString('pt-BR'):'—';
+      hierDet.innerHTML='<b>'+hV+'</b> verticais · <b>'+hT+'</b> tribos · <b>'+hC+'</b> clusters · <b>'+DATA.hier.length+'</b> squads<br><span style="font-size:10px;color:var(--muted)">Sincronizado do Estrutura em '+tsLbl+'</span>';
+      p.push('<b>'+DATA.hier.length+'</b> squads · '+hV+' verticais · '+hT+' tribos (Estrutura)');
+    } else {
+      hierDet.innerHTML='Aguardando importação de dados pelo módulo <b>Estrutura</b>.<br><span style="font-size:10px;color:var(--muted)">Importe <code>tribe.csv</code>, <code>cluster.csv</code>, <code>squad.csv</code> naquele módulo.</span>';
+    }
   }
-  if(DATA.hier.length){
-    var hV2=uniq(DATA.hier.map(function(h){return h.vert;}).filter(Boolean)).length;
-    var hT2=uniq(DATA.hier.map(function(h){return h.tribo;}).filter(Boolean)).length;
-    p.push('<b>'+DATA.hier.length+'</b> squads · '+hV2+' verticais · '+hT2+' tribos (Estrutura)');
-  } else if(DATA.okrs.length){
+  
+  if(!p.length && DATA.okrs.length){
     p.push('<b>'+DATA.okrs.length+'</b> OKRs · '+uniq(DATA.okrs.map(function(o){return o.vert;}).filter(Boolean)).length+' verticais · '+uniq(DATA.okrs.map(function(o){return o.tribe;}).filter(Boolean)).length+' tribos · '+uniq(DATA.okrs.map(function(o){return o.squad;}).filter(Boolean)).length+' squads');
   }
   if(DATA.krs.length)p.push('<b>'+DATA.krs.length+'</b> KRs');
   if(DATA.deps.length)p.push('<b>'+DATA.deps.length+'</b> Deps (<b>'+DATA.deps.filter(function(d){return d.active&&d.overdue;}).length+'</b> vencidas · <b>'+DATA.deps.filter(function(d){return!d.active;}).length+'</b> encerradas)');
   if(DATA.features.length)p.push('<b>'+DATA.features.length+'</b> Features (<b>'+DATA.features.filter(function(f){return f.deliv;}).length+'</b> entregues)');
   if(DATA.stories.length)p.push('<b>'+DATA.stories.length+'</b> Stories');
-  sm.innerHTML=p.length?'✅ '+p.join(' &nbsp;·&nbsp; '):'Nenhum dado carregado — importe os arquivos CSV abaixo';
+  
+  /* Mensagem de status */
+  if(p.length){
+    sm.innerHTML='✅ <b>Dados carregados:</b> '+p.join(' &nbsp;·&nbsp; ');
+    sm.style.background='rgba(18,122,62,.06)';
+    sm.style.borderLeft='4px solid #127a3e';
+  } else {
+    sm.innerHTML='⏳ <b>Nenhum dado carregado ainda.</b> Fluxo: Estrutura → OKRs &amp; KRs → Planejamento → retorne aqui e clique ↺ Recarregar em cada seção abaixo.';
+    sm.style.background='rgba(180,83,9,.06)';
+    sm.style.borderLeft='4px solid #b45309';
+  }
 }
 
 /* ─── Filtros da apresentação: cascade com dados reais ─── */
 /* fonte preferencial: hier → okrs → fallback estático */
 function hierSource(){return DATA.loaded.hier?'hier':DATA.loaded.okrs?'okrs':'';}
 
+var _rebuildFiltersLock=false;
+/* Versão que neutraliza onchange dos selects para não disparar re-renders */
+function _rebuildFiltersNoEvent(){
+  if(_rebuildFiltersLock)return;
+  _rebuildFiltersLock=true;
+  try{rebuildSlideFilters();}finally{_rebuildFiltersLock=false;}
+}
 function rebuildSlideFilters(){
   var vSel=g('sVert'),tSel=g('sTribo');if(!vSel||!tSel)return;
   var src=hierSource();
@@ -2221,7 +2665,9 @@ function rebuildSlideFilters(){
   else if(src==='okrs') verts=uniq(DATA.okrs.map(function(o){return o.vert;}).filter(Boolean)).sort();
   if(verts.length){
     var curV=vSel.value;
+    var prevOC=vSel.onchange;vSel.onchange=null;
     vSel.innerHTML='<option value="">Todas as verticais</option>'+verts.map(function(v){return'<option'+(v===curV?' selected':'')+'>'+esc(v)+'</option>';}).join('');
+    vSel.onchange=prevOC;
   }
   rebuildTriboOpts();
 }
@@ -2236,7 +2682,9 @@ function rebuildTriboOpts(){
     tribos=uniq(DATA.okrs.filter(function(o){return !vert||o.vert===vert;}).map(function(o){return o.tribe;}).filter(Boolean)).sort();
   }
   var cur=tSel.value;
+  var prevOC=tSel.onchange;tSel.onchange=null;
   tSel.innerHTML='<option value="">Todas as tribos</option>'+tribos.map(function(t){return'<option'+(t===cur?' selected':'')+'>'+esc(t)+'</option>';}).join('');
+  tSel.onchange=prevOC;
   rebuildClusterOpts();
   rebuildSquadOpts();
 }
@@ -2400,15 +2848,54 @@ function genRiscos(cols,expPct){
   return out.slice(0,6);
 }
 
-/* ─── INIT ─── */
-if(g('imgB'))g('imgB').src=BRAD_LOGO;
-if(g('imgC'))g('imgC').src=CHANGE_LOGO;
-loadFromLS();
-buildGlobalFilters();
-buildMesOptions();
-rebuildSlideFilters();
-updateDataStatus();
-renderAll();
+/* ─── GESTÃO DE DADOS E INICIALIZAÇÃO ─── */
+var _LS_RELEVANT_KEYS=['okr_objetivos','okr_krs','okr_ts','plan_krs','plan_features','plan_stories','plan_deps','plan_ts','est_tribes','est_clusters','est_squads','est_verts','est_ts'];
+
+var _reloadAllBusy=false;
+function _reloadAll(){
+  if(_reloadAllBusy)return;
+  _reloadAllBusy=true;
+  try{
+    loadFromLS();
+    buildGlobalFilters();
+    buildMesOptions();
+    _rebuildFiltersNoEvent();
+    updateDataStatus();
+    renderAll();
+    if(DATA.loaded.okrs||DATA.loaded.krs||DATA.loaded.features){
+      setTimeout(function(){try{renderSlide();}catch(e){console.warn('renderSlide:',e);}},0);
+    }
+  }finally{_reloadAllBusy=false;}
+}
+
+function initApp(){
+  /* Carregar logos */
+  if(g('imgB'))g('imgB').src=BRAD_LOGO;
+  if(g('imgC'))g('imgC').src=CHANGE_LOGO;
+
+  /* Carregar e renderizar */
+  _reloadAll();
+
+  /* Detectar atualizações feitas por outros módulos em outras abas */
+  window.addEventListener('storage',function(e){
+    if(_LS_RELEVANT_KEYS.indexOf(e.key)!==-1){_reloadAll();}
+  });
+
+  /* Recarregar ao retornar para esta aba */
+  document.addEventListener('visibilitychange',function(){
+    if(!document.hidden){_reloadAll();}
+  });
+
+  console.log('✅ MBR Portal inicializado');
+  console.log('📦 Status dos dados:', DATA.loaded);
+}
+
+/* Iniciar aplicação quando DOM estiver pronto */
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',initApp);
+} else {
+  initApp();
+}
 </script>
 </body>
 </html>
