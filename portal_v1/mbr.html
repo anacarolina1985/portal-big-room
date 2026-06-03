@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MBR · Monthly Business Review · Bradesco Program Board v1.2.0</title>
+<title>MBR · Monthly Business Review · Bradesco Program Board v1.4.0</title>
 <style>
   :root{
     --red:#CC0000;--red-d:#A30000;
@@ -2297,7 +2297,7 @@ function printSlide(){
   var clone=slideEl.cloneNode(true);
   clone.querySelectorAll('button,input,select,.dm-upload,.dm-file-btn').forEach(function(el){el.remove();});
   printWin.document.write(clone.outerHTML);
-  printWin.document.write('<div style="margin-top:12px;text-align:right;font-size:9px;color:#9ca3af">Gerado em: '+new Date().toLocaleString('pt-BR')+' · Portal Big Room Planning v1.2.0</div>');
+  printWin.document.write('<div style="margin-top:12px;text-align:right;font-size:9px;color:#9ca3af">Gerado em: '+new Date().toLocaleString('pt-BR')+' · Portal Big Room Planning v1.4.0</div>');
   printWin.document.write('<div style="text-align:center;margin-top:8px"><button onclick="window.print();window.close()" style="background:#CC0000;color:#fff;border:none;padding:8px 20px;border-radius:6px;font-size:12px;cursor:pointer">🖨️ Imprimir / Salvar PDF</button></div>');
   printWin.document.write('</body></html>');
   printWin.document.close();
