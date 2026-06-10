@@ -1,36 +1,38 @@
 /* ═══════════════════════════════════════════════════════
-   LUXURY SKIN — Portal Big Room Planning
+   LUXURY SKIN — Portal Big Room Planning v2
    Clean · Minimal · Fluid · Premium
    ═══════════════════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* ── DESIGN TOKENS — LIGHT ───────────────────────────── */
+/* ══════════════════════════════════════════════════════
+   DESIGN TOKENS
+   ══════════════════════════════════════════════════════ */
 
 [data-theme="light"] {
-  --bg:    #F5F3EF;
-  --bg2:   #EBE8E2;
-  --card:  #FEFEFE;
+  --bg:    #F6F4F1;
+  --bg2:   #EDEBE6;
+  --card:  #FFFFFF;
 
-  --border: #E3DED7;
+  --border: #E2DDD5;
 
-  --txt:   #131110;
+  --txt:   #1A1714;
   --muted: #7A726A;
 
   --red:    #A80010;
   --red2:   #7B000B;
   --accent: #A80010;
 
-  --sidebar-bg:     linear-gradient(168deg, #6E0008 0%, #2A0004 62%, #0F0002 100%);
-  --topbar-bg:      rgba(253,252,250,0.92);
-  --topbar-border:  rgba(168,0,16,0.12);
+  --sidebar-bg:    linear-gradient(168deg, #6E0008 0%, #2A0004 62%, #0F0002 100%);
+  --topbar-bg:     rgba(254,253,251,0.97);
+  --topbar-border: #E2DDD5;
 
-  --th-bg:    #F5F3EF;
-  --hover-row: rgba(168,0,16,0.035);
-  --input-bg: #FEFEFE;
+  --th-bg:    #F6F4F1;
+  --hover-row: rgba(0,0,0,0.022);
+  --input-bg: #FFFFFF;
 
-  --shadow:    0 1px 2px rgba(0,0,0,0.04), 0 2px 6px rgba(0,0,0,0.04);
-  --shadow-md: 0 4px 20px rgba(0,0,0,0.08), 0 8px 32px rgba(0,0,0,0.05);
+  --shadow:    0 1px 3px rgba(0,0,0,0.05), 0 1px 10px rgba(0,0,0,0.04);
+  --shadow-md: 0 6px 28px rgba(0,0,0,0.08), 0 10px 36px rgba(0,0,0,0.04);
 
   --radius: 10px;
 
@@ -44,16 +46,14 @@
   --err-bg:   #FBF0F1;
 }
 
-/* ── DESIGN TOKENS — DARK ────────────────────────────── */
-
 [data-theme="dark"] {
-  --bg:    #0B0A09;
-  --bg2:   #121110;
-  --card:  #1A1917;
+  --bg:    #0C0B0A;
+  --bg2:   #141311;
+  --card:  #1C1A18;
 
-  --border: #2A2825;
+  --border: #2C2926;
 
-  --txt:   #F2EEE8;
+  --txt:   #F0ECE6;
   --muted: #8A857E;
 
   --red:    #C8001A;
@@ -61,15 +61,15 @@
   --accent: #C8001A;
 
   --sidebar-bg:    linear-gradient(168deg, #3D0006 0%, #180002 62%, #060001 100%);
-  --topbar-bg:     rgba(26,25,23,0.94);
-  --topbar-border: rgba(200,0,26,0.18);
+  --topbar-bg:     rgba(28,26,24,0.97);
+  --topbar-border: #2C2926;
 
-  --th-bg:    #121110;
-  --hover-row: rgba(200,0,26,0.07);
-  --input-bg: #1A1917;
+  --th-bg:    #141311;
+  --hover-row: rgba(255,255,255,0.028);
+  --input-bg: #1C1A18;
 
-  --shadow:    0 1px 2px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.35);
-  --shadow-md: 0 4px 20px rgba(0,0,0,0.55), 0 8px 32px rgba(0,0,0,0.45);
+  --shadow:    0 1px 3px rgba(0,0,0,0.4), 0 2px 10px rgba(0,0,0,0.3);
+  --shadow-md: 0 6px 28px rgba(0,0,0,0.5), 0 10px 36px rgba(0,0,0,0.4);
 
   --radius: 10px;
 
@@ -83,7 +83,9 @@
   --err-bg:   #1E0608;
 }
 
-/* ── RESET & RENDERING ───────────────────────────────── */
+/* ══════════════════════════════════════════════════════
+   RESET & RENDER
+   ══════════════════════════════════════════════════════ */
 
 *,
 *::before,
@@ -97,142 +99,788 @@ html {
   scroll-behavior: smooth;
 }
 
-/* ── TYPOGRAPHY ──────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════
+   TYPOGRAPHY
+   ══════════════════════════════════════════════════════ */
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
   font-feature-settings: 'ss01' 1, 'cv01' 1, 'cv03' 1;
-  letter-spacing: -0.005em;
+  font-size: 13px !important;
+  line-height: 1.55 !important;
+  letter-spacing: -0.003em;
 }
 
-/* Títulos de página recebem o serif de luxo */
+/* Page titles */
+.pt,
 .ph h1,
 .ph-title,
 h1 {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 600;
-  letter-spacing: -0.025em;
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-size: 22px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.2 !important;
+  color: var(--txt) !important;
 }
 
-/* Cabeçalhos de tabela — uppercase fino */
-th {
-  letter-spacing: 0.055em !important;
+/* Section headings */
+h2,
+.okr-entity-header h2 {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.015em !important;
+  color: var(--txt) !important;
+}
+
+/* Card section label */
+.ct {
+  font-size: 10.5px !important;
+  font-weight: 600 !important;
   text-transform: uppercase !important;
+  letter-spacing: 0.07em !important;
+  color: var(--muted) !important;
+  margin-bottom: 14px !important;
+  padding-bottom: 10px !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+/* Sidebar nav */
+.nb, .nb .ntxt {
+  font-size: 12px !important;
+  font-weight: 500 !important;
+}
+
+/* Metric value */
+.sv {
+  font-size: 26px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.04em !important;
+  color: var(--txt) !important;
+}
+
+.sl {
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.06em !important;
+  margin-top: 4px !important;
+  color: var(--muted) !important;
+}
+
+/* OKR/dash metric values */
+.okr-metric-val,
+.dash-okr-mv,
+.okr-dash-mini-val,
+.okr-stat-v {
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.04em !important;
+  color: var(--txt) !important;
+}
+
+.okr-metric-lbl,
+.dash-okr-ml,
+.okr-dash-mini-lbl,
+.okr-stat-l {
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.06em !important;
+  color: var(--muted) !important;
+}
+
+/* Topbar sub-label */
+.tsub {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* Data labels / keys */
+.ml,
+.fl,
+.sl,
+.srk {
+  font-size: 11.5px !important;
+}
+
+.mv,
+.srv {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+
+/* Table headers */
+th {
+  font-size: 10.5px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: var(--muted) !important;
+}
+
+/* Table cells */
+td {
+  font-size: 12.5px !important;
+  color: var(--txt) !important;
+}
+
+/* OKR card titles */
+.okr-btitle,
+.okr-title {
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  line-height: 1.45 !important;
+  color: var(--txt) !important;
+}
+
+/* Section/okr sub titles */
+.okr-section-title {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* KR names */
+.kr-name,
+.okr-bkr-name,
+.okr-kr-name {
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  color: var(--txt) !important;
+}
+
+/* KR meta / code */
+.kr-num,
+.okr-bkr-icon {
+  font-size: 10px !important;
+}
+
+/* General body labels */
+.mr .ml { font-size: 12px !important; }
+.mr .mv { font-size: 12px !important; font-weight: 600 !important; }
+
+/* OKR progress */
+.okr-bprog-pct,
+.okr-prog-pct,
+.okr-kr-prog {
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  color: var(--txt) !important;
+}
+
+/* OKR row meta */
+.okr-row-meta,
+.okr-meta,
+.okr-bkr-name,
+.okr-exec {
+  font-size: 11px !important;
+  color: var(--muted) !important;
+}
+
+/* Squad */
+.sname {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  line-height: 1.35 !important;
+}
+
+.srow { font-size: 11.5px !important; }
+.srk  { font-size: 10.5px !important; }
+.srv  { font-size: 11.5px !important; font-weight: 600 !important; }
+
+/* Hierarchy nodes */
+.lnode   { font-size: 12px !important; }
+.lrole   { font-size: 9px  !important; }
+.hier-vname { font-size: 13.5px !important; font-weight: 600 !important; color: var(--txt) !important; }
+.hier-exec  { font-size: 11px !important; }
+
+/* Badges & tags */
+.badge,
+[class*="badge"],
+.tag,
+.tok, .twrn, .terr, .tinf,
+.tcat-tribo, .tcat-squad,
+.cnt, .chip {
+  font-size: 10.5px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.01em !important;
+  border-radius: 5px !important;
+}
+
+/* OKR counts */
+.okr-section-count {
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  border-radius: 5px !important;
+  padding: 2px 8px !important;
+}
+
+.okr-kr-count {
+  font-size: 10px !important;
+  border-radius: 5px !important;
+}
+
+/* No data */
+.nodata {
+  font-size: 13px !important;
+  padding: 44px 20px !important;
+  color: var(--muted) !important;
+}
+
+/* Writer / form text */
+.okr-writer-textarea,
+.okr-kr-input {
+  font-size: 12.5px !important;
+}
+
+/* OKR writer step title */
+.okr-writer-step-title {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.05em !important;
+  color: var(--muted) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+/* Existing OKR card */
+.okr-existing-card {
+  font-size: 12px !important;
+}
+
+/* CSV import labels */
+.csv-lbl {
+  font-size: 12px !important;
+  font-weight: 500 !important;
+}
+
+/* ══════════════════════════════════════════════════════
+   LAYOUT STRUCTURE
+   ══════════════════════════════════════════════════════ */
+
+/* Topbar */
+.topbar {
+  background: var(--topbar-bg) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-bottom: 1px solid var(--topbar-border) !important;
+  box-shadow: none !important;
+  height: 48px !important;
+  min-height: 48px !important;
+}
+
+/* Filter bar */
+.fbar {
+  border-bottom: 1px solid var(--border) !important;
+  padding: 7px 18px !important;
+  background: var(--card) !important;
+  gap: 10px !important;
+  box-shadow: none !important;
+}
+
+.fg {
+  min-width: 130px !important;
+  max-width: 230px !important;
+}
+
+.fl {
+  font-size: 10px !important;
+  letter-spacing: 0.04em !important;
+}
+
+.fs {
+  height: 28px !important;
+  font-size: 12px !important;
+  padding: 3px 8px !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 6px !important;
+}
+
+/* Sidebar */
+.sidebar {
+  background: var(--sidebar-bg) !important;
+  box-shadow: none !important;
+  width: 196px !important;
+  min-width: 196px !important;
+  max-width: 196px !important;
+}
+
+.sidebar::before,
+.sidebar::after {
+  display: none !important;
+}
+
+.nb {
+  padding: 8px 10px !important;
+  border-radius: 7px !important;
+  margin-bottom: 1px !important;
+  color: rgba(255,255,255,0.72) !important;
+}
+
+.nb.act {
+  background: rgba(255,255,255,0.18) !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+
+.nb::before {
+  border-radius: 7px !important;
+}
+
+/* Page header */
+.ph {
+  border-bottom: 1px solid var(--border) !important;
+  margin-bottom: 20px !important;
+  padding-bottom: 14px !important;
+}
+
+/* Main content */
+.main {
+  padding: 20px 22px !important;
+}
+
+/* ══════════════════════════════════════════════════════
+   CARDS
+   ══════════════════════════════════════════════════════ */
+
+.card,
+.scard,
+.hier-card,
+.okr-card,
+.okr-bcard,
+.okr-section,
+.okr-metric-card,
+.okr-writer-step,
+.okr-writer-form,
+.okr-val-result,
+.okr-bar {
+  border-radius: var(--radius) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow) !important;
+  background: var(--card) !important;
+}
+
+/* Remove all colored top-borders on stat/squad cards */
+.sc {
+  border: 1px solid var(--border) !important;
+  border-top: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  padding: 16px 14px !important;
+  box-shadow: var(--shadow) !important;
+  background: var(--card) !important;
+}
+
+.scard {
+  border: 1px solid var(--border) !important;
+  border-top: 1px solid var(--border) !important;
+  padding: 16px !important;
+}
+
+.okr-stat {
+  border: 1px solid var(--border) !important;
+  border-top: 1px solid var(--border) !important;
+  padding: 14px !important;
+}
+
+.okr-nc-card {
+  border: 1px solid var(--border) !important;
+  border-left: 3px solid var(--errC) !important;
+}
+
+/* Hover lifts */
+.card:hover,
+.sc:hover,
+.scard:hover,
+.okr-metric-card:hover {
+  box-shadow: var(--shadow-md) !important;
+  transform: translateY(-2px) !important;
+  border-color: var(--border) !important;
+}
+
+/* Hier card — remove left border accent */
+.hier-card {
+  border-left: 1px solid var(--border) !important;
+  margin-bottom: 8px !important;
+}
+
+.hier-header {
+  background: var(--bg) !important;
+  padding: 14px 18px !important;
+}
+
+.hier-header:hover {
+  background: var(--bg2) !important;
+}
+
+/* OKR card hover (accordion) */
+.okr-card:hover,
+.okr-bcard:hover {
+  box-shadow: var(--shadow) !important;
+  transform: none !important;
+}
+
+/* ══════════════════════════════════════════════════════
+   OKR COMPONENTS
+   ══════════════════════════════════════════════════════ */
+
+/* Section header */
+.okr-section-header {
+  background: transparent !important;
+  padding: 12px 18px !important;
+}
+
+.okr-section-header:hover {
+  background: var(--hover-row) !important;
+}
+
+/* Card header */
+.okr-header,
+.okr-bcard-header {
+  padding: 14px 18px !important;
+}
+
+.okr-header:hover,
+.okr-bcard-header:hover {
+  background: var(--hover-row) !important;
+}
+
+/* OKR code badge (status circle → rounded rect) */
+.okr-bcode,
+.okr-row-code {
+  border-radius: 6px !important;
+}
+
+.okr-bcode {
+  width: 36px !important;
+  height: 36px !important;
+  font-size: 9px !important;
+}
+
+.okr-row-code {
+  width: 26px !important;
+  height: 26px !important;
+}
+
+/* Remove gradient from tribe/squad codes */
+.code-tribe {
+  background: var(--blue-bg) !important;
+  color: var(--blue) !important;
+}
+
+.code-squad {
+  background: var(--amber-bg) !important;
+  color: var(--amber) !important;
+}
+
+/* Progress panels */
+.okr-bprog {
+  padding: 4px 18px 14px !important;
+}
+
+.okr-prog-wrap {
+  padding: 0 18px 12px !important;
+}
+
+/* KR list */
+.kr-list {
+  padding: 8px 18px !important;
+}
+
+.kr-item {
+  padding: 8px 0 !important;
+}
+
+.okr-bkr-item {
+  padding: 9px 18px !important;
+}
+
+/* Suggestion box */
+.okr-sug-box {
+  padding: 10px 18px !important;
+}
+
+.okr-sug-title {
+  font-size: 10px !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* NC items */
+.okr-nc-title {
+  font-size: 10px !important;
+  letter-spacing: 0.05em !important;
+}
+
+.okr-nc-item {
+  font-size: 12px !important;
+  padding: 6px 0 !important;
+}
+
+/* Entity header — remove gradient + left border */
+.okr-entity-header {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid var(--border) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 0 14px 0 !important;
+  margin-bottom: 18px !important;
+}
+
+/* Sub sections */
+.okr-sub-header {
+  background: var(--bg) !important;
+  padding: 9px 18px !important;
+}
+
+.okr-sub-header:hover {
+  background: var(--hover-row) !important;
+}
+
+.okr-krs-list {
+  background: var(--bg) !important;
+  padding: 8px 18px 12px 52px !important;
+}
+
+.okr-kr-row {
+  padding: 5px 0 !important;
+}
+
+.okr-row-header {
+  padding: 12px 18px !important;
+}
+
+.okr-row-header:hover {
+  background: var(--hover-row) !important;
+}
+
+.okr-bar {
+  padding: 9px 16px !important;
+  margin-bottom: 12px !important;
+}
+
+/* OKR writer step */
+.okr-writer-step {
+  padding: 18px !important;
+}
+
+.okr-gen-btn {
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  padding: 10px 20px !important;
+  border-radius: 8px !important;
+}
+
+/* Existing card */
+.okr-existing-card {
+  border-radius: 7px !important;
+  padding: 9px 12px !important;
+}
+
+/* Risk table */
+.okr-risk-table th {
+  background: var(--th-bg) !important;
+  color: var(--muted) !important;
   font-size: 10px !important;
   font-weight: 600 !important;
 }
 
-/* ── TOPBAR ──────────────────────────────────────────── */
-
-.topbar {
-  background: var(--topbar-bg) !important;
-  backdrop-filter: blur(14px) !important;
-  -webkit-backdrop-filter: blur(14px) !important;
-  border-bottom: 1px solid var(--topbar-border) !important;
+.okr-risk-table td {
+  font-size: 12px !important;
+  padding: 7px 10px !important;
 }
 
-/* ── SIDEBAR ─────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════
+   TABLES
+   ══════════════════════════════════════════════════════ */
 
-.sidebar {
-  background: var(--sidebar-bg) !important;
-}
-
-/* ── CARDS ───────────────────────────────────────────── */
-
-.card,
-.sc,
-.scard,
-.hier-card,
-.okr-card {
+.tw {
   border-radius: var(--radius) !important;
   border: 1px solid var(--border) !important;
   box-shadow: var(--shadow) !important;
-  transition: box-shadow 0.28s ease, transform 0.22s ease, border-color 0.22s ease !important;
   background: var(--card) !important;
 }
 
-.card:hover,
-.scard:hover,
-.okr-card:hover {
-  box-shadow: var(--shadow-md) !important;
-  transform: translateY(-2px);
-  border-color: transparent !important;
-}
-
-/* ── TABELAS ─────────────────────────────────────────── */
-
-.tw table {
+.tw table,
+table {
   border-collapse: separate !important;
   border-spacing: 0 !important;
 }
 
-.tw td,
-.tw th {
+th {
+  background: var(--th-bg) !important;
+  padding: 10px 16px !important;
+  border-bottom: 1px solid var(--border) !important;
+  border-top: none !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 5 !important;
+}
+
+td {
+  padding: 10px 16px !important;
   border-bottom: 1px solid var(--border) !important;
 }
 
-.tw tbody tr:last-child td {
+tr:last-child td {
   border-bottom: none !important;
 }
 
-.tw tbody tr {
-  transition: background 0.15s ease !important;
+tbody tr {
+  transition: background 0.12s ease !important;
 }
 
-/* ── BADGES / TAGS ───────────────────────────────────── */
-
-.badge,
-[class*="badge"],
-.tag {
-  border-radius: 6px !important;
-  font-weight: 500 !important;
-  letter-spacing: 0.02em !important;
-}
-
-/* ── PROGRESS BARS ───────────────────────────────────── */
+/* ══════════════════════════════════════════════════════
+   PROGRESS BARS
+   ══════════════════════════════════════════════════════ */
 
 .cbar {
+  height: 5px !important;
   border-radius: 100px !important;
-  overflow: hidden !important;
+  background: var(--bg2) !important;
 }
 
 .cfill,
 [class*="cfill"] {
   border-radius: 100px !important;
-  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* ── INPUTS & SELECTS ────────────────────────────────── */
+.okr-bprog-bar {
+  height: 5px !important;
+  border-radius: 100px !important;
+}
+
+.okr-bprog-fill {
+  border-radius: 100px !important;
+}
+
+.okr-prog-bar {
+  height: 5px !important;
+  border-radius: 100px !important;
+}
+
+.okr-prog-fill {
+  border-radius: 100px !important;
+}
+
+.okr-row-pbar {
+  height: 4px !important;
+  border-radius: 100px !important;
+}
+
+.okr-kr-bar,
+.kr-bar {
+  height: 3px !important;
+  border-radius: 100px !important;
+}
+
+/* ══════════════════════════════════════════════════════
+   INPUTS & BUTTONS
+   ══════════════════════════════════════════════════════ */
 
 input,
 select,
+textarea,
 .custom-select-btn,
 .filter-select,
-.search-input {
-  border-radius: 8px !important;
+.search-input,
+.okr-writer-textarea,
+.okr-kr-input {
+  border-radius: 7px !important;
   border: 1px solid var(--border) !important;
   background: var(--input-bg) !important;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+  color: var(--txt) !important;
+  font-size: 12.5px !important;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease !important;
 }
 
 input:focus,
 select:focus,
-.custom-select-btn:focus {
+textarea:focus,
+.custom-select-btn:focus,
+.okr-writer-textarea:focus,
+.okr-kr-input:focus {
   outline: none !important;
   border-color: var(--red) !important;
-  box-shadow: 0 0 0 3px rgba(168, 0, 16, 0.1) !important;
+  box-shadow: 0 0 0 3px rgba(168,0,16,0.08) !important;
 }
-
-/* ── BOTÕES ──────────────────────────────────────────── */
 
 button,
 .btn,
-[class*="btn"] {
-  border-radius: 8px !important;
-  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1) !important;
+[class*="btn"],
+.theme-btn {
+  border-radius: 7px !important;
+  transition: all 0.2s cubic-bezier(0.4,0,0.2,1) !important;
 }
 
-/* ── SCROLLBAR ───────────────────────────────────────── */
+.theme-btn {
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  padding: 4px 12px !important;
+  border-radius: 20px !important;
+}
+
+/* ══════════════════════════════════════════════════════
+   CSV IMPORT
+   ══════════════════════════════════════════════════════ */
+
+.csv-lbl {
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  padding: 12px 14px !important;
+  border-radius: 8px !important;
+  border-style: dashed !important;
+  border-width: 1px !important;
+}
+
+.csv-lbl:hover {
+  border-color: var(--red) !important;
+  color: var(--red) !important;
+}
+
+/* ══════════════════════════════════════════════════════
+   GRID SPACING
+   ══════════════════════════════════════════════════════ */
+
+.sgrid {
+  gap: 12px !important;
+  margin-bottom: 16px !important;
+}
+
+.scards {
+  gap: 12px !important;
+}
+
+.row2 {
+  gap: 14px !important;
+  margin-bottom: 14px !important;
+}
+
+.okr-stats-bar {
+  gap: 10px !important;
+  margin-bottom: 16px !important;
+}
+
+.lvl {
+  gap: 4px !important;
+}
+
+/* ══════════════════════════════════════════════════════
+   METRIC ROWS
+   ══════════════════════════════════════════════════════ */
+
+.mr {
+  padding: 9px 0 !important;
+}
+
+.srule {
+  padding: 9px 0 !important;
+  font-size: 12px !important;
+}
+
+/* ══════════════════════════════════════════════════════
+   SCROLLBAR
+   ══════════════════════════════════════════════════════ */
 
 ::-webkit-scrollbar {
   width: 4px;
@@ -257,9 +905,54 @@ button,
   scrollbar-color: var(--border) transparent;
 }
 
-/* ── SELEÇÃO DE TEXTO ────────────────────────────────── */
+/* ══════════════════════════════════════════════════════
+   CONTENT GRIDS & VIEWS
+   ══════════════════════════════════════════════════════ */
+
+/* Main padding */
+.main {
+  padding: 20px 22px !important;
+}
+
+/* Metric rows */
+.okr-metrics-row {
+  gap: 12px !important;
+  margin-bottom: 14px !important;
+}
+
+.okr-main-row {
+  gap: 14px !important;
+}
+
+.okr-cards-col {
+  gap: 8px !important;
+}
+
+.dash-okr-mini {
+  gap: 10px !important;
+  margin-bottom: 14px !important;
+}
+
+.okr-stats-col {
+  gap: 10px !important;
+}
+
+/* Section filter bar of OKRs */
+.okr-bar-filters {
+  gap: 8px !important;
+}
+
+/* View animation: softer */
+.view.act {
+  animation-duration: 0.18s !important;
+  animation-timing-function: ease !important;
+}
+
+/* ══════════════════════════════════════════════════════
+   TEXT SELECTION
+   ══════════════════════════════════════════════════════ */
 
 ::selection {
-  background: rgba(168, 0, 16, 0.14);
+  background: rgba(168,0,16,0.12);
   color: inherit;
 }
