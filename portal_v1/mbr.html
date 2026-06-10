@@ -76,11 +76,14 @@
   .cac-val.ph{color:var(--muted)}
   .cac-arr{font-size:8px;color:var(--muted);transition:transform .15s;flex-shrink:0}
   .cac.cac-open .cac-arr{transform:rotate(180deg)}
-  .cac-drop{display:none;position:absolute;top:calc(100% + 2px);left:0;min-width:100%;background:var(--card);border:1.5px solid var(--red);border-radius:5px;box-shadow:0 4px 16px rgba(0,0,0,.15);z-index:9999;max-height:180px;overflow-y:auto}
+  .cac-drop{display:none;position:fixed;top:0;left:0;background:var(--card);border:1.5px solid var(--red);border-radius:5px;box-shadow:0 4px 16px rgba(0,0,0,.15);z-index:9999;max-height:180px;overflow-y:auto}
   .cac.cac-open .cac-drop{display:block}
   .cac-opt{padding:5px 8px;font-size:10px;cursor:pointer;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .cac-opt:hover,.cac-opt.cac-hi{background:rgba(204,0,0,.07)}
   .cac-opt.cac-sel{color:var(--red);font-weight:700}
+  .cac-search{padding:4px 8px;border-bottom:1px solid var(--border);background:var(--bg2);position:sticky;top:0;z-index:1}
+  .cac-search input{width:100%;padding:4px 6px;border:1px solid var(--border);border-radius:3px;background:var(--card);color:var(--txt);font-size:9px;outline:none}
+  .cac-search input:focus{border-color:var(--red);box-shadow:0 0 0 2px rgba(204,0,0,.1)}
   /* Bolinha de status do filtro Ativo */
   .fdot{display:inline-block;width:8px;height:8px;border-radius:50%;vertical-align:middle;margin-right:2px;transition:background .2s,box-shadow .2s;flex-shrink:0}
   .fdot-all{background:var(--muted);opacity:.7}
@@ -338,6 +341,7 @@
     body,html{overflow:visible!important;height:auto!important}
   }
 </style>
+<link rel="stylesheet" href="luxury-skin.css">
 </head>
 <body>
 <div class="shell">
@@ -347,7 +351,7 @@
     <button class="stoggle" onclick="toggleSidebar()" id="stoggleBtn" title="Recolher menu">
       <span class="stoggle-ic">«</span><span class="stoggle-txt">Recolher</span>
     </button>
-    <div><a href="../index.html" class="back-link"><span class="bl-ic">←</span><span class="bl-txt">Portal</span></a></div>
+    <div><a href="../index.html" class="back-link" title="Portal"><span class="bl-ic">←</span><span class="bl-txt">Portal</span></a></div>
     <div class="sbrand">
       <img src="" alt="" class="sblogo" id="imgB">
       <img src="" alt="" class="sclogo" id="imgC">
@@ -359,6 +363,7 @@
       <button class="nb" onclick="switchView('acoes',this)"><span class="ic">✅</span><span class="ntxt">Ações</span></button>
       <button class="nb" onclick="switchView('slide',this)"><span class="ic">📊</span><span class="ntxt">Apresentação</span></button>
       <div class="nlabel" style="margin-top:8px">Portal</div>
+      <a href="dashboard.html" class="nb" style="text-decoration:none"><span class="ic">📊</span><span class="ntxt">Dashboard</span></a>
       <a href="estrutura.html" class="nb" style="text-decoration:none"><span class="ic">🏛️</span><span class="ntxt">Estrutura</span></a>
       <a href="okrs.html" class="nb" style="text-decoration:none"><span class="ic">🎯</span><span class="ntxt">OKRs & KRs</span></a>
       <a href="planejamento.html" class="nb" style="text-decoration:none"><span class="ic">🗓️</span><span class="ntxt">Planejamento</span></a>
@@ -377,12 +382,12 @@
       <div class="tright"></div>
     </header>
     <div class="fbar">
-      <div class="fg"><label class="fl">🌍 Vertical</label><input class="fs fac" id="fv" list="dl-fv" placeholder="Todos" autocomplete="off" onfocus="this.select()" oninput="onAC('fv')" onchange="onAC('fv')"><datalist id="dl-fv"></datalist></div>
-      <div class="fg"><label class="fl">👥 Tribo</label><input class="fs fac" id="ft" list="dl-ft" placeholder="Todos" autocomplete="off" onfocus="this.select()" oninput="onAC('ft')" onchange="onAC('ft')"><datalist id="dl-ft"></datalist></div>
-      <div class="fg"><label class="fl">🎯 Cluster</label><input class="fs fac" id="fc" list="dl-fc" placeholder="Todos" autocomplete="off" onfocus="this.select()" oninput="onAC('fc')" onchange="onAC('fc')"><datalist id="dl-fc"></datalist></div>
-      <div class="fg"><label class="fl">⚙️ Squad</label><input class="fs fac" id="fs" list="dl-fs" placeholder="Todos" autocomplete="off" onfocus="this.select()" oninput="onAC('fs')" onchange="onAC('fs')"><datalist id="dl-fs"></datalist></div>
-      <div class="fg"><label class="fl">📅 Quarter</label><input class="fs fac" id="fq" list="dl-fq" placeholder="Todos" autocomplete="off" onfocus="this.select()" oninput="onAC('fq')" onchange="onAC('fq')"><datalist id="dl-fq"></datalist></div>
-      <div class="fg" id="fg-fa"><label class="fl"><span class="fdot fdot-all" id="dot-fa"></span>Ativo</label><select class="fs fac" id="fa" onchange="onAC('fa')"><option value="">Todos</option><option value="sim">Apenas Ativos</option><option value="nao">Apenas Inativos</option></select></div>
+      <div class="fg"><label class="fl">🌍 Vertical</label><div class="cac" id="cac-fv"><input type="hidden" id="fv"><button type="button" class="cac-btn" onclick="cacToggle('fv')"><span class="cac-val ph" id="cacv-fv">Todos</span><span class="cac-arr">▾</span></button><div class="cac-drop" id="cacd-fv"><div class="cac-search"><input type="text" placeholder="Buscar..." oninput="cacFSearch(this,'fv')"></div><div id="caco-fv"></div></div></div></div>
+      <div class="fg"><label class="fl">👥 Tribo</label><div class="cac" id="cac-ft"><input type="hidden" id="ft"><button type="button" class="cac-btn" onclick="cacToggle('ft')"><span class="cac-val ph" id="cacv-ft">Todos</span><span class="cac-arr">▾</span></button><div class="cac-drop" id="cacd-ft"><div class="cac-search"><input type="text" placeholder="Buscar..." oninput="cacFSearch(this,'ft')"></div><div id="caco-ft"></div></div></div></div>
+      <div class="fg"><label class="fl">🎯 Cluster</label><div class="cac" id="cac-fc"><input type="hidden" id="fc"><button type="button" class="cac-btn" onclick="cacToggle('fc')"><span class="cac-val ph" id="cacv-fc">Todos</span><span class="cac-arr">▾</span></button><div class="cac-drop" id="cacd-fc"><div class="cac-search"><input type="text" placeholder="Buscar..." oninput="cacFSearch(this,'fc')"></div><div id="caco-fc"></div></div></div></div>
+      <div class="fg"><label class="fl">⚙️ Squad</label><div class="cac" id="cac-fs"><input type="hidden" id="fs"><button type="button" class="cac-btn" onclick="cacToggle('fs')"><span class="cac-val ph" id="cacv-fs">Todos</span><span class="cac-arr">▾</span></button><div class="cac-drop" id="cacd-fs"><div class="cac-search"><input type="text" placeholder="Buscar..." oninput="cacFSearch(this,'fs')"></div><div id="caco-fs"></div></div></div></div>
+      <div class="fg"><label class="fl">📅 Quarter</label><div class="cac" id="cac-fq"><input type="hidden" id="fq"><button type="button" class="cac-btn" onclick="cacToggle('fq')"><span class="cac-val ph" id="cacv-fq">Todos</span><span class="cac-arr">▾</span></button><div class="cac-drop" id="cacd-fq"><div class="cac-search"><input type="text" placeholder="Buscar..." oninput="cacFSearch(this,'fq')"></div><div id="caco-fq"></div></div></div></div>
+      <div class="fg" id="fg-fa"><label class="fl"><span class="fdot fdot-all" id="dot-fa"></span>Ativo</label><div class="cac" id="cac-fa"><input type="hidden" id="fa"><button type="button" class="cac-btn" onclick="cacToggle('fa')"><span class="cac-val ph" id="cacv-fa">Todos</span><span class="cac-arr">▾</span></button><div class="cac-drop" id="cacd-fa"><div class="cac-opt cac-sel" data-val="" onmousedown="cacPick(event,'fa','','Todos')">Todos</div><div class="cac-opt" data-val="sim" onmousedown="cacPick(event,'fa','sim','Apenas Ativos')">Apenas Ativos</div><div class="cac-opt" data-val="nao" onmousedown="cacPick(event,'fa','nao','Apenas Inativos')">Apenas Inativos</div></div></div></div>
       <div class="facts">
         <button class="btn btn-ghost" onclick="clearF()">↺ Limpar</button>
         <button class="btn btn-red" onclick="doFilter()">✓ Aplicar</button>
@@ -483,6 +488,24 @@
       <div class="view" id="view-data">
         <div class="sec-h">Gerenciar Dados — todos os CSVs podem ser importados diretamente aqui</div>
         <div class="dm-summary" id="dm-summary">Nenhum dado carregado — importe os arquivos CSV abaixo</div>
+
+        <!-- IMPORTAR PASTA -->
+        <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin:0 0 8px;padding-bottom:6px;border-bottom:2px solid var(--border)">📂 Importação Rápida — Pasta Completa</div>
+        <div class="dm-card" style="border-top:3px solid var(--red);margin-bottom:16px">
+          <div class="dm-card-title">📂 Importar todos os CSVs de uma vez</div>
+          <div class="dm-cols" style="margin-bottom:12px">Selecione a pasta de dados ou múltiplos arquivos .csv — o portal identifica cada um pelo nome e processa na ordem correta (estrutura → OKRs → planejamento).</div>
+          <div class="dm-upload" style="flex-wrap:wrap;gap:8px;align-items:center">
+            <label class="dm-file-btn" style="cursor:pointer;background:var(--red);color:#fff;border-color:var(--red);font-weight:700">
+              📁 Selecionar Pasta
+              <input type="file" webkitdirectory style="display:none" onchange="importFolderMBR(this)">
+            </label>
+            <label class="dm-file-btn" style="cursor:pointer;font-weight:700">
+              📄 Múltiplos Arquivos
+              <input type="file" accept=".csv" multiple style="display:none" onchange="importFolderMBR(this)">
+            </label>
+          </div>
+          <div style="font-size:9px;color:var(--muted);margin-top:10px">Reconhecidos: <b>tribe.csv · cluster.csv · squad.csv · Objetivo_novo.csv · KRs.csv · Dependencias.csv · feature.csv · story.csv</b></div>
+        </div>
 
         <!-- HIERARQUIA -->
         <div style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin:14px 0 8px;padding-bottom:6px;border-bottom:2px solid var(--border)">🏛️ Estrutura Organizacional</div>
@@ -844,13 +867,22 @@ var F = {v:'', t:'', c:'', s:'', q:'', a:''};
 
 function popDL(id, opts, keepVal){
   var dl=g('dl-'+id), inp=g(id);
-  if(!dl||!inp) return;
+  if(!inp) return;
   var seen={}, uni=[];
   (opts||[]).forEach(function(x){ var v=(x||'').toString().trim(); if(v&&!seen[v]){seen[v]=1;uni.push(v);} });
   uni.sort();
-  dl.innerHTML='<option value="">Todos</option>'+uni.map(function(v){return'<option value="'+v.replace(/"/g,'&quot;')+'"></option>';}).join('');
+  if(dl) dl.innerHTML='<option value="">Todos</option>'+uni.map(function(v){return'<option value="'+v.replace(/"/g,'&quot;')+'"></option>';}).join('');
   var cur=keepVal!==undefined?keepVal:inp.value;
-  inp.value=(cur&&uni.indexOf(cur)>=0)?cur:'';
+  var selVal=(cur&&uni.indexOf(cur)>=0)?cur:'';
+  inp.value=selVal;
+  var caco=g('caco-'+id);
+  if(caco){
+    var lbl=g('cacv-'+id);
+    if(lbl){lbl.textContent=selVal||'Todos';lbl.classList.toggle('ph',!selVal);}
+    var html='<div class="cac-opt'+(selVal===''?' cac-sel':'')+'" data-val="" onmousedown="cacFPick(event,\''+id+'\',\'\')">Todos</div>';
+    uni.forEach(function(v){html+='<div class="cac-opt'+(selVal===v?' cac-sel':'')+'" data-val="'+v.replace(/"/g,'&quot;')+'" onmousedown="cacFPick(event,\''+id+'\',\''+v.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')">'+v.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</div>';});
+    caco.innerHTML=html;
+  }
 }
 
 var _acTimer=null;
@@ -908,9 +940,8 @@ function doFilter(){
 
 function clearF(){
   F={v:'',t:'',c:'',s:'',q:'',a:''};
-  ['fv','ft','fc','fs','fa'].forEach(function(id){if(g(id))g(id).value='';});
-  if(g('fq'))g('fq').value='';
-  updateDot();
+  ['fv','ft','fc','fs','fq'].forEach(function(id){cacReset(id);});
+  cacReset('fa'); updateDot();
   MBR.tribo   = MBR_DATA.tribos[0];
   MBR.quarter = '';
   var hier=DATA.loaded.hier?DATA.hier:[];
@@ -945,7 +976,9 @@ function buildGlobalFilters(){
 }
 
 /* ── Custom dropdown (cac) ── */
-function cacToggle(id){var w=document.getElementById('cac-'+id);if(!w)return;var o=w.classList.contains('cac-open');document.querySelectorAll('.cac.cac-open').forEach(function(el){el.classList.remove('cac-open');});if(!o)w.classList.add('cac-open');}
+function cacToggle(id){var w=document.getElementById('cac-'+id);if(!w)return;var o=w.classList.contains('cac-open');document.querySelectorAll('.cac.cac-open').forEach(function(el){el.classList.remove('cac-open');});if(!o){w.classList.add('cac-open');var btn=w.querySelector('.cac-btn');var drop=document.getElementById('cacd-'+id);if(btn&&drop){var r=btn.getBoundingClientRect();drop.style.top=(r.bottom+2)+'px';drop.style.left=r.left+'px';drop.style.minWidth=Math.max(r.width,180)+'px';}var si=drop?drop.querySelector('.cac-search input'):null;if(si){si.value='';cacFSearch(si,id);setTimeout(function(){si.focus();},30);}}}
+function cacFSearch(inp,id){var v=(inp.value||'').toLowerCase();document.querySelectorAll('#caco-'+id+' .cac-opt').forEach(function(o){o.style.display=(!v||o.textContent.toLowerCase().indexOf(v)>=0)?'':'none';});}
+function cacFPick(e,id,val){e.preventDefault();var inp=g(id);if(inp)inp.value=val;var lbl=g('cacv-'+id);if(lbl){lbl.textContent=val||'Todos';lbl.classList.toggle('ph',!val);}var drop=g('cacd-'+id);if(drop){drop.querySelectorAll('.cac-opt').forEach(function(o){o.classList.toggle('cac-sel',o.dataset.val===val);});var si=drop.querySelector('.cac-search input');if(si){si.value='';cacFSearch(si,id);}}var w=g('cac-'+id);if(w)w.classList.remove('cac-open');onAC(id);}
 function cacPick(e,id,val,label){e.preventDefault();var inp=document.getElementById(id);if(inp)inp.value=val;var v=document.getElementById('cacv-'+id);if(v){v.textContent=val?label:'Todos';v.classList.toggle('ph',!val);}var drop=document.getElementById('cacd-'+id);if(drop)drop.querySelectorAll('.cac-opt').forEach(function(el){el.classList.toggle('cac-sel',el.dataset.val===val);});var w=document.getElementById('cac-'+id);if(w)w.classList.remove('cac-open');updateDot();if(typeof onAC==='function')onAC(id);}
 function updateDot(){
   var dot=document.getElementById('dot-fa');
@@ -2597,6 +2630,94 @@ function _mbrImportStoryFile(input){
     var n=DATA.stories.length;
     setTimeout(function(){_reloadAll();alert('✅ '+n+' stories importadas.');},0);
   });
+}
+
+function importFolderMBR(input){
+  var files=input.files;
+  if(!files||!files.length){input.value='';return;}
+  var ORDER=['tribe.csv','cluster.csv','squad.csv','objetivo_novo.csv','krs.csv','dependencias.csv','feature.csv','story.csv'];
+  function dispatchText(fn,text){
+    switch(fn){
+      case 'tribe':{
+        var rows=_parseCSVText(text);
+        var tribes=rows.map(function(r){
+          var n=(r['number']||r['numero']||'').trim(),name=(r['name']||r['nome']||'').trim();
+          if(!n&&!name)return null;
+          return{n:n,name:name,vn:(r['vertical_bu.number']||r['vertical_bu']||'').trim(),
+            v:(r['vertical']||r['vertical_name']||'').trim(),
+            ttl:(r['technical_tribe_lead']||'').trim(),blt:(r['business_tribe_lead']||'').trim(),
+            active:!/inativ|false/i.test(r['status']||r['active']||'')};
+        }).filter(Boolean);
+        _lsSave('est_tribes',tribes);_lsSaveRaw('est_ts',new Date().toISOString());
+        return tribes.length+' tribos';
+      }
+      case 'cluster':{
+        var rows=_parseCSVText(text);
+        var clusters=rows.map(function(r){
+          var n=(r['number']||r['numero']||'').trim(),name=(r['name']||r['nome']||'').trim();
+          if(!n&&!name)return null;
+          return{n:n,name:name,tn:(r['tribe.number']||r['tribe_number']||'').trim(),
+            t:(r['tribe']||r['tribe_name']||'').trim(),v:(r['vertical']||'').trim(),
+            cpo:(r['cpo']||'').trim(),active:!/inativ|false/i.test(r['status']||r['active']||'')};
+        }).filter(Boolean);
+        _lsSave('est_clusters',clusters);_lsSaveRaw('est_ts',new Date().toISOString());
+        return clusters.length+' clusters';
+      }
+      case 'squad':{
+        var rows=_parseCSVText(text);
+        var squads=rows.map(function(r){
+          var n=(r['number']||r['numero']||'').trim(),name=(r['name']||r['nome']||'').trim();
+          if(!n&&!name)return null;
+          return{n:n,name:name,cn:(r['cluster.number']||r['cluster_number']||'').trim(),
+            c:(r['cluster']||r['cluster_name']||'').trim(),
+            type:(r['type']||r['tipo']||'').trim(),
+            po:(r['product_owner']||r['po']||'').trim(),
+            sem:(r['service_manager']||r['sem']||'').trim(),
+            active:!/inativ|^false$/i.test(r['active']||r['status']||'sim')};
+        }).filter(Boolean);
+        _lsSave('est_squads',squads);_lsSaveRaw('est_ts',new Date().toISOString());
+        return squads.length+' squads';
+      }
+      case 'okrs':  loadObjetivos(text); return DATA.okrs.length+' OKRs';
+      case 'krs':   loadKRs(text);       return DATA.krs.length+' KRs';
+      case 'deps':  loadDeps(text);      return DATA.deps.length+' dependências';
+      case 'feats': loadFeaturesOnly(text); return DATA.features.length+' features';
+      case 'stories': loadStoriesOnly(text); return DATA.stories.length+' stories';
+    }
+    return '?';
+  }
+  var nameToFn={
+    'tribe.csv':'tribe','cluster.csv':'cluster','squad.csv':'squad',
+    'objetivo_novo.csv':'okrs','krs.csv':'krs',
+    'dependencias.csv':'deps','feature.csv':'feats','story.csv':'stories'
+  };
+  var byLower={};
+  Array.from(files).forEach(function(f){byLower[f.name.toLowerCase()]=f;});
+  var toProcess=ORDER.filter(function(n){return byLower[n]&&nameToFn[n];}).map(function(n){return{name:n,file:byLower[n],fn:nameToFn[n]};});
+  var skipped=Object.keys(byLower).filter(function(n){return n.endsWith('.csv')&&!nameToFn[n];});
+  if(!toProcess.length){
+    alert('Nenhum arquivo reconhecido.\nEsperados: tribe.csv, cluster.csv, squad.csv, Objetivo_novo.csv, KRs.csv, Dependencias.csv, feature.csv, story.csv');
+    input.value='';return;
+  }
+  var results=[],idx=0;
+  function next(){
+    if(idx>=toProcess.length){
+      var msg='✅ '+results.length+' arquivo(s) importado(s):\n'+results.map(function(r){return '  · '+r;}).join('\n');
+      if(skipped.length) msg+='\n\n⚠️ Não reconhecidos: '+skipped.join(', ');
+      setTimeout(function(){_reloadAll();alert(msg);},0);
+      input.value='';return;
+    }
+    var item=toProcess[idx++];
+    var fr=new FileReader();
+    fr.onload=function(e){
+      try{results.push(item.name+': '+dispatchText(item.fn,e.target.result));}
+      catch(err){results.push('❌ '+item.name+': '+err.message);}
+      next();
+    };
+    fr.onerror=function(){results.push('❌ '+item.name+': falha ao ler');next();};
+    fr.readAsText(item.file,'UTF-8');
+  }
+  next();
 }
 
 function handleFile(inputId,loaderFn){

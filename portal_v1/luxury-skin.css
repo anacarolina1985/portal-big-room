@@ -1,0 +1,265 @@
+/* ═══════════════════════════════════════════════════════
+   LUXURY SKIN — Portal Big Room Planning
+   Clean · Minimal · Fluid · Premium
+   ═══════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ── DESIGN TOKENS — LIGHT ───────────────────────────── */
+
+[data-theme="light"] {
+  --bg:    #F5F3EF;
+  --bg2:   #EBE8E2;
+  --card:  #FEFEFE;
+
+  --border: #E3DED7;
+
+  --txt:   #131110;
+  --muted: #7A726A;
+
+  --red:    #A80010;
+  --red2:   #7B000B;
+  --accent: #A80010;
+
+  --sidebar-bg:     linear-gradient(168deg, #6E0008 0%, #2A0004 62%, #0F0002 100%);
+  --topbar-bg:      rgba(253,252,250,0.92);
+  --topbar-border:  rgba(168,0,16,0.12);
+
+  --th-bg:    #F5F3EF;
+  --hover-row: rgba(168,0,16,0.035);
+  --input-bg: #FEFEFE;
+
+  --shadow:    0 1px 2px rgba(0,0,0,0.04), 0 2px 6px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.08), 0 8px 32px rgba(0,0,0,0.05);
+
+  --radius: 10px;
+
+  --green:    #1A7A4A;
+  --green-bg: #EEF7F2;
+  --amber:    #A05000;
+  --amber-bg: #FDF4E8;
+  --blue:     #1A4A8A;
+  --blue-bg:  #EEF2FB;
+  --errC:     #A80010;
+  --err-bg:   #FBF0F1;
+}
+
+/* ── DESIGN TOKENS — DARK ────────────────────────────── */
+
+[data-theme="dark"] {
+  --bg:    #0B0A09;
+  --bg2:   #121110;
+  --card:  #1A1917;
+
+  --border: #2A2825;
+
+  --txt:   #F2EEE8;
+  --muted: #8A857E;
+
+  --red:    #C8001A;
+  --red2:   #960014;
+  --accent: #C8001A;
+
+  --sidebar-bg:    linear-gradient(168deg, #3D0006 0%, #180002 62%, #060001 100%);
+  --topbar-bg:     rgba(26,25,23,0.94);
+  --topbar-border: rgba(200,0,26,0.18);
+
+  --th-bg:    #121110;
+  --hover-row: rgba(200,0,26,0.07);
+  --input-bg: #1A1917;
+
+  --shadow:    0 1px 2px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.35);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.55), 0 8px 32px rgba(0,0,0,0.45);
+
+  --radius: 10px;
+
+  --green:    #2AB870;
+  --green-bg: #0D2018;
+  --amber:    #E08820;
+  --amber-bg: #1E1500;
+  --blue:     #5A90E0;
+  --blue-bg:  #0D1828;
+  --errC:     #E83050;
+  --err-bg:   #1E0608;
+}
+
+/* ── RESET & RENDERING ───────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── TYPOGRAPHY ──────────────────────────────────────── */
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-feature-settings: 'ss01' 1, 'cv01' 1, 'cv03' 1;
+  letter-spacing: -0.005em;
+}
+
+/* Títulos de página recebem o serif de luxo */
+.ph h1,
+.ph-title,
+h1 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+/* Cabeçalhos de tabela — uppercase fino */
+th {
+  letter-spacing: 0.055em !important;
+  text-transform: uppercase !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+}
+
+/* ── TOPBAR ──────────────────────────────────────────── */
+
+.topbar {
+  background: var(--topbar-bg) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border-bottom: 1px solid var(--topbar-border) !important;
+}
+
+/* ── SIDEBAR ─────────────────────────────────────────── */
+
+.sidebar {
+  background: var(--sidebar-bg) !important;
+}
+
+/* ── CARDS ───────────────────────────────────────────── */
+
+.card,
+.sc,
+.scard,
+.hier-card,
+.okr-card {
+  border-radius: var(--radius) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow) !important;
+  transition: box-shadow 0.28s ease, transform 0.22s ease, border-color 0.22s ease !important;
+  background: var(--card) !important;
+}
+
+.card:hover,
+.scard:hover,
+.okr-card:hover {
+  box-shadow: var(--shadow-md) !important;
+  transform: translateY(-2px);
+  border-color: transparent !important;
+}
+
+/* ── TABELAS ─────────────────────────────────────────── */
+
+.tw table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+.tw td,
+.tw th {
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.tw tbody tr:last-child td {
+  border-bottom: none !important;
+}
+
+.tw tbody tr {
+  transition: background 0.15s ease !important;
+}
+
+/* ── BADGES / TAGS ───────────────────────────────────── */
+
+.badge,
+[class*="badge"],
+.tag {
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.02em !important;
+}
+
+/* ── PROGRESS BARS ───────────────────────────────────── */
+
+.cbar {
+  border-radius: 100px !important;
+  overflow: hidden !important;
+}
+
+.cfill,
+[class*="cfill"] {
+  border-radius: 100px !important;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* ── INPUTS & SELECTS ────────────────────────────────── */
+
+input,
+select,
+.custom-select-btn,
+.filter-select,
+.search-input {
+  border-radius: 8px !important;
+  border: 1px solid var(--border) !important;
+  background: var(--input-bg) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+input:focus,
+select:focus,
+.custom-select-btn:focus {
+  outline: none !important;
+  border-color: var(--red) !important;
+  box-shadow: 0 0 0 3px rgba(168, 0, 16, 0.1) !important;
+}
+
+/* ── BOTÕES ──────────────────────────────────────────── */
+
+button,
+.btn,
+[class*="btn"] {
+  border-radius: 8px !important;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* ── SCROLLBAR ───────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+/* ── SELEÇÃO DE TEXTO ────────────────────────────────── */
+
+::selection {
+  background: rgba(168, 0, 16, 0.14);
+  color: inherit;
+}
